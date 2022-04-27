@@ -209,7 +209,6 @@ if (isset($_POST["submit"])) {
                             $second = false;
                             $contador = 1;
                             continue;
-                
                         }
                         if(true === $third){
                             if (!empty($_FILES["imagen1"]["tmp_name"])) {
