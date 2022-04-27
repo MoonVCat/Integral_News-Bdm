@@ -1,0 +1,11 @@
+<?php
+session_start();
+unset($_SESSION["USER_ID"]);
+unset($_SESSION["user_login"]);
+unset($_SESSION["username"]);
+unset($_SESSION["image"]);
+unset($_SESSION["phone"]);
+unset($_SESSION["infoU"]);
+unset($_SESSION["nombreCom"]);
+header("Location:login.php");
+?>

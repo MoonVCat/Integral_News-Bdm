@@ -1,0 +1,352 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand:300,400|Lato:400,300|Coda|Open+Sans);
+
+body {
+  background-color: #e0e7ee;
+  font-family: "Open sans", sans-serif;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100vh;
+}
+
+.content-profile-page {
+  margin: 1em auto;
+  width: 44.23em;
+}
+
+.content {
+  padding: 2rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cateNew{
+  color:black;
+}
+
+.recent-news {
+  text-align: center;
+}
+
+.preguntas{
+
+  background: rgb(41, 37, 71);
+  position: relative;
+  width: 800px;
+  top: 50px;
+  left: 450px;
+}
+#carouselExampleIndicators{
+  margin: auto;
+  width: 400px;
+  height: 450px;
+}
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column2 {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+#imTitulo{
+    display: flex;
+    justify-content: center;
+}
+/* Clear floats after image containers */
+.row2::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.imagenPreview {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.botonBonito {
+  display: flex;
+  justify-content: center;
+}
+
+.preguntas2{
+
+  background: rgb(222, 50, 50);
+  position: relative;
+  width: 600px;
+  top: 50px;
+  left: 700px;
+}
+
+.editarUser{
+  background: rgb(135, 197, 166);
+  position: relative;
+  top: 50px;
+  left: 250px;
+}
+
+.tablita{
+  position: relative;
+  top: 50px;
+  left: 100px;
+}
+
+
+
+.info_usuario{
+
+  background: rgb(41, 37, 71);
+  position: relative;
+  top: 50px;
+  left: 300px;
+}
+
+
+.recent-news h5 {
+  text-align: center;
+}
+
+.body-card {
+ align-content: center;
+  max-width: 1140px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border: .1em solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 1em; 
+}
+
+.profile-user-page .img-user-profile {
+	margin: 0 auto;
+  text-align: center; 
+}
+.profile-user-page .img-user-profile .profile-bgHome {
+	border-bottom: .2em solid #f5f5f5;
+  width: 44.23em;
+  height: 16em;
+  }
+.profile-user-page .img-user-profile .avatar {
+	margin: 0 auto;
+  background: #fff;
+  width: 7em;
+  height: 7em;
+  padding: 0.25em;
+  border-radius: .4em;
+  margin-top: -10em;
+  box-shadow: 0 0 .1em rgba(0, 0, 0, 0.35);
+}
+.profile-user-page button {
+	position: absolute;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 7em; 
+  background: #aa66cc;
+  border: 1px solid #aa66cc;
+  color: #fff;
+  border-radius:  #aa66cc;
+  outline: none;
+  border-radius: 0 .6em .6em 0;
+  padding: .80em;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.carousel{
+  width: 40vw;
+  height: 40vh;
+  position: relative;
+  left: 30px;
+}
+
+.carousel > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 200ms opacity ease-in-out;
+  transition-delay: 200ms;
+}
+.slide > img {
+  display: block;
+  width: 100%;
+  height: 110%;
+  padding: 10px;
+  left: 30px;
+  object-fit: cover;
+  object-position: center;
+}
+.slide > video {
+  display: block;
+  width: 100%;
+  height: 110%;
+  padding: 10px;
+  left: 30px;
+  object-fit: cover;
+  object-position: center;
+}
+.slide[data-active]{
+  opacity: 1;
+  z-index: 1;
+}
+
+.carousel-button {
+  position: absolute;
+  z-index: 2;
+  background: none;
+  border: none;
+  font-size: 4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, .5);
+  cursor: pointer;
+  border-radius: .25rem;
+  padding: 0 .5rem;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.carousel-button:hover,
+.carousel-button:focus{
+  color: white;
+  background-color: rgba(0, 0, 0, .2);
+}
+
+.carousel-button:focus{
+  outline: 1px solid black;
+}
+
+.carousel-button.prev{
+  left: 1rem;
+}
+
+.carousel-button.next{
+  right: 1rem;
+}
+
+.profile-user-page button:hover {
+  background:#aa66cc;
+  transition: background .2s ease-in-out;
+  border: 1px solid #aa66cc;
+}
+.profile-user-page .user-profile-data, .profile-user-page .description-profile {
+  text-align: center;
+  padding: 0 1.5em; 
+  
+}
+.profile-user-page .user-profile-data h1 {
+  font-family: "Lato", sans-serif;
+  margin-top: 0.35em;
+  color: #292f33;
+  margin-bottom: 0; 
+}
+.profile-user-page .user-profile-data p {
+	font-family: "Lato", sans-serif;
+  color: #8899a6; 
+  font-size: 1.1em;
+  margin-top: 0;
+  margin-bottom: 0.5em; 
+}
+.profile-user-page .description-profile {
+  color: #75787b;
+  font-size: 0.98em; 
+}
+.profile-user-page .data-user {
+	font-family: "Quicksand", sans-serif;
+  margin-bottom: 0;
+  cursor: pointer;
+  padding: 0;
+  list-style: none;
+  display: table;
+  width: 100.15%; 
+}
+.profile-user-page .data-user li {
+  margin: 0;
+  padding: 0;
+  width: 33.33334%;
+  display: table-cell;
+  text-align: center;
+  border-left: 0.1em solid transparent; 
+}
+.profile-user-page .data-user li:first-child {
+  border-left: 0; 
+}
+.profile-user-page .data-user li:first-child a {
+  border-bottom-left-radius: 0.3rem; 
+  }
+.profile-user-page .data-user li:last-child a {
+  border-bottom-right-radius: 0.3rem; 
+}
+.profile-user-page .data-user li a, .profile-user-page .data-user li strong {
+  display: block; 
+}
+.profile-user-page .data-user li a {
+  background-color: #f7f7f7;
+  border-top: 1px solid rgba(242,242,242,0.5);
+  border-bottom: .2em solid #f7f7f7;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4),0 1px 1px rgba(255,255,255,0.4);
+  padding: .93em 0;
+  color: #46494c; 
+}
+.profile-user-page .data-user li a strong, .profile-user-page .data-user li a span {
+  font-weight: 600;
+  line-height: 1; 
+}
+.profile-user-page .data-user li a strong {
+  font-size: 2em; 
+}
+.profile-user-page .data-user li a span {
+  color: #aa66cc; 
+}
+.profile-user-page .data-user li a:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: .2em solid #aa66cc;
+  color:#aa66cc; 
+}
+.profile-user-page .data-user li a:hover span {
+  color: #aa66cc; 
+}
+
+#navbar{
+
+  background: rgb(41, 37, 71);
+}
+.far
+{
+  color:    #aa66cc;
+  
+}
+
+.navbar-custom {
+  height: 100px;
+}
+
+#footer {
+
+  padding: 2rem;
+    width: 100%;
+    z-index: 10;
+    background: rgb(41, 37, 71);
+}
+
+
+#ContraseñaError{
+  display: none;
+  color: red;
+}
+
+
+.ocultar {
+  display: none;
+}
+
+.mostrar {
+  display: block;
+}
