@@ -107,8 +107,6 @@ $resultado = $mysqli->query($color);
                         <?php
                         $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
                         $resultado = $mysqli->query($cate);
-                        $res = $mysqli->query($cate);
-                        $res1 = $mysqli->query($cate);
                         ?>
                         <b style="color: white" for="exampleFormControlFile1">Selecciona la categoria</b>
                         <small style="color: white" for="exampleFormControlFile1">(Minimo una categoria)</small>
@@ -142,7 +140,7 @@ $resultado = $mysqli->query($color);
                         <b style="color: white" for="exampleFormControlFile1">Agregue Descripcion</b>
                         <br>
                         <br>
-                        <textarea name="desc" id="desc" type="text" placeholder="Descripción" class="form-control" maxlength="600" style="height: 300px;" required></textarea>
+                        <textarea name="desc" id="desc" type="text" placeholder="Descripción" class="form-control" maxlength="800" style="height: 300px;" required></textarea>
                     </div>
 
                     <div class="form-group">

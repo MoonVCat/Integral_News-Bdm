@@ -84,13 +84,16 @@ $idRepo = $_SESSION["USER_ID"];
                                     if (strcmp($row['NEW_STATUS'], "En redaccion") == 0) {
                                     ?>
                                         <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                            <img src="<?php echo $a['NEWS_TITLE']; ?>" width="150" height="250" class="card-img" alt="...">
+                                            
+                                        <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
+                                        <img src="<?php echo $a['NEWS_TITLE']; ?>"  width="150" height="250" class="card-img" alt="...">
+                                        </a>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body" style="background-color:<?php echo $color ?>">
-
+                                            <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
                                                 <h4 style="text-align: left;" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
-
+                                            </a>
                                                 <p style="text-align: left;" class="card-text">Descripcion corta: <?php echo $row['DESCRIPTION']; ?>.</p>
 
                                                 <p class="card-text" style="text-align: left;">

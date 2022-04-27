@@ -7,7 +7,6 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
-    $email = $_SESSION["user_login"];
     $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, TEXT_NEWS, CITY, SUBURB, COUNTRY, DATE_OF_NEWS, HOUR_OF_NEWS, COMMENTS_EDITOR FROM NEWS WHERE NEWS_ID = $id";
     $resultado = $mysqli->query($new);
 
@@ -32,7 +31,7 @@ if (isset($_GET['id'])) {
                 <a href="perfilReportero.php" class="list-group-item list-group-item-action">Mi perfil
                     <i class='fas fa-tools' style='font-size:18px;color: black'></i>
                 </a>
-                <a href="editNoticia.php" class="list-group-item list-group-item-action">Editar Noticia
+                <a href="editNoticia.php" class="list-group-item list-group-item-action">Portal de Noticias
                     <i class='far fa-hand-point-up' style='font-size:18px;color: black'></i>
                 </a>
                 <a href="includes/delete_inc.php?deleteid=<?php echo $id; ?>" class="list-group-item list-group-item-action">Eliminar cuenta
@@ -254,7 +253,7 @@ if (isset($_GET['id'])) {
                             <br>
                             <br>
                             <textarea name="desc" id="desc" type="text" placeholder="Descripción" class="form-control" maxlength="600" style="height: 300px;" required><?php echo (isset($noticia['TEXT_NEWS']) ? htmlspecialchars($noticia['TEXT_NEWS']) : ''); ?></textarea>
-                        
+
                         </div>
 
                         <div class="form-group">
@@ -271,7 +270,7 @@ if (isset($_GET['id'])) {
                             <br>
                             <br>
                             <div style="text-align: center;" class="li-container">
-                            <?php
+                                <?php
                                 $first = true;
                                 $second = true;
                                 $third = true;
@@ -312,7 +311,7 @@ if (isset($_GET['id'])) {
                                     ?>
                                     <input value="" name="claveD" id="claveD" readonly />
                                     <input value="" name="claveDPK" id="claveDPK" hidden />
-                                    
+
                                     <input value="" name="claveT" id="claveT" readonly />
                                     <input value="" name="claveTPK" id="claveTPK" hidden />
                                 <?php
@@ -332,7 +331,7 @@ if (isset($_GET['id'])) {
                             <br>
                             <br>
                             <input type="text" name="firma" id="firma" placeholder="Firma del editor" class="form-control" value="<?php echo (isset($noticia['SIGN']) ? htmlspecialchars($noticia['SIGN']) : ''); ?>" required>
-                        
+
                             <input type="text" name="idNew" id="idNew" class="form-control" value="<?php echo (isset($id) ? htmlspecialchars($id) : ''); ?>" hidden>
                             <input type="text" name="comentarioEditor" id="comentarioEditor" class="form-control" value="<?php echo (isset($noticia['COMMENTS_EDITOR']) ? htmlspecialchars($noticia['COMMENTS_EDITOR']) : ''); ?>" hidden>
                         </div>

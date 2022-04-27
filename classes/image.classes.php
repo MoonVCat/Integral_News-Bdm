@@ -80,11 +80,7 @@ class Imagen extends Dbh{
                 echo '</script>';
                 exit();
             } 
-        } else {
-            echo "<script> alert('".$imgId."'); </script>"; 
-            echo "<script> alert('".$idNew."'); </script>"; 
-            echo "<script> alert('".$uno."'); </script>";
-            echo "<script> alert('".$tipo."'); </script>";
+        } else { 
             if(!$stmt->execute(array('update', $imgId, $idNew, "", $uno, $tipo))){
                 $stmt = null;
             

@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+session_start();
 require "connection.php";
 include 'C:\xampp\htdocs\proyecto\templatess\header.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
@@ -89,49 +89,51 @@ $resultado = $mysqli->query($new);
 
     <ol></ol>
 
-
     <figure class="text-center">
       <h1>Noticias más recientes</h1>
     </figure>
 
-    <div class="row g-0 bg-light position-relative">
-      <div class="col-md-6 mb-md-0 p-md-4">
-        <img src="http://www.periodicojudicial.gov.ar/wp-content/uploads/2017/12/NOTICIAS-800x502.jpg" class="w-100" alt="...">
-      </div>
-      <div class="col-md-6 p-4 ps-md-0">
-        <h5 class="mt-0">Lorem ipsum dolor sit amet.</h5>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi quibusdam doloremque totam. Deleniti quos, reiciendis impedit vero deserunt repellat, quasi neque dolorum inventore voluptatem repudiandae eaque. Impedit, quo commodi? Id!</p>
-        <a href="noticia.php" class="stretched-link">Go somewhere</a>
-      </div>
-    </div>
+    <?php
 
+    $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS ORDER BY CREATION_DATE DESC";
+    $news = $mysqli->query($new);
 
-    <div class="row g-0 bg-light position-relative">
-      <div class="col-md-6 mb-md-0 p-md-4">
-        <img src="https://www.parqueempresarial.es/wp-content/uploads/2020/09/BITCOIN-3.jpg" class="w-100" alt="...">
-      </div>
-      <div class="col-md-6 p-4 ps-md-0">
-        <h5 class="mt-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores?</h5>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti alias pariatur ab maiores iure quia beatae quis a atque illum dolores, adipisci earum reprehenderit quas exercitationem cum, voluptates ipsum porro?</p>
-        <a href="noticia.php" class="stretched-link">Go somewhere</a>
-      </div>
-    </div>
+    while ($row = mysqli_fetch_assoc($news)) {
+      $idNew = $row['NEWS_ID'];
 
+      $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+      $category = $mysqli->query($categ);
+      $i = mysqli_fetch_array($category);
+      $color = $i['COLOR'];
 
-    <div class="row g-0 bg-light position-relative">
-      <div class="col-md-6 mb-md-0 p-md-4">
-        <img src="http://antenasanluis.mx/wp-content/uploads/2020/06/15929145909729.jpg" class="w-100" alt="...">
-      </div>
-      <div class="col-md-6 p-4 ps-md-0">
-        <h5 class="mt-0">Lorem, ipsum dolor.</h5>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi quibusdam doloremque totam. Deleniti quos, reiciendis impedit vero deserunt repellat, quasi neque dolorum inventore voluptatem repudiandae eaque. Impedit, quo commodi? Id!</p>
-        <a href="noticia.php" class="stretched-link">Go somewhere</a>
-      </div>
-    </div>
+      $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+      $imagen = $mysqli->query($img);
+      $a = mysqli_fetch_array($imagen);
+      if (strcmp($row['NEW_STATUS'], "Publicada") == 0) {
+    ?>
+        <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
 
+          <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
+            <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" alt="...">
+          </div>
+          <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
+            <h5 class="mt-0" style="color: black">Titulo: <?php echo $row['TITLE']; ?>.</h5>
+            <br>
+            <small ><?php echo $row['DATE_OF_NEWS']; ?></small>
+            <br>
+            <p style="color: black">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
+            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Go somewhere</a>
+          </div>
+        </div>
+
+    <?php
+      }
+    }
+    ?>
   </div>
 
 </div>
+
 
 
 <script src="jquery-3.6.0.min.js"></script>

@@ -180,155 +180,16 @@ if (isset($_GET['id'])) {
                         <hr style="height:6px;">
                         <br>
                         <small><?php echo $row['CREATION_DATE'] ?></small>
-                        <br>
-                        <br>
                     </div>
-                    <b>Likes/Dislikes</b>
-                    <br><br>
-                    <a href="#" class="">
-                        <i class='fas fa-heart' style='font-size:24px'></i>
-                    </a>
 
-                    <a href="#" class="">
-                        <i class='far fa-heart' style='font-size:24px'></i>
-                    </a>
                 </div>
+
             <?php
             }
             ?>
 
         </div>
 
-        <!-- Contenedor Principal -->
-        <div class="comments-container">
-            <h1>Comentarios</h1>
-
-            <ul id="comments-list" class="comments-list">
-                <li>
-                    <div class="comment-main-level">
-                        <!-- Avatar -->
-                        <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                        <!-- Contenedor del Comentario -->
-
-
-                        <div class="comment-box">
-                            <div class="comment-head">
-
-
-                                <h6 class="comment-name by-author"><a href="">Edson Lugo</a></h6>
-                                <span>hace 20 minutos</span>
-                                <div class="boton-corazon text-right">
-                                    <a href="#" class="">
-                                        <i class='fas fa-heart' style='font-size:24px'></i>
-                                    </a>
-                                    <a href="#" class="">
-                                        <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                    </a>
-
-                                </div>
-                            </div>
-
-
-                            <div class="comment-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Respuestas de los comentarios -->
-                    <ul class="comments-list reply-list">
-                        <li>
-                            <!-- Avatar -->
-                            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                            <!-- Contenedor del Comentario -->
-                            <div class="comment-box">
-                                <div class="comment-head">
-                                    <h6 class="comment-name"><a href="">Rubí Alvarado</a></h6>
-                                    <span>hace 10 minutos </span>
-                                    <div class="boton text-right">
-                                        <a href="#" class="">
-                                            <i class='fas fa-heart' style='font-size:24px'></i>
-                                        </a>
-
-
-                                    </div>
-
-
-
-                                </div>
-                                <div class="comment-content">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <!-- Avatar -->
-                            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                            <!-- Contenedor del Comentario -->
-                            <div class="comment-box">
-                                <div class="comment-head">
-                                    <h6 class="comment-name by-author"><a href="">Edson Lugo</a></h6>
-                                    <span>hace 10 minutos </span>
-                                    <div class="boton-corazon text-right">
-                                        <a href="#" class="">
-                                            <i class='fas fa-heart' style='font-size:24px'></i>
-                                        </a>
-                                        <a href="#" class="">
-                                            <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                        </a>
-                                    </div>
-
-
-                                </div>
-                                <div class="comment-content">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <div class="comment-main-level">
-                        <!-- Avatar -->
-                        <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                        <!-- Contenedor del Comentario -->
-                        <div class="comment-box">
-                            <div class="comment-head">
-                                <h6 class="comment-name"><a href="">Rubí Alvarado</a></h6>
-                                <span>hace 10 minutos </span>
-
-
-                                <a href="#" class="">
-                                    <i class='fas fa-heart' style='font-size:24px'></i>
-                                </a>
-                            </div>
-
-                            <div class="comment-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <br>
-
-        <form>
-            <div class="form-group">
-                <input type="text" publi="" pa="" placeholder="Agregar un comentario" class="form-control" style="height: 100px;" required>
-
-                <ol>
-                    <br>
-                    <input type="submit" value="Agregar comentarios">
-
-                </ol>
-
-            </div>
-        </form>
     </div>
 
 </div>
