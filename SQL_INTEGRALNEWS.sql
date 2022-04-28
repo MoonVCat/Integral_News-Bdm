@@ -395,12 +395,39 @@ CREATE TABLE IF NOT EXISTS COMMENTS_NEWS (
 );
 
 
-#----------------Me gusta----------------
-CREATE TABLE `LIKES` (
-  `LIKES_COUNTER` INT(11) DEFAULT NULL COMMENT "Contador de Likes",
-  `LIKE` TINYINT(1) DEFAULT NULL COMMENT "Darle like a una noticia",
-  `NEWS_FK` INT(11) NOT NULL COMMENT "Llave foranea a la tabla NEWS",
-  `USER_FK` INT(11) NOT NULL COMMENT "Llave foranea a la tabla USERS",
-  FOREIGN KEY (`NEWS_FK`) REFERENCES `NEWS` (`NEWS_ID`),
-  FOREIGN KEY (`USER_FK`) REFERENCES `USERS` (`USER_ID`)
+#-----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
+
+#-----------------------------------------LIKES-------------------------------------------
+
+CREATE TABLE `NEWS_LIKES` (
+	`ID_NEW_LIKE` INT NOT NULL AUTO_INCREMENT COMMENT  "Llave primaria de likes", 
+	`NEWS_FK` INT(11) COMMENT "Llave foranea a la tabla NEWS",
+	`LIKE` INT(11) DEFAULT '0' COMMENT "Darle like a una noticia",
+	`USER_FK` INT(11) COMMENT "Llave foranea a la tabla USERS",
+    CONSTRAINT UC_NEWS_LIKES UNIQUE (`USER_FK`, `NEWS_FK`),
+	PRIMARY KEY (`ID_NEW_LIKE`)
 );
+
+DELIMITER $$
+CREATE PROCEDURE `SP_NEWS_LIKES`(
+    IN vOption	char(20),
+    IN vNEWS_FK	int,
+    IN vUSER_FK	int
+    )
+BEGIN
+	IF vOption = 'Gusta' THEN
+		INSERT INTO NEWS_LIKES(`NEWS_FK`,`USER_FK`,`LIKE`)
+		VALUES (vNEWS_FK,vUSER_FK,1);
+		CALL SP_NEWS('likeMas',vNEWS_FK,null,null,null,null,null,null,null,null,null,null,null,null,null,null);      
+	END IF;
+
+	IF vOption = 'NoGusta' THEN
+		DELETE FROM NEWS_LIKES WHERE `NEWS_FK`= vNEWS_FK AND `USER_FK`= vUSER_FK;  
+		CALL SP_NEWS('likeMenos',vNEWS_FK,null,null,null,null,null,null,null,null,null,null,null,null,null,null);        
+	END IF;
+END$$
+DELIMITER ;
+
+SELECT * FROM NEWS_LIKES;

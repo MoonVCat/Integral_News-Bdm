@@ -62,7 +62,7 @@ $image = $_SESSION['image'];
                             <p>
                                 <?php echo '<a>' . $_SESSION['phone'] . '</a>'; ?>
                             </p>
-                            <h6>-Firma-</h6>
+                            <h6>-Correo-</h6>
                             <p>
                                 <?php echo '<a>' . $_SESSION['user_login'] . '</a>'; ?>
                             </p>
@@ -74,9 +74,7 @@ $image = $_SESSION['image'];
                         </div>
 
                         <ul class="data-user">
-                            <li class="seccion">
-                                <a href="#noticia" class="seccion">Mis noticias</a>
-                            </li>
+                            
                             <li class="seccion1">
                                 <a href="#favoritos" class="seccion1">Mis favoritos</a>
                             </li>
@@ -88,7 +86,7 @@ $image = $_SESSION['image'];
             <div class="container text-center">
 
                 <hr>
-                <h4>Mis favoritos</h4>
+                <h4 style="color: white">Mis favoritos</h4>
                 </hr>
 
                 <section id="favoritos" class="seccion1">

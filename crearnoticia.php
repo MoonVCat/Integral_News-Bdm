@@ -4,9 +4,9 @@ require "connection.php";
 include 'C:\xampp\htdocs\proyecto\templatess\headerPerfil.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
-$email = $_SESSION["user_login"];
 $color = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
 $resultado = $mysqli->query($color);
+
 ?>
 
 <div class="content">
@@ -156,12 +156,12 @@ $resultado = $mysqli->query($color);
                         <button class="btnA2">Limpiar</button>
                         <div style="text-align: center;" class="li-container">
                             <br>
-                                    <input value="" name="claveU" id="claveU" readonly required />
-                                
-                                    <input value="" name="claveD" id="claveD" readonly />
-                                
-                                    <input value="" name="claveT" id="claveT" readonly />
-                               
+                            <input value="" name="claveU" id="claveU" readonly required />
+
+                            <input value="" name="claveD" id="claveD" readonly />
+
+                            <input value="" name="claveT" id="claveT" readonly />
+
                         </div>
                     </div>
                     <br>
@@ -169,7 +169,7 @@ $resultado = $mysqli->query($color);
                         <b style="color: white" for="user-email-id">Firma del editor</b>
                         <br>
                         <br>
-                        <input type="text" name="firma" id="firma" placeholder="Firma del editor" class="form-control" value="<?php echo (isset($email) ? htmlspecialchars($email) : ''); ?>" >
+                        <input type="text" name="firma" id="firma" placeholder="Firma del editor" class="form-control">
                     </div>
 
                     <br>
@@ -211,6 +211,12 @@ $resultado = $mysqli->query($color);
             </div>
         </div>
     </div>
+
+    <?php
+    $color = NULL;
+    $cate = NULL;
+    ?>
+
 </div>
 
 <script src="js/bootstrap.min.js"></script>

@@ -6,9 +6,9 @@
 
         protected function editNew($idNews, $hora, $fecha, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $comentarioEditor){
 
-            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('update', $idNews, $firma, $titulo, $descCorta, $desc, $ciudad, $colonia, $pais, "En redaccion", $fecha, $hora, "", "", $comentarioEditor))){
+                if(!$stmt->execute(array('update', $idNews, $firma, $titulo, $descCorta, $desc, $ciudad, $colonia, $pais, "En redaccion", $fecha, $hora, "", "", $comentarioEditor, ""))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 

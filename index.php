@@ -4,9 +4,6 @@ require "connection.php";
 include 'C:\xampp\htdocs\proyecto\templatess\header.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
-$new = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
-$resultado = $mysqli->query($new);
-
 ?>
 
 <div class="content">
@@ -99,6 +96,7 @@ $resultado = $mysqli->query($new);
     $news = $mysqli->query($new);
 
     while ($row = mysqli_fetch_assoc($news)) {
+
       $idNew = $row['NEWS_ID'];
 
       $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
@@ -117,18 +115,24 @@ $resultado = $mysqli->query($new);
             <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" alt="...">
           </div>
           <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
-            <h5 class="mt-0" style="color: black">Titulo: <?php echo $row['TITLE']; ?>.</h5>
+            <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
             <br>
-            <small ><?php echo $row['DATE_OF_NEWS']; ?></small>
+            <small style="color: white">Fecha de noticia: </small>
+            <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
             <br>
-            <p style="color: black">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
-            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Go somewhere</a>
+            <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
+            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
           </div>
         </div>
 
     <?php
       }
     }
+
+    $new = NULL;
+    $categ = NULL;
+    $img = NULL;
+    
     ?>
   </div>
 

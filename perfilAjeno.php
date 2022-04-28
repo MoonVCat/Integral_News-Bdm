@@ -1,44 +1,25 @@
 <?php
 session_start();
-require "connection.php";
+
 include 'C:\xampp\htdocs\proyecto\templatess\headerPerfil.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 ?>
 
 <?php
-$id =  $_SESSION["USER_ID"];
-$image = $_SESSION["image"];
+if (isset($_GET['idAjeno'])) {
+    $idUser = $_GET['idAjeno'];
+    $ajeno = "SELECT USER_ID, EMAIL, FULL_NAME, PROFILE_PIC, USER_TYPE_ID, PHONE, USERNAME, USER_INFO FROM USERS WHERE USER_ID = $idUser";
+    $resAjeno = $mysqli->query($ajeno);
+    $rowAjeno = mysqli_fetch_array($resAjeno);
 
-$sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $id";
-$resultado = $mysqli->query($sign);
+    $sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $idUser";
+    $resultado = $mysqli->query($sign);
+}
 ?>
 
 <div class="content">
     <!----->
     <div class="d-flex" id="wrapper">
-
-        <!-- Sidebar -->
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="list-group list-group-flush">
-                <a href="crearNoticia.php" class="list-group-item list-group-item-action">Crear Noticias
-                    <i class='far fa-save' style='font-size:18px;color: black'></i>
-                </a>
-                <a href="editNoticia.php" class="list-group-item list-group-item-action">Portal de Noticias
-                    <i class='far fa-hand-point-up' style='font-size:18px;color: black'></i>
-                </a>
-                <a href="conf.php" class="list-group-item list-group-item-action">Configuración
-                    <i class='fas fa-tools' style='font-size:18px;color: black'></i>
-                </a>
-                <a class="list-group-item list-group-item-action" onClick="javascript: return confirm('Seguro q te quieres ir? :c etto etto');" href="includes/delete_inc.php?deleteid=<?php echo $id; ?>">Eliminar cuenta
-                    <i class='far fa-folder-open' style='font-size:18px;color: black'></i>
-                </a>
-                <a href="cerrarsesion.php" class="list-group-item list-group-item-action">Cerrar Sesion
-                    <i class='far fa-eye' style='font-size:18px;color: black'></i>
-                </a>
-            </div>
-        </div>
-
-
         <div class="info_usuario">
             <div class="container text-center">
                 <div class="content-profile-page">
@@ -46,40 +27,31 @@ $resultado = $mysqli->query($sign);
 
                         <div class="img-user-profile">
                             <img class="profile-bgHome" src="https://www.sbs.com.au/yourlanguage/sites/sbs.com.au.yourlanguage/files/podcast_images/sbs_04.jpg" />
-                            <img class="avatar" src='<?php echo $image; ?>' alt="jofpin" />
+                            <img class="avatar" src='<?php echo $rowAjeno['PROFILE_PIC']; ?>' alt="jofpin" />
 
                         </div>
                         <div class="user-profile-data">
 
                             <h1>
                                 <?php
-                                echo '<a>' . $_SESSION["username"] . '</a>';
+                                echo '<a>' . $rowAjeno['USERNAME'] . '</a>';
                                 ?>
                             </h1>
                             <br>
                             <?php
-                            echo '<h4>' . $_SESSION["nombreCom"] . '</h4>';
+                                echo '<h4>' . $rowAjeno['FULL_NAME'] . '</h4>';
                             ?>
                             <br>
                             <h6>-Telefono de contacto-</h6>
                             <p>
                                 <?php
-                                echo '<a>' . $_SESSION["phone"] . '</a>';
+                                echo '<a>' . $rowAjeno['PHONE'] . '</a>';
                                 ?>
                             </p>
                             <h6>-Correo-</h6>
                             <p>
                                 <?php
-                                echo '<a>' . $_SESSION["user_login"] . '</a>';
-                                ?>
-                            </p>
-                            <h6>-Firmas-</h6>
-                            <p>
-                                <?php
-                                while ($row = $resultado->fetch_assoc()) {
-
-                                    echo '<a>' . $row['SIGN'] . '</a>';
-                                }
+                                echo '<a>' . $rowAjeno['EMAIL'] . '</a>';
                                 ?>
                             </p>
 
@@ -87,9 +59,36 @@ $resultado = $mysqli->query($sign);
                         <div class="description-profile">
                             <h6>-Acerca de mi-</h6>
                             <?php
-                            echo '<a>' . $_SESSION["infoU"] . '</a>';
+                            echo '<a>' . $rowAjeno['USER_INFO'] . '</a>';
                             ?>
                         </div>
+                        <br>
+                        <div class="description-profile">
+                            <h6>-Rol-</h6>
+                            <?php
+                            if ($rowAjeno['USER_TYPE_ID'] == 1) {
+                            ?>
+                                <a>Editor</a>
+                            <?php
+                            } else if ($rowAjeno['USER_TYPE_ID'] == 2) {
+                            ?>
+                                <a>Reportero</a>
+                                <br>
+                                <br>
+                                <h6>-Firmas-</h6>
+                                <p>
+                                    <?php
+                                    while ($row = $resultado->fetch_assoc()) {
+
+                                        echo '<a>' . $row['SIGN'] . '</a>';
+                                    }
+                                    ?>
+                                </p>
+                            <?php
+                            }
+                            ?>
+                        </div>
+
 
                         <ul class="data-user">
                             <li class="seccion">
@@ -102,7 +101,6 @@ $resultado = $mysqli->query($sign);
                     </div>
                 </div>
             </div>
-
             <!--------------------------------------------------------- mis noticias --------------------------------------------------------->
 
             <div class="container text-center">
@@ -110,13 +108,14 @@ $resultado = $mysqli->query($sign);
                 <h4 style="color: white">Mis noticias</h4>
                 </hr>
                 <section id="noticia" class="seccion">
+
                     <div class="recent-news ">
                         <div class="card mb-3 body-card ">
 
                             <?php
                             $resNew = $mysqli->query($sign);
-                            while ($row2 = mysqli_fetch_assoc($resNew)) {
-                                $idNew = $row2['NEWS_ID'];
+                            while ($row = mysqli_fetch_assoc($resNew)) {
+                                $idNew = $row['NEWS_ID'];
 
                                 $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
                                 $category = $mysqli->query($categ);
@@ -133,20 +132,21 @@ $resultado = $mysqli->query($sign);
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body" style="background-color:<?php echo $color ?>">
-                                        <br>
-                                            <h5 class="mt-0" style="color: white">Titulo: <?php echo $row2['TITLE']; ?>.</h5>
+                                            <br>
+                                            <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
                                             <br>
                                             <small style="color: white">Fecha de noticia: </small>
-                                            <small style="color: white"><?php echo $row2['DATE_OF_NEWS']; ?></small>
+                                            <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
                                             <br>
-                                            <p style="color: white">Resumen: <?php echo $row2['DESCRIPTION']; ?></p>
+                                            <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
 
                                             <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
-                                            <small style="color: white" class="text-muted"><?php echo $row2['CREATION_DATE']; ?></small>
+                                                <small style="color: white" class="text-muted"><?php echo $row['CREATION_DATE']; ?></small>
                                                 <i class='far fa-calendar' style='font-size:18px'></i>
                                             </p>
                                             <br>
-                                            <a href="noticia.php?id=<?php echo $row2['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+                                            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -159,11 +159,9 @@ $resultado = $mysqli->query($sign);
 
 
                 </section>
-
                 <!--------------------------------------------------------- mis favoritos --------------------------------------------------------->
-
                 <hr>
-                <h4 style="color: white">Mis favoritos</h4>
+                <h4 style="color: white" >Mis favoritos</h4>
                 </hr>
 
                 <section id="favoritos" class="seccion1">
@@ -200,70 +198,16 @@ $resultado = $mysqli->query($sign);
 
                     </div>
 
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
-                            <div class="row no-gutters ">
 
-                                <div class="col-md-4">
-                                    <img src="http://i.huffpost.com/gen/1385110/images/o-COLBERT-FOX-NEWS-facebook.jpg" class="card-img" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo de la Noticia</h5>
-                                        <p class="card-text">Descripcion corta de la noticia Descripcion corta de la noticia
-                                            Descripcion corta de la noticia Descripcion corta de la noticia Descripcion corta de la
-                                            noticia.</p>
-
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
-
-                                            <i class='far fa-calendar' style='font-size:18px'></i>
-
-                                        </p>
-
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-primary me-md-2" type="button">Eliminar de favoritos</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
-                            <div class="row no-gutters ">
-
-                                <div class="col-md-4">
-                                    <img src="http://i.huffpost.com/gen/1385110/images/o-COLBERT-FOX-NEWS-facebook.jpg" class="card-img" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo de la Noticia</h5>
-                                        <p class="card-text">Descripcion corta de la noticia Descripcion corta de la noticia
-                                            Descripcion corta de la noticia Descripcion corta de la noticia Descripcion corta de la
-                                            noticia.</p>
-
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
-
-                                            <i class='far fa-calendar' style='font-size:18px'></i>
-
-                                        </p>
-
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-primary me-md-2" type="button">Eliminar de favoritos</button>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
+
+            <?php
+            $ajeno = NULL;
+            $sign = NULL;
+            $categ = NULL;
+            $img = NULL;
+            ?>
 
         </div>
     </div>
@@ -273,8 +217,5 @@ $resultado = $mysqli->query($sign);
 <script src="jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
-<?php
-include 'C:\xampp\htdocs\proyecto\templatess\footer.php';
-?>
 
 </html>

@@ -377,6 +377,15 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </div>
+
+    <?php
+    $new = NULL;
+    $newImage = NULL;
+    $newClave = NULL;
+    $newCate = NULL;
+    $cate = NULL;
+    ?>
+
 </div>
 
 <script src="js/registro.js"></script>

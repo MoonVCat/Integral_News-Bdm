@@ -6,9 +6,9 @@
 
         protected function done($id){
 
-            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('terminada', $id, "", "", "", "", "", "", "", "Terminada", "", "", "", "", ""))){
+                if(!$stmt->execute(array('terminada', $id, "", "", "", "", "", "", "", "Terminada", "", "", "", "", "", ""))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 
@@ -22,9 +22,9 @@
 
         protected function aprobar($id){
 
-            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('publicada', $id, "", "", "", "", "", "", "", "Publicada", "", "", "", "", ""))){
+                if(!$stmt->execute(array('publicada', $id, "", "", "", "", "", "", "", "Publicada", "", "", "", "", "", ""))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 

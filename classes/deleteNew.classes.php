@@ -37,9 +37,9 @@
                                 echo '</script>';
                                 exit();
                         } 
-                        $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
+                        $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
                     
-                        if(!$stmt->execute(array('delete', $id, "", "", "", "", "", "", "", "", "", "", "", "", ""))){
+                        if(!$stmt->execute(array('delete', $id, "", "", "", "", "", "", "", "", "", "", "", "", "", ""))){
                                 $stmt = null;
                                 echo '<script type="text/javascript">'; 
                                 echo 'alert("salio algo mal en la base de datos");';

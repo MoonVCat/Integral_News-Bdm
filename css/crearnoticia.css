@@ -19,6 +19,13 @@ hr{
   opacity: 100;
 }
 
+.likesDislikes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;

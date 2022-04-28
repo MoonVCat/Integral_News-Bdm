@@ -92,15 +92,15 @@ $idRepo = $_SESSION["USER_ID"];
                                         <div class="col-md-8">
                                             <div class="card-body" style="background-color:<?php echo $color ?>">
                                             <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
-                                                <h4 style="text-align: left;" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
+                                                <h4 style="text-align: left;color: white" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
                                             </a>
-                                                <p style="text-align: left;" class="card-text">Descripcion corta: <?php echo $row['DESCRIPTION']; ?>.</p>
+                                                <p style="text-align: left;color: white" class="card-text">Descripcion corta: <?php echo $row['DESCRIPTION']; ?>.</p>
 
                                                 <p class="card-text" style="text-align: left;">
-                                                    <small style="color: black">Status noticia <?php echo $row['NEW_STATUS']; ?> </small>
+                                                    <small style="color: white">Status noticia <?php echo $row['NEW_STATUS']; ?> </small>
                                                     <br>
 
-                                                    <small style="color: black">Firma reportero: <?php echo $row['SIGN']; ?></small>
+                                                    <small style="color: white">Firma reportero: <?php echo $row['SIGN']; ?></small>
                                                 </p>
 
                                                 <p style="text-align: left;" class="card-text">Comentario del editor: " <?php echo $row['COMMENTS_EDITOR']; ?> "</p>
@@ -135,7 +135,7 @@ $idRepo = $_SESSION["USER_ID"];
                                 <h5 style="text-align: left;">Noticias publicadas</h5>
                                 <?php
 
-                                $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS ORDER BY CREATION_DATE DESC";
+                                $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS WHERE CREATED_BY = $idRepo ORDER BY CREATION_DATE DESC";
                                 $news = $mysqli->query($new);
 
                                 while ($row = mysqli_fetch_assoc($news)) {
@@ -160,16 +160,18 @@ $idRepo = $_SESSION["USER_ID"];
                                         <div class="col-md-8">
                                             <div class="card-body" style="background-color:<?php echo $color ?>">
 
-                                                <h4 style="text-align: left;" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
+                                                <h4 style="text-align: left;color: white" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
 
-                                                <p style="text-align: left;" class="card-text">Descripcion corta: <?php echo $row['DESCRIPTION']; ?>.</p>
+                                                <p style="text-align: left;color: white" class="card-text">Descripcion corta: <?php echo $row['DESCRIPTION']; ?>.</p>
 
                                                 <p class="card-text" style="text-align: left;">
-                                                    <small style="color: black">Status noticia <?php echo $row['NEW_STATUS']; ?> </small>
+                                                    <small style="color: white">Status noticia <?php echo $row['NEW_STATUS']; ?> </small>
                                                     <br>
 
-                                                    <small style="color: black">Firma reportero: <?php echo $row['SIGN']; ?></small>
+                                                    <small style="color: white">Firma reportero: <?php echo $row['SIGN']; ?></small>
                                                 </p>
+                                                <br>
+                                                <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
                                             </div>
                                         </div>
                                     <?php } ?>
