@@ -243,7 +243,9 @@ if (isset($_GET['id'])) {
                     </form>
                 </div>
                 <!-- Contenedor Principal -->
-
+                <br>
+                <br>
+                <br>
                 <h1>Comentarios</h1>
 
                 <?php
@@ -285,17 +287,20 @@ if (isset($_GET['id'])) {
                                                 <span><a style="font-weight:900">Fecha </a><a><?php echo $row10['DATE_CREATION'] ?></a><br></span>
                                                 <div class="boton-corazon text-right">
                                                     <?php
-                                                    $userComments = $_SESSION["USER_ID"];
-                                                    $userIdNews = $row10['FK_USER'];
 
-                                                    if ($userIdNews == $userComments) {
+                                                    if (isset($_SESSION["USER_ID"])) {
+                                                        $userComments = $_SESSION["USER_ID"];
+                                                        $userIdNews = $row10['FK_USER'];
+
+                                                        if ($userIdNews == $userComments) {
+
                                                     ?>
 
-                                                        <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row10['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
-                                                            <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                        </a>
+                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row10['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                            </a>
 
-                                                        <a id="BtnEdicion" onClick="
+                                                            <a id="BtnEdicion" onClick="
                                                             if(contador==0){
                                                             document.getElementById('<?php echo $row10['ID_COMMENT']; ?>').style.display = 'inline';
                                                             document.getElementById('<?php echo $row10['ID_COMMENT']; ?>content').style.display = 'none'
@@ -308,9 +313,10 @@ if (isset($_GET['id'])) {
                                                             document.getElementById('<?php echo $row10['ID_COMMENT']; ?>ButEditar').style.display = 'none'
                                                             contador=0;
                                                             }">
-                                                            <i class='far fa-edit' style='font-size:24px'></i>
-                                                        </a>
+                                                                <i class='far fa-edit' style='font-size:24px'></i>
+                                                            </a>
                                                     <?php
+                                                        }
                                                     }
                                                     ?>
 
@@ -380,15 +386,18 @@ if (isset($_GET['id'])) {
                                                     <span><a style="font-weight:900">Fecha </a><a><?php echo $row11['DATE_CREATION'] ?></a><br></span>
                                                     <div class="boton-corazon text-right">
                                                         <?php
-                                                        $ReporteroComentario = $_SESSION["USER_ID"];
-                                                        $ReporteroId = $row11['FK_USER'];
+                                                        if (isset($_SESSION["USER_ID"])) {
+                                                            $ReporteroComentario = $_SESSION["USER_ID"];
+                                                            $ReporteroId = $row11['FK_USER'];
 
-                                                        if ($ReporteroId == $ReporteroComentario) {
+                                                            if ($ReporteroId == $ReporteroComentario) {
+
+
                                                         ?>
-                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row11['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
-                                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                            </a>
-                                                            <a id="BtnEdicion" onClick="
+                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row11['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                                </a>
+                                                                <a id="BtnEdicion" onClick="
                                                                     if(contadorRespuesta==0){
                                                                     document.getElementById('<?php echo $row11['ID_COMMENT']; ?>').style.display = 'inline';
                                                                     document.getElementById('<?php echo $row11['ID_COMMENT']; ?>content').style.display = 'none'
@@ -401,9 +410,10 @@ if (isset($_GET['id'])) {
                                                                     document.getElementById('<?php echo $row11['ID_COMMENT']; ?>ButEditar').style.display = 'none'
                                                                     contadorRespuesta=0;
                                                                     } " class='bx bxs-edit-alt bx-md bx-tada-hover'>
-                                                                <i class='far fa-edit' style='font-size:24px'></i>
-                                                            </a>
+                                                                    <i class='far fa-edit' style='font-size:24px'></i>
+                                                                </a>
                                                         <?php
+                                                            }
                                                         }
                                                         ?>
 
@@ -439,43 +449,68 @@ if (isset($_GET['id'])) {
                         }
                         ?>
 
+                        <?php
+                        if (isset($_SESSION["USER_ID"])) {
+                        ?>
+                            <form class="form" action="./includes/respuesta_inc.php" method="post" enctype="multipart/form-data">
+                                <div>
 
+                                    <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
+                                    <input value="<?php echo $row10['ID_COMMENT'] ?>" name="idCom" id="idCom" hidden />
+                                    <div id="Respuesta">
+                                        <h5 style=" margin-left: 200px;">Responder</h5>
 
-                        <form class="form" action="./includes/respuesta_inc.php" method="post" enctype="multipart/form-data">
-                            <div>
-
-                                <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
-                                <input value="<?php echo $row10['ID_COMMENT'] ?>" name="idCom" id="idCom" hidden />
-                                <div id="Respuesta">
-                                    <h5 style=" margin-left: 200px;">Responder</h5>
-
-                                    <div class="Escribir" align="right">
-                                        <input class="form-control" align="right" size="4" type="text" name="Comentario" id="Comentario" placeholder="Responder el comentario" required>
-                                        <button type="submit" name="submit" id="submit">
-                                            <i class='fas fa-angle-right' style='font-size:24px'></i>
-                                        </button>
+                                        <div class="Escribir" align="right">
+                                            <input class="form-control" align="right" size="4" type="text" name="Comentario" id="Comentario" placeholder="Responder el comentario" required>
+                                            <button type="submit" name="submit" id="submit">
+                                                <i class='fas fa-angle-right' style='font-size:24px'></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <br>
-                            <br>
-                        </form>
+                                <br>
+                                <br>
+                            </form>
+                        <?php
+                        } else {
+                        ?>
+                            <a href="registro.php">
+                                <b class="cuentaReg" >No puedes responder sin una cuenta, hazte una cuenta ya, ya te dije</b>
+                            </a>
                 <?php
+                        }
                     }
                 }
                 ?>
-                <form class="form" action="./includes/comentario_inc.php" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="comentario" id="comentario" placeholder="Escribe un comentario" class="form-control" style="height: 100px;" required>
-                        <input name=idNews id=idNews style="display:none;" value="<?php echo $id ?>" hidden />
-                        <ol>
-                            <br>
-                            <div class="botonBonito">
-                                <button type="submit" name="submit" value="Agregar comentarios" class="btn btn-info">Subir Comentario</button>
-                            </div>
-                        </ol>
-                    </div>
-                </form>
+
+                <?php if (isset($_SESSION["USER_ID"])) {
+                ?>
+                    <form class="form" action="./includes/comentario_inc.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="comentario" id="comentario" placeholder="Escribe un comentario" class="form-control" style="height: 100px;" required>
+                            <input name=idNews id=idNews style="display:none;" value="<?php echo $id ?>" hidden />
+                            <ol>
+                                <br>
+                                <div class="botonBonito">
+                                    <button type="submit" name="submit" value="Agregar comentarios" class="btn btn-info">Subir Comentario</button>
+                                </div>
+                            </ol>
+                        </div>
+                    </form>
+                <?php
+                } else {
+                ?>
+                    <a href="registro.php">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <h5 style="align-content: space-around">¿Quieres dar tu opinion equivocada? Crea una cuenta!</h5>
+                    </a>
+                <?php
+                }
+                ?>
+
         </div>
         <br>
 

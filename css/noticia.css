@@ -183,7 +183,10 @@ body {
    font-weight: 700;
 }
 
-
+.cuentaReg{
+   position: relative;
+   margin-left: 750px;
+}
 
 .comments-list {
    margin-top: 30px;
