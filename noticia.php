@@ -243,143 +243,261 @@ if (isset($_GET['id'])) {
                     </form>
                 </div>
                 <!-- Contenedor Principal -->
-                <div class="comments-container">
-                    <h1>Comentarios</h1>
 
-                    <ul id="comments-list" class="comments-list">
-                        <li>
-                            <div class="comment-main-level">
-                                <!-- Avatar -->
-                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                                <!-- Contenedor del Comentario -->
+                <h1>Comentarios</h1>
 
+                <?php
 
-                                <div class="comment-box">
-                                    <div class="comment-head">
+                $vacio = '';
+                $comment =  "SELECT * FROM COMMENT WHERE FK_NEWS = $id AND FK_COMMENT = 0";
+                $resComment = $mysqli->query($comment);
 
+                if ($resComment) {
+                    while ($row10 = mysqli_fetch_assoc($resComment)) {
 
-                                        <h6 class="comment-name by-author"><a href="">Edson Lugo</a></h6>
-                                        <span>hace 20 minutos</span>
-                                        <div class="boton-corazon text-right">
-                                            <a href="#" class="">
-                                                <i class='fas fa-heart' style='font-size:24px'></i>
-                                            </a>
-                                            <a href="#" class="">
-                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                            </a>
-
+                        $user = $row10['FK_USER'];
+                        $commentDatos =  "SELECT * FROM USERS WHERE USER_ID = $user";
+                        $resCommentDatos = $mysqli->query($commentDatos);
+                        $row8 = mysqli_fetch_assoc($resCommentDatos);
+                ?>
+                        <section class="Comentarios">
+                            <div class="comments-container">
+                                <ul id="comments-list" class="comments-list">
+                                    <div class="comment-main-level">
+                                        <!-- Avatar -->
+                                        <div class="comment-avatar">
+                                            <img src="<?php echo $row8['PROFILE_PIC'] ?>" width="40" height="40" alt="">
                                         </div>
-                                    </div>
+                                        <!-- Contenedor del Comentario -->
+                                        <div class="comment-box">
+                                            <div class="comment-head">
+                                                <?php
+                                                if (strcmp($row8['USER_ID'], $idUser) == 0) {
+                                                ?>
+                                                    <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row8['USER_ID'] ?>"><?php echo $row8['USERNAME'] ?></a></h6>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row8['USER_ID'] ?>"><?php echo $row8['USERNAME'] ?></a></h6>
+                                                <?php
+                                                }
+                                                ?>
+                                                <span><a style="font-weight:900">Fecha </a><a><?php echo $row10['DATE_CREATION'] ?></a><br></span>
+                                                <div class="boton-corazon text-right">
+                                                    <?php
+                                                    $userComments = $_SESSION["USER_ID"];
+                                                    $userIdNews = $row10['FK_USER'];
+
+                                                    if ($userIdNews == $userComments) {
+                                                    ?>
+
+                                                        <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row10['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                            <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                        </a>
+
+                                                        <a id="BtnEdicion" onClick="
+                                                            if(contador==0){
+                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>').style.display = 'inline';
+                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>content').style.display = 'none'
+                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>ButEditar').style.display = 'inline'
+                                                            contador=1;
+                                                            }
+                                                            else{
+                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>').style.display = 'none';
+                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>content').style.display = 'inline'
+                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>ButEditar').style.display = 'none'
+                                                            contador=0;
+                                                            }">
+                                                            <i class='far fa-edit' style='font-size:24px'></i>
+                                                        </a>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+                                                    <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
 
 
-                                    <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                                        <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row10['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row10['CONTENT'] ?>" placeholder="Editar Comentario">
+                                                        <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
+                                                        <input value="<?php echo $row10['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
 
+                                                        <button id='<?php echo $row10['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
+                                                            <a class="far fa-paper-plane"></a>
+                                                        </button>
+                                                    </form>
 
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- Respuestas de los comentarios -->
-                            <ul class="comments-list reply-list">
-                                <li>
-                                    <!-- Avatar -->
-                                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                                    <!-- Contenedor del Comentario -->
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name"><a href="">Rubí Alvarado</a></h6>
-                                            <span>hace 10 minutos </span>
-                                            <div class="boton text-right">
-                                                <a href="#" class="">
-                                                    <i class='fas fa-heart' style='font-size:24px'></i>
-                                                </a>
-
-
+                                                </div>
                                             </div>
 
-
-
-                                        </div>
-                                        <div class="comment-content">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <!-- Avatar -->
-                                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                                    <!-- Contenedor del Comentario -->
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name by-author"><a href="">Edson Lugo</a></h6>
-                                            <span>hace 10 minutos </span>
-                                            <div class="boton-corazon text-right">
-                                                <a href="#" class="">
-                                                    <i class='fas fa-heart' style='font-size:24px'></i>
-                                                </a>
-                                                <a href="#" class="">
-                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                </a>
+                                            <div class="comment-content">
+                                                <p id='<?php echo $row10['ID_COMMENT']; ?>content'><?php echo $row10['CONTENT'] ?></p>
                                             </div>
 
-
-                                        </div>
-                                        <div class="comment-content">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                        </li>
+                                </ul>
 
-                        <li>
-                            <div class="comment-main-level">
-                                <!-- Avatar -->
-                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                                <!-- Contenedor del Comentario -->
-                                <div class="comment-box">
-                                    <div class="comment-head">
-                                        <h6 class="comment-name"><a href="">Rubí Alvarado</a></h6>
-                                        <span>hace 10 minutos </span>
+                            </div>
+
+                        </section>
+
+                        <?php
+                        $comId =  $row10['ID_COMMENT'];
+                        $answer =  "SELECT * FROM COMMENT WHERE FK_COMMENT = $comId";
+                        $resAnswer = $mysqli->query($answer);
+
+                        while ($row11 = mysqli_fetch_assoc($resAnswer)) {
+                            $idNoticia2 = $id;
+                            $user2 = $row11['FK_USER'];
+                            $NewsCommentDatos2 =  "SELECT * FROM USERS WHERE USER_ID = $user2";
+                            $NewsCommentDatosSql2 = $mysqli->query($NewsCommentDatos2);
+                            $row12 = mysqli_fetch_assoc($NewsCommentDatosSql2);
+
+                        ?>
+                            <br>
+                            <section class="Comentarios2">
+                                <div class="comments-container" align="left" style="position:relative; left:200px;">
+                                    <ul id="comments-list" class="comments-list">
+                                        <div class="comment-main-level">
+                                            <!-- Avatar -->
+                                            <div class="comment-avatar">
+                                                <img src="<?php echo $row12['PROFILE_PIC'] ?>" width="40" height="40" alt="">
+                                            </div>
+                                            <!-- Contenedor del Comentario -->
+                                            <div class="comment-box">
+                                                <div class="comment-head">
+                                                    <?php
+                                                    if (strcmp($row12['USER_ID'], $idUser) == 0) {
+                                                    ?>
+                                                        <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row12['USER_ID'] ?>"><?php echo $row12['USERNAME'] ?></a></h6>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row12['USER_ID'] ?>"><?php echo $row12['USERNAME'] ?></a></h6>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    <span><a style="font-weight:900">Fecha </a><a><?php echo $row11['DATE_CREATION'] ?></a><br></span>
+                                                    <div class="boton-corazon text-right">
+                                                        <?php
+                                                        $ReporteroComentario = $_SESSION["USER_ID"];
+                                                        $ReporteroId = $row11['FK_USER'];
+
+                                                        if ($ReporteroId == $ReporteroComentario) {
+                                                        ?>
+                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row11['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                            </a>
+                                                            <a id="BtnEdicion" onClick="
+                                                                    if(contadorRespuesta==0){
+                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>').style.display = 'inline';
+                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>content').style.display = 'none'
+                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>ButEditar').style.display = 'inline'
+                                                                    contadorRespuesta=1;
+                                                                    }
+                                                                    else{
+                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>').style.display = 'none';
+                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>content').style.display = 'inline'
+                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>ButEditar').style.display = 'none'
+                                                                    contadorRespuesta=0;
+                                                                    } " class='bx bxs-edit-alt bx-md bx-tada-hover'>
+                                                                <i class='far fa-edit' style='font-size:24px'></i>
+                                                            </a>
+                                                        <?php
+                                                        }
+                                                        ?>
+
+                                                        <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
+
+                                                            <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row11['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row11['CONTENT'] ?>" placeholder="Editar Comentario">
+                                                            <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
+                                                            <input value="<?php echo $row11['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
 
 
-                                        <a href="#" class="">
-                                            <i class='fas fa-heart' style='font-size:24px'></i>
-                                        </a>
-                                    </div>
+                                                            <button id='<?php echo $row11['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
 
-                                    <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                                                <a class="far fa-paper-plane"></a>
+                                                            </button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="comment-content">
+                                                    <p id='<?php echo $row11['ID_COMMENT']; ?>content'><?php echo $row11['CONTENT'] ?></p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </ul>
+
+                                </div>
+
+                            </section>
+                            <br>
+                        <?php
+                        }
+                        ?>
+
+
+
+                        <form class="form" action="./includes/respuesta_inc.php" method="post" enctype="multipart/form-data">
+                            <div>
+
+                                <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
+                                <input value="<?php echo $row10['ID_COMMENT'] ?>" name="idCom" id="idCom" hidden />
+                                <div id="Respuesta">
+                                    <h5 style=" margin-left: 200px;">Responder</h5>
+
+                                    <div class="Escribir" align="right">
+                                        <input class="form-control" align="right" size="4" type="text" name="Comentario" id="Comentario" placeholder="Responder el comentario" required>
+                                        <button type="submit" name="submit" id="submit">
+                                            <i class='fas fa-angle-right' style='font-size:24px'></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-                <br>
-
-                <form>
+                            <br>
+                            <br>
+                        </form>
+                <?php
+                    }
+                }
+                ?>
+                <form class="form" action="./includes/comentario_inc.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <input type="text" publi="" pa="" placeholder="Agregar un comentario" class="form-control" style="height: 100px;" required>
+                        <input class="form-control" type="text" name="comentario" id="comentario" placeholder="Escribe un comentario" class="form-control" style="height: 100px;" required>
+                        <input name=idNews id=idNews style="display:none;" value="<?php echo $id ?>" hidden />
                         <ol>
                             <br>
-                            <input type="submit" value="Agregar comentarios">
+                            <div class="botonBonito">
+                                <button type="submit" name="submit" value="Agregar comentarios" class="btn btn-info">Subir Comentario</button>
+                            </div>
                         </ol>
                     </div>
                 </form>
         </div>
+        <br>
 
     </div>
 
+</div>
 
-    <script src="jquery.min.js"></script>
-    <script src="jquery-3.6.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    </body>
+<script>
+    var contador = 0;
+    var contadorRespuesta = 0;
 
-    <?php include 'C:\xampp\htdocs\proyecto\templatess\footer.php'; ?>
+    function changeStyle() {
+        document.getElementById("Respuesta").style.display = "inline";
+    }
+</script>
+
+<script src="jquery.min.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+
+<?php include 'C:\xampp\htdocs\proyecto\templatess\footer.php'; ?>
 
 
-    </html>
+</html>

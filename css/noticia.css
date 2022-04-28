@@ -158,6 +158,12 @@ body {
    right: 1rem;
  }
 
+ #Comentario {
+   
+   width: 500px;
+   width: 400px;
+}
+
 /** ====================
 * Lista de Comentarios
 =======================*/
@@ -176,6 +182,8 @@ body {
    font-size: 18px;
    font-weight: 700;
 }
+
+
 
 .comments-list {
    margin-top: 30px;
@@ -331,6 +339,10 @@ body {
  left: 500px;
 }
 
+.botonBonito {
+   display: flex;
+   justify-content: center;
+ }
 
 .comment-box .comment-head i {
    float: right;
@@ -391,6 +403,8 @@ body {
    -moz-border-radius: 3px;
    border-radius: 3px;
 }
+
+.comment-box .comment-name.by-user, .comment-box .comment-name.by-user a {color: #aa66cc;}
 
 /** =====================
 * Responsive

@@ -354,7 +354,6 @@ CREATE PROCEDURE SP_CATEGORIES(
 END	$$
 DELIMITER ;
 
-
 SELECT * FROM CATEGORIES;
 
 CREATE TABLE IF NOT EXISTS COLORS (
@@ -363,7 +362,6 @@ CREATE TABLE IF NOT EXISTS COLORS (
     PRIMARY KEY (COLOR_ID)
 );
 
-
 SELECT * FROM COLORS;
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------
@@ -371,29 +369,40 @@ SELECT * FROM COLORS;
 
 #-----------------------------------------COMENTARIOS--------------------------------------
 
+CREATE TABLE `COMMENT` (
+  `ID_COMMENT` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave del comentario',
+  `FK_NEWS` int(11) NOT NULL COMMENT 'Llave foranea de la noticia',
+  `FK_USER` int(11) NOT NULL COMMENT 'Llave foranea del usuario',
+  `FK_COMMENT` int(11) DEFAULT NULL COMMENT 'Llave foranea del comentario',
+  `CONTENT` varchar(1000) NOT NULL COMMENT 'Contenido del comentario',
+  `DATE_CREATION` date NOT NULL,
+  PRIMARY KEY (`ID_COMMENT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS COMMENTS (
+SELECT * FROM `COMMENT`;
 
-	`COMMENT_ID` INT NOT NULL AUTO_INCREMENT COMMENT "Llave primaria de la tabla COMMENTS",
-    `COMMENT_TEXT` VARCHAR(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Comentario realizado",
-    `CREATION_DATE` DATETIME NOT NULL COMMENT "Fecha de alta del registrp",
-    `CREATED_BY` INT NOT NULL COMMENT "Usuario que dio de alta el registro",
-    PRIMARY KEY (COMMENT_ID)
-);
 
-CREATE TABLE IF NOT EXISTS COMMENTS_NEWS (
-
-	`COMMENT_ID` INT NOT NULL COMMENT "Primera parte de la llave primaria de COMMENTS_NEWS",
-    `NEWS_ID` INT NOT NULL COMMENT "Segunda parte de la llave primaria de COMMENTS_NEWS",
-    `PARENT_ID` INT COMMENT "Comentario padre de esta union",
-    `CREATION_DATE` DATETIME NOT NULL COMMENT "Fecha de alta del registrp",
-    `CREATED_BY` INT NOT NULL COMMENT "Usuario que dio de alta el registro",
-    PRIMARY KEY (COMMENT_ID, NEWS_ID),
-    INDEX (PARENT_ID), -- UNIQUE
-    FOREIGN KEY (`COMMENT_ID`) references COMMENTS(`COMMENT_ID`),
-    FOREIGN KEY (`NEWS_ID`) references NEWS(`NEWS_ID`)
-);
-
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_NEWS_COMMENTS`(
+    IN vOption	VARCHAR(20),
+    IN vFK_USER	INT,
+    IN vFK_NEWS INT,
+    IN vCONTENT	VARCHAR(200),
+    IN vID_COMMENT INT
+    )
+BEGIN
+	IF vOption = 'Insertar' THEN
+		INSERT INTO COMMENT(`FK_NEWS`,`FK_USER`,`FK_COMMENT`,`CONTENT`,`DATE_CREATION`)
+		VALUES (vFK_NEWS, vFK_USER, vID_COMMENT, vCONTENT, sysdate());
+	END IF;
+	IF vOption = 'Eliminar' THEN
+		DELETE FROM COMMENT WHERE `FK_COMMENT` = vID_COMMENT OR `FK_COMMENT` = vID_COMMENT;
+	END IF;
+	IF vOption = 'EliminarSOLO' THEN
+		DELETE FROM COMMENT WHERE `FK_COMMENT` = vID_COMMENT;
+	END IF;
+END$$
+DELIMITER ;
 
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------

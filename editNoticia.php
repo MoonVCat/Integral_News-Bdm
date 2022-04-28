@@ -126,8 +126,6 @@ $idRepo = $_SESSION["USER_ID"];
                                             </div>
                                         </div>
                                     <?php } ?>
-
-
                                 <?php
                                 }
                                 $news = NULL;

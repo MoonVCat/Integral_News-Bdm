@@ -15,7 +15,6 @@ if (isset($_GET['idAjeno'])) {
 
     $sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $idUser";
     $resultado = $mysqli->query($sign);
-    $sign = NULL;
             
 }
 ?>
