@@ -39,6 +39,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
                                 $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS ORDER BY CREATION_DATE DESC";
                                 $news = $mysqli->query($new);
+                                $new = NULL;
 
                                 while ($row = mysqli_fetch_assoc($news)) {
                                     $idNew = $row['NEWS_ID'];
@@ -47,10 +48,12 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                                     $category = $mysqli->query($categ);
                                     $i = mysqli_fetch_array($category);
                                     $color = $i['COLOR'];
+                                    $categ = NULL;
 
                                     $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
                                     $imagen = $mysqli->query($img);
                                     $a = mysqli_fetch_array($imagen);
+                                    $img = NULL;
                                 ?>
 
                                     <h5 style="text-align: left;">Noticias en aprobacion</h5>
@@ -107,7 +110,12 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                                         </div>
                                     <?php } ?>
 
-                                <?php } ?>
+                                <?php
+                                }
+                                $category = NULL;
+                                $imagen = NULL;
+                                $news = NULL;
+                                ?>
 
                             </div>
                         </div>

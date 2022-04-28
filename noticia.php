@@ -14,15 +14,19 @@ if (isset($_GET['id'])) {
 
     $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, TEXT_NEWS, CITY, SUBURB, COUNTRY, DATE_OF_NEWS, HOUR_OF_NEWS, CREATION_DATE, CREATED_BY, COMMENTS_EDITOR, `LIKES` FROM NEWS WHERE NEWS_ID = $id";
     $resNew = $mysqli->query($new);
+    $new = NULL;
 
     $newImage = "SELECT N_IMAGE_ID, NEWS_ID, NEWS_TITLE, NEWS_IMAGE, NEWS_TYPE FROM NEWS_IMAGE WHERE NEWS_ID = $id";
     $resImage = $mysqli->query($newImage);
+    $newImage = NULL;
 
     $newClave = "SELECT N_CLAVE_ID, NEWS_ID, NEWS_CLAVE FROM NEWS_CLAVE WHERE NEWS_ID = $id";
     $resClave = $mysqli->query($newClave);
+    $newClave = NULL;
 
     $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $id";
     $resCate = $mysqli->query($newCate);
+    $newCate = NULL;
 }
 
 ?>
@@ -40,6 +44,7 @@ if (isset($_GET['id'])) {
                     $repo = "SELECT USER_ID, FULL_NAME, PROFILE_PIC FROM USERS WHERE USER_ID = $idUser";
                     $resRepo = $mysqli->query($repo);
                     $aRepo = mysqli_fetch_array($resRepo);
+                    $repo = NULL;
                 ?>
                     <b>Categorias</b>
                     <hr style="height:6px;">
@@ -47,10 +52,10 @@ if (isset($_GET['id'])) {
                     <?php
                     while ($cate = $resCate->fetch_assoc()) {
                     ?>
-                    <span style="background-color:<?php echo $cate['COLOR']?>;align-content: space-around; font-size: 200%;font-weight:bold">
-                    <?php echo $cate['DESCRIPTION']; ?>
-                    </span>
-                        
+                        <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 200%;font-weight:bold">
+                            <?php echo $cate['DESCRIPTION']; ?>
+                        </span>
+
                     <?php
                     }
                     ?>
@@ -63,10 +68,10 @@ if (isset($_GET['id'])) {
                             </a>
                             <br>
                             <br>
-                            <small > Nombre del Reportero/a </small>
+                            <small> Nombre del Reportero/a </small>
                             <h3 class="card-title text-center "><?php echo $aRepo['FULL_NAME']; ?></h3>
                             <br>
-                            <small > Firma </small>
+                            <small> Firma </small>
                             <h6 class="card-title text-center "><?php echo $row['SIGN']; ?></h6>
                             <br>
                             <hr style="height:6px;">
@@ -109,14 +114,15 @@ if (isset($_GET['id'])) {
                             $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $id = `NEWS_ID`";
                             $imagen = $mysqli->query($img);
                             $a = mysqli_fetch_array($imagen);
+                            $img = NULL;
                             ?>
                             <img src="<?php echo $a['NEWS_TITLE']; ?>" id="imgTitulo" name="imgTitulo" width="120" height="120" class="card-img" alt="...">
 
                         </div>
 
                         <div class=" descrip">
-                        
-                            <b >Info de noticia</b>
+
+                            <b>Info de noticia</b>
                             <hr style="height:6px;">
                             <p>
 
@@ -200,6 +206,7 @@ if (isset($_GET['id'])) {
                             <?php
                             $likes =  "SELECT NEWS_FK, `LIKE`, USER_FK from NEWS_LIKES where NEWS_FK= $id AND USER_FK= $idRepo";
                             $resLikes = $mysqli->query($likes);
+                            $likes = NULL;
 
                             if ($row6 = mysqli_fetch_assoc($resLikes)) {
 
@@ -222,20 +229,17 @@ if (isset($_GET['id'])) {
                             <a href="registro.php">
                                 <h5 style="align-content: space-around">¿Quieres reaccionar a esta noticia? Crea una cuenta!</h5>
                             </a>
-                        <?php
-                        }
-                        ?>
-
                     <?php
-                }
-                $new = NULL;
-                $newImage = NULL;
-                $newClave = NULL;
-                $newCate = NULL;
-                $repo = NULL;
-                $likes = NULL;
-                    ?>
+                        }
+                    }
+                    $resNew = NULL;
+                    $resImage = NULL;
+                    $resClave = NULL;
+                    $resCate = NULL;
+                    $resRepo = NULL;
+                    $imagen = NULL;
 
+                    ?>
                     </div>
             </form>
             <!-- Contenedor Principal -->

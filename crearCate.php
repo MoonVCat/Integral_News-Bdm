@@ -6,6 +6,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
 $color = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
 $resultado = $mysqli->query($color);
+$color = NULL;
 ?>
 
 <div class="content">
@@ -106,6 +107,7 @@ $resultado = $mysqli->query($color);
 
                             $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                             $category = $mysqli->query($cate);
+                            $cate = NULL;
 
                             while ($row = mysqli_fetch_assoc($category)) {
 
@@ -126,6 +128,8 @@ $resultado = $mysqli->query($color);
                                 </tr>
                             <?php
                             }
+                            $category = NULL;
+                            $resultado = NULL;
                             ?>
                         </tbody>
                     </table>

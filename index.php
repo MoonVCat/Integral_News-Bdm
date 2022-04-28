@@ -94,6 +94,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
     $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS ORDER BY CREATION_DATE DESC";
     $news = $mysqli->query($new);
+    $new = NULL;
 
     while ($row = mysqli_fetch_assoc($news)) {
 
@@ -103,10 +104,12 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
       $category = $mysqli->query($categ);
       $i = mysqli_fetch_array($category);
       $color = $i['COLOR'];
+      $categ = NULL;
 
       $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
       $imagen = $mysqli->query($img);
       $a = mysqli_fetch_array($imagen);
+      $img = NULL;
       if (strcmp($row['NEW_STATUS'], "Publicada") == 0) {
     ?>
         <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
@@ -115,6 +118,20 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
             <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" alt="...">
           </div>
           <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
+            <?php
+            $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+            $resCate = $mysqli->query($newCate);
+            while ($cate = $resCate->fetch_assoc()) {
+            ?>
+              <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                <?php echo $cate['DESCRIPTION']; ?>
+              </span>
+
+            <?php
+            }
+            ?>
+            <br>
+            <br>
             <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
             <br>
             <small style="color: white">Fecha de noticia: </small>
@@ -128,11 +145,10 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
     <?php
       }
     }
+    $news = NULL;
+    $category = NULL;
+    $imagen = NULL;
 
-    $new = NULL;
-    $categ = NULL;
-    $img = NULL;
-    
     ?>
   </div>
 

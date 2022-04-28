@@ -124,6 +124,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
                                 $user = "SELECT USER_ID, EMAIL, USER_TYPE_ID, USERNAME FROM USERS";
                                 $users = $mysqli->query($user);
+                                $user = NULL;
 
                                 while ($row = mysqli_fetch_assoc($users)) {
 
@@ -143,6 +144,8 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                                 <?php
                                     }
                                 }
+                                $users = NULL;
+                                
                                 ?>
                             </tbody>
                         </table>

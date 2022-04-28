@@ -5,8 +5,6 @@ include 'C:\xampp\htdocs\proyecto\templatess\headerNew.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
 $idRepo = $_SESSION["USER_ID"];
-$new = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
-$resultado = $mysqli->query($new);
 
 if (isset($_GET['id'])) {
 
@@ -16,22 +14,26 @@ if (isset($_GET['id'])) {
 
     $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, TEXT_NEWS, CITY, SUBURB, COUNTRY, DATE_OF_NEWS, HOUR_OF_NEWS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS WHERE NEWS_ID = $id";
     $resultado = $mysqli->query($new);
-
+    $new = NULL;
+            
     $newImage = "SELECT N_IMAGE_ID, NEWS_ID, NEWS_TITLE, NEWS_IMAGE, NEWS_TYPE FROM NEWS_IMAGE WHERE NEWS_ID = $id";
     $resImage = $mysqli->query($newImage);
+    $newImage = NULL;
 
     $newClave = "SELECT N_CLAVE_ID, NEWS_ID, NEWS_CLAVE FROM NEWS_CLAVE WHERE NEWS_ID = $id";
     $resClave = $mysqli->query($newClave);
+    $newClave = NULL;
 
     $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $id";
     $resCate = $mysqli->query($newCate);
+    $newCate = NULL;
+            
 }
 
 ?>
 
 <div class="content">
     <div class="preguntas">
-
         <div class="container text-center">
 
             <?php
@@ -103,6 +105,7 @@ if (isset($_GET['id'])) {
                         $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
                         $imagen = $mysqli->query($img);
                         $a = mysqli_fetch_array($imagen);
+                        $img = NULL;
                         ?>
                         <img src="<?php echo $a['NEWS_TITLE']; ?>" id="imgTitulo" name="imgTitulo" width="120" height="120" class="card-img" alt="...">
 
@@ -186,14 +189,16 @@ if (isset($_GET['id'])) {
 
             <?php
             }
+            $resultado = NULL;
+            $resImage = NULL;
+            $resClave = NULL;
+            $resCate = NULL;
+            $imagen = NULL;
             ?>
 
         </div>
-
     </div>
-
 </div>
-
 
 <script src="jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

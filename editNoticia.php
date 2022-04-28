@@ -64,6 +64,7 @@ $idRepo = $_SESSION["USER_ID"];
 
                                 $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS WHERE CREATED_BY = $idRepo ORDER BY CREATION_DATE DESC";
                                 $news = $mysqli->query($new);
+                                $new = NULL;
 
                                 while ($row = mysqli_fetch_assoc($news)) {
                                     $idNew = $row['NEWS_ID'];
@@ -72,10 +73,12 @@ $idRepo = $_SESSION["USER_ID"];
                                     $category = $mysqli->query($categ);
                                     $i = mysqli_fetch_array($category);
                                     $color = $i['COLOR'];
+                                    $cate = NULL;
 
                                     $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
                                     $imagen = $mysqli->query($img);
                                     $a = mysqli_fetch_array($imagen);
+                                    $img = NULL;
                                 ?>
 
                                     <br>
@@ -84,16 +87,16 @@ $idRepo = $_SESSION["USER_ID"];
                                     if (strcmp($row['NEW_STATUS'], "En redaccion") == 0) {
                                     ?>
                                         <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                            
-                                        <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
-                                        <img src="<?php echo $a['NEWS_TITLE']; ?>"  width="150" height="250" class="card-img" alt="...">
-                                        </a>
+
+                                            <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
+                                                <img src="<?php echo $a['NEWS_TITLE']; ?>" width="150" height="250" class="card-img" alt="...">
+                                            </a>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body" style="background-color:<?php echo $color ?>">
-                                            <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
-                                                <h4 style="text-align: left;color: white" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
-                                            </a>
+                                                <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
+                                                    <h4 style="text-align: left;color: white" class="card-title">Titulo: <?php echo $row['TITLE']; ?></h4>
+                                                </a>
                                                 <p style="text-align: left;color: white" class="card-text">Descripcion corta: <?php echo $row['DESCRIPTION']; ?>.</p>
 
                                                 <p class="card-text" style="text-align: left;">
@@ -127,6 +130,9 @@ $idRepo = $_SESSION["USER_ID"];
 
                                 <?php
                                 }
+                                $news = NULL;
+                                $category = NULL;
+                                $imagen = NULL;
                                 ?>
 
                             </div>
@@ -137,6 +143,7 @@ $idRepo = $_SESSION["USER_ID"];
 
                                 $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS WHERE CREATED_BY = $idRepo ORDER BY CREATION_DATE DESC";
                                 $news = $mysqli->query($new);
+                                $new = NULL;
 
                                 while ($row = mysqli_fetch_assoc($news)) {
                                     $idNew = $row['NEWS_ID'];
@@ -145,10 +152,12 @@ $idRepo = $_SESSION["USER_ID"];
                                     $category = $mysqli->query($categ);
                                     $i = mysqli_fetch_array($category);
                                     $color = $i['COLOR'];
+                                    $cate = NULL;
 
                                     $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
                                     $imagen = $mysqli->query($img);
                                     $a = mysqli_fetch_array($imagen);
+                                    $img = NULL;
                                 ?>
                                     <br>
                                     <?php
@@ -174,8 +183,16 @@ $idRepo = $_SESSION["USER_ID"];
                                                 <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
                                             </div>
                                         </div>
-                                    <?php } ?>
-                                <?php } ?>
+                                    <?php
+                                    }
+                                    ?>
+                                <?php
+                                }
+                                $news = NULL;
+                                $category = NULL;
+                                $imagen = NULL;
+
+                                ?>
                             </div>
                         </div>
 

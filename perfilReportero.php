@@ -11,6 +11,7 @@ $image = $_SESSION["image"];
 
 $sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $id";
 $resultado = $mysqli->query($sign);
+
 ?>
 
 <div class="content">
@@ -115,6 +116,7 @@ $resultado = $mysqli->query($sign);
 
                             <?php
                             $resNew = $mysqli->query($sign);
+                            $sign = NULL;
                             while ($row2 = mysqli_fetch_assoc($resNew)) {
                                 $idNew = $row2['NEWS_ID'];
 
@@ -122,10 +124,13 @@ $resultado = $mysqli->query($sign);
                                 $category = $mysqli->query($categ);
                                 $i = mysqli_fetch_array($category);
                                 $color = $i['COLOR'];
+                                $categ = NULL;
 
                                 $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
                                 $imagen = $mysqli->query($img);
                                 $a = mysqli_fetch_array($imagen);
+                                $img = NULL;
+
                             ?>
                                 <div class="row no-gutters" style="background-color:<?php echo $color ?>">
                                     <div class="col-md-4" style="background-color:<?php echo $color ?>">
@@ -133,7 +138,21 @@ $resultado = $mysqli->query($sign);
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body" style="background-color:<?php echo $color ?>">
-                                        <br>
+                                            <?php
+                                            $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                                            $resCate = $mysqli->query($newCate);
+                                            $newCate = NULL;
+                                            while ($cate = $resCate->fetch_assoc()) {
+                                            ?>
+                                                <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                                                    <?php echo $cate['DESCRIPTION']; ?>
+                                                </span>
+
+                                            <?php
+                                            }
+                                            ?>
+                                            <br>
+                                            <br>
                                             <h5 class="mt-0" style="color: white">Titulo: <?php echo $row2['TITLE']; ?>.</h5>
                                             <br>
                                             <small style="color: white">Fecha de noticia: </small>
@@ -142,7 +161,7 @@ $resultado = $mysqli->query($sign);
                                             <p style="color: white">Resumen: <?php echo $row2['DESCRIPTION']; ?></p>
 
                                             <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
-                                            <small style="color: white" class="text-muted"><?php echo $row2['CREATION_DATE']; ?></small>
+                                                <small style="color: white" class="text-muted"><?php echo $row2['CREATION_DATE']; ?></small>
                                                 <i class='far fa-calendar' style='font-size:18px'></i>
                                             </p>
                                             <br>
@@ -152,16 +171,16 @@ $resultado = $mysqli->query($sign);
                                 </div>
                             <?php
                             }
-                            ?>
+                            $resNew = NULL;
+                            $resultado = NULL;
+                            $category = NULL;
+                            $imagen = NULL;
 
+                            ?>
                         </div>
                     </div>
-
-
                 </section>
-
                 <!--------------------------------------------------------- mis favoritos --------------------------------------------------------->
-
                 <hr>
                 <h4 style="color: white">Mis favoritos</h4>
                 </hr>
@@ -228,8 +247,6 @@ $resultado = $mysqli->query($sign);
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="recent-news ">

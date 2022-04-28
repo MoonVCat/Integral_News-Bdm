@@ -11,9 +11,12 @@ if (isset($_GET['idAjeno'])) {
     $ajeno = "SELECT USER_ID, EMAIL, FULL_NAME, PROFILE_PIC, USER_TYPE_ID, PHONE, USERNAME, USER_INFO FROM USERS WHERE USER_ID = $idUser";
     $resAjeno = $mysqli->query($ajeno);
     $rowAjeno = mysqli_fetch_array($resAjeno);
+    $ajeno = NULL;
 
     $sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $idUser";
     $resultado = $mysqli->query($sign);
+    $sign = NULL;
+            
 }
 ?>
 
@@ -39,7 +42,7 @@ if (isset($_GET['idAjeno'])) {
                             </h1>
                             <br>
                             <?php
-                                echo '<h4>' . $rowAjeno['FULL_NAME'] . '</h4>';
+                            echo '<h4>' . $rowAjeno['FULL_NAME'] . '</h4>';
                             ?>
                             <br>
                             <h6>-Telefono de contacto-</h6>
@@ -89,7 +92,6 @@ if (isset($_GET['idAjeno'])) {
                             ?>
                         </div>
 
-
                         <ul class="data-user">
                             <li class="seccion">
                                 <a href="#noticia" class="seccion">Mis noticias</a>
@@ -104,6 +106,9 @@ if (isset($_GET['idAjeno'])) {
             <!--------------------------------------------------------- mis noticias --------------------------------------------------------->
 
             <div class="container text-center">
+                <?php 
+                    if($rowAjeno['USER_TYPE_ID'] == 2){
+                ?>
                 <hr>
                 <h4 style="color: white">Mis noticias</h4>
                 </hr>
@@ -121,10 +126,12 @@ if (isset($_GET['idAjeno'])) {
                                 $category = $mysqli->query($categ);
                                 $i = mysqli_fetch_array($category);
                                 $color = $i['COLOR'];
+                                $categ = NULL;
 
                                 $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
                                 $imagen = $mysqli->query($img);
                                 $a = mysqli_fetch_array($imagen);
+                                $img = NULL;
                             ?>
                                 <div class="row no-gutters" style="background-color:<?php echo $color ?>">
                                     <div class="col-md-4" style="background-color:<?php echo $color ?>">
@@ -132,6 +139,19 @@ if (isset($_GET['idAjeno'])) {
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body" style="background-color:<?php echo $color ?>">
+                                            <?php
+                                            $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                                            $resCate = $mysqli->query($newCate);
+                                            while ($cate = $resCate->fetch_assoc()) {
+                                            ?>
+                                                <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                                                    <?php echo $cate['DESCRIPTION']; ?>
+                                                </span>
+
+                                            <?php
+                                            }
+                                            ?>
+                                            <br>
                                             <br>
                                             <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
                                             <br>
@@ -152,16 +172,24 @@ if (isset($_GET['idAjeno'])) {
                                 </div>
                             <?php
                             }
+                            $resAjeno = NULL;
+                            $resultado = NULL;
+                            $category = NULL;
+                            $resCate = NULL;
+                            $imagen = NULL;
                             ?>
 
                         </div>
                     </div>
 
-
                 </section>
+                <?php 
+                }
+                ?>
+                
                 <!--------------------------------------------------------- mis favoritos --------------------------------------------------------->
                 <hr>
-                <h4 style="color: white" >Mis favoritos</h4>
+                <h4 style="color: white">Mis favoritos</h4>
                 </hr>
 
                 <section id="favoritos" class="seccion1">
@@ -201,14 +229,7 @@ if (isset($_GET['idAjeno'])) {
 
                 </section>
             </div>
-
-            <?php
-            $ajeno = NULL;
-            $sign = NULL;
-            $categ = NULL;
-            $img = NULL;
-            ?>
-
+          
         </div>
     </div>
 

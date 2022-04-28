@@ -4,9 +4,6 @@ require "connection.php";
 include 'C:\xampp\htdocs\proyecto\templatess\headerPerfil.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
-$color = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
-$resultado = $mysqli->query($color);
-
 ?>
 
 <div class="content">
@@ -107,6 +104,7 @@ $resultado = $mysqli->query($color);
                         <?php
                         $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
                         $resultado = $mysqli->query($cate);
+                        $cate = NULL;
                         ?>
                         <b style="color: white" for="exampleFormControlFile1">Selecciona la categoria</b>
                         <small style="color: white" for="exampleFormControlFile1">(Minimo una categoria)</small>
@@ -117,6 +115,7 @@ $resultado = $mysqli->query($color);
                                 <option value="<?php echo $row['DESCRIPTION'] ?>"><?php echo $row['DESCRIPTION'] ?></option>
                             <?php
                             }
+                            $resultado = NULL;
                             ?>
                         </select>
                         <br>
@@ -212,11 +211,6 @@ $resultado = $mysqli->query($color);
         </div>
     </div>
 
-    <?php
-    $color = NULL;
-    $cate = NULL;
-    ?>
-
 </div>
 
 <script src="js/bootstrap.min.js"></script>
@@ -261,8 +255,6 @@ $resultado = $mysqli->query($color);
             fileInput.value = '';
             return false;
         } else {
-
-
             if (input.files)
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
@@ -273,9 +265,7 @@ $resultado = $mysqli->query($color);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
-
         }
-
     }
 
     function readURLL(input) {

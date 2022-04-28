@@ -7,14 +7,18 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
 $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
 $resultado = $mysqli->query($cate);
+$cate = NULL;
+
 $color = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
 $resulColor = $mysqli->query($color);
+$color = NULL;
 
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
     $query = "SELECT  CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES WHERE CATEGORY_ID=$id";
     $category = $mysqli->query($query);
+    $query = NULL;
     if (mysqli_num_rows($category) == 1) {
         $row = mysqli_fetch_array($category);
         $title = $row['DESCRIPTION'];
@@ -98,6 +102,10 @@ if (isset($_GET['id'])) {
                                         <option style="color: <?php echo $color ?>;" value="<?php echo $row['COLOR'] ?>"><?php echo $row['COLOR'] ?></option>
                                     <?php
                                     }
+
+                                    $resultado = NULL;
+                                    $resulColor = NULL;
+                                    $category = NULL;
                                     ?>
                                 </select>
                             </div>
