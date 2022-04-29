@@ -15,7 +15,6 @@ if (isset($_GET['idAjeno'])) {
 
     $sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $idUser";
     $resultado = $mysqli->query($sign);
-            
 }
 ?>
 
@@ -105,87 +104,91 @@ if (isset($_GET['idAjeno'])) {
             <!--------------------------------------------------------- mis noticias --------------------------------------------------------->
 
             <div class="container text-center">
-                <?php 
-                    if($rowAjeno['USER_TYPE_ID'] == 2){
+                <?php
+                if ($rowAjeno['USER_TYPE_ID'] == 2) {
                 ?>
-                <hr>
-                <h4 style="color: white">Mis noticias</h4>
-                </hr>
-                <section id="noticia" class="seccion">
+                    <hr>
+                    <h4 style="color: white">Mis noticias</h4>
+                    </hr>
+                    <section id="noticia" class="seccion">
 
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
+                        <div class="recent-news ">
+                            <div class="card mb-3 body-card ">
 
-                            <?php
-                            $resNew = $mysqli->query($sign);
-                            while ($row = mysqli_fetch_assoc($resNew)) {
-                                $idNew = $row['NEWS_ID'];
+                                <?php
+                                $resNew = $mysqli->query($sign);
+                                while ($row = mysqli_fetch_assoc($resNew)) {
 
-                                $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-                                $category = $mysqli->query($categ);
-                                $i = mysqli_fetch_array($category);
-                                $color = $i['COLOR'];
-                                $categ = NULL;
+                                    if (strcmp($row['NEW_STATUS'], "Publicada") == 0) {
 
-                                $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-                                $imagen = $mysqli->query($img);
-                                $a = mysqli_fetch_array($imagen);
-                                $img = NULL;
-                            ?>
-                                <div class="row no-gutters" style="background-color:<?php echo $color ?>">
-                                    <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                        <img src="<?php echo $a['NEWS_TITLE']; ?>" class="card-img" width="80" height="250" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body" style="background-color:<?php echo $color ?>">
-                                            <?php
-                                            $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
-                                            $resCate = $mysqli->query($newCate);
-                                            while ($cate = $resCate->fetch_assoc()) {
-                                            ?>
-                                                <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
-                                                    <?php echo $cate['DESCRIPTION']; ?>
-                                                </span>
+                                        $idNew = $row['NEWS_ID'];
 
-                                            <?php
-                                            }
-                                            ?>
-                                            <br>
-                                            <br>
-                                            <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
-                                            <br>
-                                            <small style="color: white">Fecha de noticia: </small>
-                                            <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
-                                            <br>
-                                            <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
+                                        $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+                                        $category = $mysqli->query($categ);
+                                        $i = mysqli_fetch_array($category);
+                                        $color = $i['COLOR'];
+                                        $categ = NULL;
 
-                                            <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
-                                                <small style="color: white" class="text-muted"><?php echo $row['CREATION_DATE']; ?></small>
-                                                <i class='far fa-calendar' style='font-size:18px'></i>
-                                            </p>
-                                            <br>
-                                            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+                                        $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+                                        $imagen = $mysqli->query($img);
+                                        $a = mysqli_fetch_array($imagen);
+                                        $img = NULL;
+                                ?>
+                                        <div class="row no-gutters" style="background-color:<?php echo $color ?>">
+                                            <div class="col-md-4" style="background-color:<?php echo $color ?>">
+                                                <img src="<?php echo $a['NEWS_TITLE']; ?>" class="card-img" width="80" height="250" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body" style="background-color:<?php echo $color ?>">
+                                                    <?php
+                                                    $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                                                    $resCate = $mysqli->query($newCate);
+                                                    while ($cate = $resCate->fetch_assoc()) {
+                                                    ?>
+                                                        <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                                                            <?php echo $cate['DESCRIPTION']; ?>
+                                                        </span>
 
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    <br>
+                                                    <br>
+                                                    <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
+                                                    <br>
+                                                    <small style="color: white">Fecha de noticia: </small>
+                                                    <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
+                                                    <br>
+                                                    <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
+
+                                                    <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
+                                                        <small style="color: white" class="text-muted"><?php echo $row['CREATION_DATE']; ?></small>
+                                                        <i class='far fa-calendar' style='font-size:18px'></i>
+                                                    </p>
+                                                    <br>
+                                                    <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            <?php
-                            }
-                            $resAjeno = NULL;
-                            $resultado = NULL;
-                            $category = NULL;
-                            $resCate = NULL;
-                            $imagen = NULL;
-                            ?>
+                                <?php
+                                    }
+                                }
+                                $resAjeno = NULL;
+                                $resultado = NULL;
+                                $category = NULL;
+                                $resCate = NULL;
+                                $imagen = NULL;
+                                ?>
 
+                            </div>
                         </div>
-                    </div>
 
-                </section>
-                <?php 
+                    </section>
+                <?php
                 }
                 ?>
-                
+
                 <!--------------------------------------------------------- mis favoritos --------------------------------------------------------->
                 <hr>
                 <h4 style="color: white">Mis favoritos</h4>
@@ -228,7 +231,7 @@ if (isset($_GET['idAjeno'])) {
 
                 </section>
             </div>
-          
+
         </div>
     </div>
 

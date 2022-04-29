@@ -188,8 +188,8 @@ if (isset($_GET['id'])) {
                             </select>
                             <br>
                             <br>
-                            <button class="btn-add">Agregar</button>
-                            <button class="btn-add2">Limpiar</button>
+                            <button type="button" class="btn-add">Agregar</button>
+                            <button type="button" class="btn-add2">Limpiar</button>
                             <br> <br>
                             <div style="text-align: center;" class="li-container">
                                 <?php
@@ -244,6 +244,7 @@ if (isset($_GET['id'])) {
                                 <?php
                                 }
                                 ?>
+                                <input value="" name="limpiado" id="limpiado" hidden/>
                             </div>
                             <br>
                         </div>
@@ -265,8 +266,8 @@ if (isset($_GET['id'])) {
                             <br>
                             <input type="text" name="claveWord" id="claveWord" onkeypress="return Letra(event);" maxlength="100" placeholder="Palabras Clave" class="form-control">
                             <br>
-                            <button class="btnA">Agregar</button>
-                            <button class="btnA2">Limpiar</button>
+                            <button type="button" class="btn-add3">Agregar</button>
+                            <button type="button" class="btn-add4">Limpiar</button>
                             <br>
                             <br>
                             <div style="text-align: center;" class="li-container">
@@ -323,6 +324,7 @@ if (isset($_GET['id'])) {
                                 <?php
                                 }
                                 ?>
+                                <input value="" name="limpiado1" id="limpiado1" hidden/>
                             </div>
                         </div>
                         <br>
@@ -333,7 +335,6 @@ if (isset($_GET['id'])) {
                             <input type="text" name="firma" id="firma" placeholder="Firma del editor" class="form-control" value="<?php echo (isset($noticia['SIGN']) ? htmlspecialchars($noticia['SIGN']) : ''); ?>" required>
 
                             <input type="text" name="idNew" id="idNew" class="form-control" value="<?php echo (isset($id) ? htmlspecialchars($id) : ''); ?>" hidden>
-                            <input type="text" name="comentarioEditor" id="comentarioEditor" class="form-control" value="<?php echo (isset($noticia['COMMENTS_EDITOR']) ? htmlspecialchars($noticia['COMMENTS_EDITOR']) : ''); ?>" hidden>
                         </div>
 
                         <br>
@@ -360,7 +361,6 @@ if (isset($_GET['id'])) {
                                     <img class="imagenPreview" id="blah3" width="200" height="200"> </img>
 
                                 </div>
-
                             </div>
 
                         </div>
@@ -368,7 +368,7 @@ if (isset($_GET['id'])) {
                             <br>
                             <br>
                             <div class="botonBonito">
-                                <button type="submit" name="submit" class="btn btn-info">Publicar</button>
+                                <button type="submit" name="submit" id="submit" class="btn btn-info">Publicar</button>
                             </div>
                         </ol>
                     </form>
@@ -390,7 +390,6 @@ if (isset($_GET['id'])) {
 
 <script src="js/registro.js"></script>
 <script src="js/categoria.js"> </script>
-<script src="js/claveWord.js"> </script>
 
 <script type="text/javascript">
     function readURT(input) {

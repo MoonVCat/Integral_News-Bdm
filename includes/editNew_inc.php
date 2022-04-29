@@ -14,8 +14,9 @@ if (isset($_POST["submit"])) {
     $descCorta = $_POST["descCorta"];
     $desc = $_POST["desc"];
     $firma = $_POST["firma"];
+    $limpadito = $_POST["limpiado"];
+    $limpadito2 = $_POST["limpiado1"];
     $fecha = $_POST["date"];
-    $comentarioEditor = $_POST["comentarioEditor"];
     $first = true;
     $second = true;
     $third = true;
@@ -26,6 +27,15 @@ if (isset($_POST["submit"])) {
 
     $date = substr($fecha, 0, 10);
     $hora = substr($fecha, -5);
+
+    if($limpadito2 == 1){
+        $categ1 = "DELETE FROM NEWS_CLAVE WHERE NEWS_ID = $idNews";
+        $category1 = $mysqli->query($categ1);
+    }
+    if($limpadito == 1){
+        $clave1 = "DELETE FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNews";
+        $claveRes = $mysqli->query($clave1); 
+    }
 
     //echo "<script> alert('".$hora."'); </script>";
     //echo "<script> alert('".$date."'); </script>";
@@ -52,9 +62,10 @@ if (isset($_POST["submit"])) {
         
         if(!empty($_FILES["imagenT"]["name"]) || !empty($_FILES["imagen"]["name"]) || !empty($_FILES["imagen1"]["name"]) || !empty($_FILES["imagen2"]["name"])){
 
+
             if(strcmp($imageType, $mp4) == 0 || strcmp($imageType1, $mp4) == 0 || strcmp($imageType2, $mp4) == 0){
 
-                $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $comentarioEditor);
+                $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma);
                 $new->editNew2();
                 $cateV = 0;
                 $claveV = 0;

@@ -162,7 +162,10 @@ $idRepo = $_SESSION["USER_ID"];
                                     if (strcmp($row['NEW_STATUS'], "Publicada") == 0) {
                                     ?>
                                         <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                            <img src="<?php echo $a['NEWS_TITLE']; ?>" width="150" height="250" class="card-img" alt="...">
+                                            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>">
+                                                <img src="<?php echo $a['NEWS_TITLE']; ?>" width="150" height="250" class="card-img" alt="...">
+                                            </a>
+
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body" style="background-color:<?php echo $color ?>">
@@ -176,9 +179,10 @@ $idRepo = $_SESSION["USER_ID"];
                                                     <br>
 
                                                     <small style="color: white">Firma reportero: <?php echo $row['SIGN']; ?></small>
+
                                                 </p>
                                                 <br>
-                                                <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+
                                             </div>
                                         </div>
                                     <?php

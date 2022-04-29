@@ -118,58 +118,62 @@ $resultado = $mysqli->query($sign);
                             $resNew = $mysqli->query($sign);
                             $sign = NULL;
                             while ($row2 = mysqli_fetch_assoc($resNew)) {
-                                $idNew = $row2['NEWS_ID'];
 
-                                $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-                                $category = $mysqli->query($categ);
-                                $i = mysqli_fetch_array($category);
-                                $color = $i['COLOR'];
-                                $categ = NULL;
+                                if (strcmp($row2['NEW_STATUS'], "Publicada") == 0) {
 
-                                $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-                                $imagen = $mysqli->query($img);
-                                $a = mysqli_fetch_array($imagen);
-                                $img = NULL;
+                                    $idNew = $row2['NEWS_ID'];
+
+                                    $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+                                    $category = $mysqli->query($categ);
+                                    $i = mysqli_fetch_array($category);
+                                    $color = $i['COLOR'];
+                                    $categ = NULL;
+
+                                    $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+                                    $imagen = $mysqli->query($img);
+                                    $a = mysqli_fetch_array($imagen);
+                                    $img = NULL;
 
                             ?>
-                                <div class="row no-gutters" style="background-color:<?php echo $color ?>">
-                                    <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                        <img src="<?php echo $a['NEWS_TITLE']; ?>" class="card-img" width="80" height="250" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body" style="background-color:<?php echo $color ?>">
-                                            <?php
-                                            $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
-                                            $resCate = $mysqli->query($newCate);
-                                            $newCate = NULL;
-                                            while ($cate = $resCate->fetch_assoc()) {
-                                            ?>
-                                                <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
-                                                    <?php echo $cate['DESCRIPTION']; ?>
-                                                </span>
+                                    <div class="row no-gutters" style="background-color:<?php echo $color ?>">
+                                        <div class="col-md-4" style="background-color:<?php echo $color ?>">
+                                            <img src="<?php echo $a['NEWS_TITLE']; ?>" class="card-img" width="80" height="250" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body" style="background-color:<?php echo $color ?>">
+                                                <?php
+                                                $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                                                $resCate = $mysqli->query($newCate);
+                                                $newCate = NULL;
+                                                while ($cate = $resCate->fetch_assoc()) {
+                                                ?>
+                                                    <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                                                        <?php echo $cate['DESCRIPTION']; ?>
+                                                    </span>
 
-                                            <?php
-                                            }
-                                            ?>
-                                            <br>
-                                            <br>
-                                            <h5 class="mt-0" style="color: white">Titulo: <?php echo $row2['TITLE']; ?>.</h5>
-                                            <br>
-                                            <small style="color: white">Fecha de noticia: </small>
-                                            <small style="color: white"><?php echo $row2['DATE_OF_NEWS']; ?></small>
-                                            <br>
-                                            <p style="color: white">Resumen: <?php echo $row2['DESCRIPTION']; ?></p>
+                                                <?php
+                                                }
+                                                ?>
+                                                <br>
+                                                <br>
+                                                <h5 class="mt-0" style="color: white">Titulo: <?php echo $row2['TITLE']; ?>.</h5>
+                                                <br>
+                                                <small style="color: white">Fecha de noticia: </small>
+                                                <small style="color: white"><?php echo $row2['DATE_OF_NEWS']; ?></small>
+                                                <br>
+                                                <p style="color: white">Resumen: <?php echo $row2['DESCRIPTION']; ?></p>
 
-                                            <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
-                                                <small style="color: white" class="text-muted"><?php echo $row2['CREATION_DATE']; ?></small>
-                                                <i class='far fa-calendar' style='font-size:18px'></i>
-                                            </p>
-                                            <br>
-                                            <a href="noticia.php?id=<?php echo $row2['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+                                                <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
+                                                    <small style="color: white" class="text-muted"><?php echo $row2['CREATION_DATE']; ?></small>
+                                                    <i class='far fa-calendar' style='font-size:18px'></i>
+                                                </p>
+                                                <br>
+                                                <a href="noticia.php?id=<?php echo $row2['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                             <?php
+                                }
                             }
                             $resNew = NULL;
                             $resultado = NULL;

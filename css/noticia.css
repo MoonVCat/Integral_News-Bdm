@@ -183,6 +183,11 @@ body {
    font-weight: 700;
 }
 
+div {
+   word-wrap: break-word;
+}
+
+
 .cuentaReg{
    position: relative;
    margin-left: 750px;

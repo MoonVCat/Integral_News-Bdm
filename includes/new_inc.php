@@ -15,11 +15,13 @@ if (isset($_POST["submit"])) {
     $firma = $_POST["firma"];
     $idUser = $_SESSION["USER_ID"];
     $fecha = $_POST["date"];
+    $idNew = $_POST["idNew"];
     $edicion = 0;
     $mp4 = "mp4";
 
     $date = substr($fecha, 0, 10);
     $hora = substr($fecha, -5);
+
 
     //echo "<script> alert('".$hora."'); </script>";
     //echo "<script> alert('".$date."'); </script>";
@@ -61,6 +63,7 @@ if (isset($_POST["submit"])) {
                 if(strcmp($row['DESCRIPTION'], $cate)==0){
                     $color = $row['COLOR'];
                 }
+
             }
             $cateV = 1;
 

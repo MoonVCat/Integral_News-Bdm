@@ -16,8 +16,11 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                 <a href="perfilEditor.php" class="list-group-item list-group-item-action">Perfil
                     <i class='fas fa-tools' style='font-size:18px;color: black'></i>
                 </a>
-                <a href="crearNoticia.php" class="list-group-item list-group-item-action">Crear Noticias
-                    <i class='far fa-save' style='font-size:18px;color: black'></i>
+                <a href="editarUser.php" class="list-group-item list-group-item-action">Crear/Eliminar Usuarios
+                    <i class='far fa-address-card' style='font-size:18px;color: black'></i>
+                </a>
+                <a href="aprobarNew.php" class="list-group-item list-group-item-action">Aprobar Noticias
+                    <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
                 </a>
                 <a href="cerrarsesion.php" class="list-group-item list-group-item-action">Cerrar Sesion
                     <i class='far fa-eye' style='font-size:18px;color: black'></i>
@@ -63,7 +66,10 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                                     if (strcmp($row['NEW_STATUS'], "Terminada") == 0) {
                                     ?>
                                         <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                            <img src="<?php echo $a['NEWS_TITLE']; ?>" width="150" height="250" class="card-img" alt="...">
+                                            <a href="prevNew.php?id=<?php echo $row['NEWS_ID'] ?>">
+                                                <img src="<?php echo $a['NEWS_TITLE']; ?>" width="150" height="250" class="card-img" alt="...">
+                                            </a>
+
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body" style="background-color:<?php echo $color ?>">

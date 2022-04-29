@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, TEXT_NEWS, CITY, SUBURB, COUNTRY, DATE_OF_NEWS, HOUR_OF_NEWS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS WHERE NEWS_ID = $id";
     $resultado = $mysqli->query($new);
     $new = NULL;
-            
+
     $newImage = "SELECT N_IMAGE_ID, NEWS_ID, NEWS_TITLE, NEWS_IMAGE, NEWS_TYPE FROM NEWS_IMAGE WHERE NEWS_ID = $id";
     $resImage = $mysqli->query($newImage);
     $newImage = NULL;
@@ -27,7 +27,6 @@ if (isset($_GET['id'])) {
     $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $id";
     $resCate = $mysqli->query($newCate);
     $newCate = NULL;
-            
 }
 
 ?>
@@ -94,9 +93,10 @@ if (isset($_GET['id'])) {
                         <br>
                         <b style="color: white">Resumen de noticia</b>
                         <hr style="height:6px;">
-                        <h4>
-                            <?php echo $row['DESCRIPTION']; ?>
-                        </h4>
+                        <p>
+                        <h4><?php echo $row['DESCRIPTION']; ?></h4>
+                        </p>
+
                         <hr style="height:6px;">
                     </div>
 
@@ -111,14 +111,13 @@ if (isset($_GET['id'])) {
 
                     </div>
 
-                    <div class=" descrip">
+                    <div class="descrip" >
                         <b style="color: white">Info de noticia</b>
                         <hr style="height:6px;">
                         <p>
+                        <h5><?php echo $row['TEXT_NEWS']; ?></h5>
+                        </p>
 
-                        <h5>
-                            <?php echo $row['TEXT_NEWS']; ?>
-                        </h5>
                         </b>
                         <hr style="height:6px;">
                     </div>

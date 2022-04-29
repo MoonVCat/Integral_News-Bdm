@@ -102,9 +102,9 @@ if (isset($_GET['id'])) {
                         <br>
                         <b>Resumen de noticia</b>
                         <hr style="height:6px;">
-                        <h4>
-                            <?php echo $row['DESCRIPTION']; ?>
-                        </h4>
+                        <p>
+                        <h4><?php echo $row['DESCRIPTION']; ?></h4>
+                        </p>
                         <hr style="height:6px;">
                     </div>
 
@@ -125,9 +125,10 @@ if (isset($_GET['id'])) {
                         <hr style="height:6px;">
                         <p>
 
-                        <h5>
-                            <?php echo $row['TEXT_NEWS']; ?>
-                        </h5>
+                        <p>
+                        <h5> <?php echo $row['TEXT_NEWS']; ?></h5>
+                        </p>
+
                         </b>
                         <hr style="height:6px;">
                     </div>
@@ -208,7 +209,7 @@ if (isset($_GET['id'])) {
                             $resLikes = $mysqli->query($likes);
                             $likes = NULL;
 
-                            if ($row6 = mysqli_fetch_assoc($resLikes)) {
+                            if ($row3 = mysqli_fetch_assoc($resLikes)) {
 
                             ?>
                                 <button type="like" name="like" id="like" class='fas fa-heart' style='font-size:24px'> </button>
@@ -229,15 +230,16 @@ if (isset($_GET['id'])) {
                             <a href="registro.php">
                                 <h5 style="align-content: space-around">¿Quieres reaccionar a esta noticia? Crea una cuenta!</h5>
                             </a>
-                    <?php
+                        <?php
                         }
-                    }
-                    $resNew = NULL;
-                    $resImage = NULL;
-                    $resClave = NULL;
-                    $resCate = NULL;
-                    $resRepo = NULL;
-                    $imagen = NULL;
+                        ?>
+                        <br>
+                        <br>
+
+                        <div class="fb-share-button" data-href="https://www.your-domain.com/your-page.html" data-layout="button_count">
+                        </div>
+                    <?php
+                }
 
                     ?>
                     </form>
@@ -255,12 +257,12 @@ if (isset($_GET['id'])) {
                 $resComment = $mysqli->query($comment);
 
                 if ($resComment) {
-                    while ($row10 = mysqli_fetch_assoc($resComment)) {
+                    while ($row4 = mysqli_fetch_assoc($resComment)) {
 
-                        $user = $row10['FK_USER'];
+                        $user = $row4['FK_USER'];
                         $commentDatos =  "SELECT * FROM USERS WHERE USER_ID = $user";
                         $resCommentDatos = $mysqli->query($commentDatos);
-                        $row8 = mysqli_fetch_assoc($resCommentDatos);
+                        $row5 = mysqli_fetch_assoc($resCommentDatos);
                 ?>
                         <section class="Comentarios">
                             <div class="comments-container">
@@ -268,52 +270,57 @@ if (isset($_GET['id'])) {
                                     <div class="comment-main-level">
                                         <!-- Avatar -->
                                         <div class="comment-avatar">
-                                            <img src="<?php echo $row8['PROFILE_PIC'] ?>" width="40" height="40" alt="">
+                                            <img src="<?php echo $row5['PROFILE_PIC'] ?>" width="40" height="40" alt="">
                                         </div>
                                         <!-- Contenedor del Comentario -->
                                         <div class="comment-box">
                                             <div class="comment-head">
                                                 <?php
-                                                if (strcmp($row8['USER_ID'], $idUser) == 0) {
+                                                if (strcmp($row5['USER_ID'], $idUser) == 0) {
                                                 ?>
-                                                    <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row8['USER_ID'] ?>"><?php echo $row8['USERNAME'] ?></a></h6>
+                                                    <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row5['USER_ID'] ?>"><?php echo $row5['USERNAME'] ?></a></h6>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row8['USER_ID'] ?>"><?php echo $row8['USERNAME'] ?></a></h6>
+                                                    <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row5['USER_ID'] ?>"><?php echo $row5['USERNAME'] ?></a></h6>
                                                 <?php
                                                 }
                                                 ?>
-                                                <span><a style="font-weight:900">Fecha </a><a><?php echo $row10['DATE_CREATION'] ?></a><br></span>
+                                                <span><a style="font-weight:900">Fecha </a><a><?php echo $row4['DATE_CREATION'] ?></a><br></span>
                                                 <div class="boton-corazon text-right">
                                                     <?php
 
                                                     if (isset($_SESSION["USER_ID"])) {
-                                                        $userComments = $_SESSION["USER_ID"];
-                                                        $userIdNews = $row10['FK_USER'];
+                                                        $userIdSession = $_SESSION["USER_ID"];
+                                                        $userIdComents = $row4['FK_USER'];
 
-                                                        if ($userIdNews == $userComments) {
 
+                                                        if ($userIdComents == $userIdSession) {
                                                     ?>
-
-                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row10['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row4['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
                                                                 <i class='far fa-trash-alt' style='font-size:24px'></i>
                                                             </a>
 
                                                             <a id="BtnEdicion" onClick="
                                                             if(contador==0){
-                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>').style.display = 'inline';
-                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>content').style.display = 'none'
-                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>ButEditar').style.display = 'inline'
+                                                            document.getElementById('<?php echo $row4['ID_COMMENT']; ?>').style.display = 'inline';
+                                                            document.getElementById('<?php echo $row4['ID_COMMENT']; ?>content').style.display = 'none'
+                                                            document.getElementById('<?php echo $row4['ID_COMMENT']; ?>ButEditar').style.display = 'inline'
                                                             contador=1;
                                                             }
                                                             else{
-                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>').style.display = 'none';
-                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>content').style.display = 'inline'
-                                                            document.getElementById('<?php echo $row10['ID_COMMENT']; ?>ButEditar').style.display = 'none'
+                                                            document.getElementById('<?php echo $row4['ID_COMMENT']; ?>').style.display = 'none';
+                                                            document.getElementById('<?php echo $row4['ID_COMMENT']; ?>content').style.display = 'inline'
+                                                            document.getElementById('<?php echo $row4['ID_COMMENT']; ?>ButEditar').style.display = 'none'
                                                             contador=0;
                                                             }">
                                                                 <i class='far fa-edit' style='font-size:24px'></i>
+                                                            </a>
+                                                        <?php
+                                                        } else if ($idUser == $userIdSession) {
+                                                        ?>
+                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row4['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
                                                             </a>
                                                     <?php
                                                         }
@@ -323,11 +330,11 @@ if (isset($_GET['id'])) {
                                                     <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
 
 
-                                                        <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row10['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row10['CONTENT'] ?>" placeholder="Editar Comentario">
+                                                        <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row4['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row4['CONTENT'] ?>" placeholder="Editar Comentario">
                                                         <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
-                                                        <input value="<?php echo $row10['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
+                                                        <input value="<?php echo $row4['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
 
-                                                        <button id='<?php echo $row10['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
+                                                        <button id='<?php echo $row4['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
                                                             <a class="far fa-paper-plane"></a>
                                                         </button>
                                                     </form>
@@ -336,7 +343,7 @@ if (isset($_GET['id'])) {
                                             </div>
 
                                             <div class="comment-content">
-                                                <p id='<?php echo $row10['ID_COMMENT']; ?>content'><?php echo $row10['CONTENT'] ?></p>
+                                                <p id='<?php echo $row4['ID_COMMENT']; ?>content'><?php echo $row4['CONTENT'] ?></p>
                                             </div>
 
                                         </div>
@@ -348,16 +355,16 @@ if (isset($_GET['id'])) {
                         </section>
 
                         <?php
-                        $comId =  $row10['ID_COMMENT'];
+                        $comId =  $row4['ID_COMMENT'];
                         $answer =  "SELECT * FROM COMMENT WHERE FK_COMMENT = $comId";
                         $resAnswer = $mysqli->query($answer);
 
-                        while ($row11 = mysqli_fetch_assoc($resAnswer)) {
+                        while ($row6 = mysqli_fetch_assoc($resAnswer)) {
                             $idNoticia2 = $id;
-                            $user2 = $row11['FK_USER'];
+                            $user2 = $row6['FK_USER'];
                             $NewsCommentDatos2 =  "SELECT * FROM USERS WHERE USER_ID = $user2";
                             $NewsCommentDatosSql2 = $mysqli->query($NewsCommentDatos2);
-                            $row12 = mysqli_fetch_assoc($NewsCommentDatosSql2);
+                            $row7 = mysqli_fetch_assoc($NewsCommentDatosSql2);
 
                         ?>
                             <br>
@@ -367,50 +374,53 @@ if (isset($_GET['id'])) {
                                         <div class="comment-main-level">
                                             <!-- Avatar -->
                                             <div class="comment-avatar">
-                                                <img src="<?php echo $row12['PROFILE_PIC'] ?>" width="40" height="40" alt="">
+                                                <img src="<?php echo $row7['PROFILE_PIC'] ?>" width="40" height="40" alt="">
                                             </div>
                                             <!-- Contenedor del Comentario -->
                                             <div class="comment-box">
                                                 <div class="comment-head">
                                                     <?php
-                                                    if (strcmp($row12['USER_ID'], $idUser) == 0) {
+                                                    if (strcmp($row7['USER_ID'], $idUser) == 0) {
                                                     ?>
-                                                        <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row12['USER_ID'] ?>"><?php echo $row12['USERNAME'] ?></a></h6>
+                                                        <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row7['USER_ID'] ?>"><?php echo $row7['USERNAME'] ?></a></h6>
                                                     <?php
                                                     } else {
                                                     ?>
-                                                        <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row12['USER_ID'] ?>"><?php echo $row12['USERNAME'] ?></a></h6>
+                                                        <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row7['USER_ID'] ?>"><?php echo $row7['USERNAME'] ?></a></h6>
                                                     <?php
                                                     }
                                                     ?>
-                                                    <span><a style="font-weight:900">Fecha </a><a><?php echo $row11['DATE_CREATION'] ?></a><br></span>
+                                                    <span><a style="font-weight:900">Fecha </a><a><?php echo $row6['DATE_CREATION'] ?></a><br></span>
                                                     <div class="boton-corazon text-right">
                                                         <?php
                                                         if (isset($_SESSION["USER_ID"])) {
-                                                            $ReporteroComentario = $_SESSION["USER_ID"];
-                                                            $ReporteroId = $row11['FK_USER'];
+                                                            $userIdAnswers = $row6['FK_USER'];
 
-                                                            if ($ReporteroId == $ReporteroComentario) {
-
-
+                                                            if ($userIdAnswers == $userIdSession) {
                                                         ?>
-                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row11['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row6['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
                                                                     <i class='far fa-trash-alt' style='font-size:24px'></i>
                                                                 </a>
                                                                 <a id="BtnEdicion" onClick="
                                                                     if(contadorRespuesta==0){
-                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>').style.display = 'inline';
-                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>content').style.display = 'none'
-                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>ButEditar').style.display = 'inline'
+                                                                    document.getElementById('<?php echo $row6['ID_COMMENT']; ?>').style.display = 'inline';
+                                                                    document.getElementById('<?php echo $row6['ID_COMMENT']; ?>content').style.display = 'none'
+                                                                    document.getElementById('<?php echo $row6['ID_COMMENT']; ?>ButEditar').style.display = 'inline'
                                                                     contadorRespuesta=1;
                                                                     }
                                                                     else{
-                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>').style.display = 'none';
-                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>content').style.display = 'inline'
-                                                                    document.getElementById('<?php echo $row11['ID_COMMENT']; ?>ButEditar').style.display = 'none'
+                                                                    document.getElementById('<?php echo $row6['ID_COMMENT']; ?>').style.display = 'none';
+                                                                    document.getElementById('<?php echo $row6['ID_COMMENT']; ?>content').style.display = 'inline'
+                                                                    document.getElementById('<?php echo $row6['ID_COMMENT']; ?>ButEditar').style.display = 'none'
                                                                     contadorRespuesta=0;
                                                                     } " class='bx bxs-edit-alt bx-md bx-tada-hover'>
                                                                     <i class='far fa-edit' style='font-size:24px'></i>
+                                                                </a>
+                                                            <?php
+                                                            } else if ($idUser == $userIdSession) {
+                                                            ?>
+                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row6['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
                                                                 </a>
                                                         <?php
                                                             }
@@ -419,12 +429,12 @@ if (isset($_GET['id'])) {
 
                                                         <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
 
-                                                            <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row11['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row11['CONTENT'] ?>" placeholder="Editar Comentario">
+                                                            <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row6['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row6['CONTENT'] ?>" placeholder="Editar Comentario">
                                                             <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
-                                                            <input value="<?php echo $row11['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
+                                                            <input value="<?php echo $row6['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
 
 
-                                                            <button id='<?php echo $row11['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
+                                                            <button id='<?php echo $row6['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
 
                                                                 <a class="far fa-paper-plane"></a>
                                                             </button>
@@ -434,7 +444,7 @@ if (isset($_GET['id'])) {
                                                 </div>
 
                                                 <div class="comment-content">
-                                                    <p id='<?php echo $row11['ID_COMMENT']; ?>content'><?php echo $row11['CONTENT'] ?></p>
+                                                    <p id='<?php echo $row6['ID_COMMENT']; ?>content'><?php echo $row6['CONTENT'] ?></p>
                                                 </div>
 
                                             </div>
@@ -456,12 +466,12 @@ if (isset($_GET['id'])) {
                                 <div>
 
                                     <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
-                                    <input value="<?php echo $row10['ID_COMMENT'] ?>" name="idCom" id="idCom" hidden />
+                                    <input value="<?php echo $row4['ID_COMMENT'] ?>" name="idCom" id="idCom" hidden />
                                     <div id="Respuesta">
                                         <h5 style=" margin-left: 200px;">Responder</h5>
 
                                         <div class="Escribir" align="right">
-                                            <input class="form-control" align="right" size="4" type="text" name="Comentario" id="Comentario" placeholder="Responder el comentario" required>
+                                            <textarea class="form-control" align="right" size="4" type="text" name="Comentario" id="Comentario" placeholder="Responder el comentario" rows="4" cols="50" maxlength="500" required></textarea>
                                             <button type="submit" name="submit" id="submit">
                                                 <i class='fas fa-angle-right' style='font-size:24px'></i>
                                             </button>
@@ -475,7 +485,7 @@ if (isset($_GET['id'])) {
                         } else {
                         ?>
                             <a href="registro.php">
-                                <b class="cuentaReg" >No puedes responder sin una cuenta, hazte una cuenta ya, ya te dije</b>
+                                <b class="cuentaReg">No puedes responder sin una cuenta, hazte una cuenta ya, ya te dije</b>
                             </a>
                 <?php
                         }
@@ -487,7 +497,7 @@ if (isset($_GET['id'])) {
                 ?>
                     <form class="form" action="./includes/comentario_inc.php" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="comentario" id="comentario" placeholder="Escribe un comentario" class="form-control" style="height: 100px;" required>
+                            <textarea class="form-control" type="text" name="comentario" id="comentario" placeholder="Escribe un comentario" class="form-control" maxlength="500" style="height: 100px;" required></textarea>
                             <input name=idNews id=idNews style="display:none;" value="<?php echo $id ?>" hidden />
                             <ol>
                                 <br>
@@ -509,14 +519,31 @@ if (isset($_GET['id'])) {
                     </a>
                 <?php
                 }
+                $resNew = NULL;
+                $resImage = NULL;
+                $resClave = NULL;
+                $resCate = NULL;
+                $resRepo = NULL;
+                $imagen = NULL;
                 ?>
-
         </div>
         <br>
 
     </div>
 
 </div>
+
+<div id="fb-root"></div>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 
 <script>
     var contador = 0;

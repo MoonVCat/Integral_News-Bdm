@@ -40,7 +40,7 @@
 
             $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('revision', $id, "", "", "", "", "", "", "", "En redaccion", "", "", "", "", "", $comen))){
+                if(!$stmt->execute(array('revision', $id, "", "", "", "", "", "", "", "En redaccion", "", "", "", "", $comen, ""))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 

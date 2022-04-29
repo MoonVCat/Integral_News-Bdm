@@ -1,17 +1,18 @@
 const palClave = document.getElementById("claveWord");
+const refresh = document.getElementById("limpiado1");
 const Uno = document.getElementById("claveU");
 const Dos = document.getElementById("claveD");
 const Tres = document.getElementById("claveT");
 const PKUno = document.getElementById("claveUPK");
 const PKDos = document.getElementById("claveDPK");
 const PKTres = document.getElementById("claveTPK");
-const agregar = document.querySelector(".btnA");
-const limpiar = document.querySelector(".btnA2");
+const agregar = document.querySelector(".btn-add3");
+const limpiar = document.querySelector(".btn-add4");
 
 const ol = document.querySelector("ol");
 var num=0;
 
-agregar.addEventListener('click', (e) => {
+agregar.addEventListener("click", (e) => {
   e.preventDefault();
   const texto = palClave.value;
   console.log(texto);
@@ -56,8 +57,10 @@ agregar.addEventListener('click', (e) => {
   }
 });
 
-limpiar.addEventListener('click', (e) => {
+limpiar.addEventListener("click", (e) => {
   e.preventDefault();
+  
+  refresh.value = 1;
   Uno.value = "";
   Dos.value= "";
   Tres.value = "";

@@ -62,9 +62,6 @@ if (isset($_GET['id'])) {
                 <a href="aprobarNew.php" class="list-group-item list-group-item-action">Aprobar Noticias
                     <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
                 </a>
-                <a class="list-group-item list-group-item-action" onClick="javascript: return confirm('Seguro q te quieres ir? :c etto etto');" href="includes/delete_inc.php?deleteid=<?php echo $id; ?>">Eliminar cuenta
-                    <i class='far fa-folder-open' style='font-size:18px;color: black'></i>
-                </a>
                 <a href="cerrarsesion.php" class="list-group-item list-group-item-action">Cerrar Sesion
                     <i class='far fa-eye' style='font-size:18px;color: black'></i>
                 </a>

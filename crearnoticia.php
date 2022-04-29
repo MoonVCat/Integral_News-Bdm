@@ -168,7 +168,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                         <b style="color: white" for="user-email-id">Firma del editor</b>
                         <br>
                         <br>
-                        <input type="text" name="firma" id="firma" placeholder="Firma del editor" class="form-control">
+                        <input type="text" name="firma" id="firma" placeholder="Firma del editor" class="form-control" required>
                     </div>
 
                     <br>
