@@ -31,10 +31,16 @@ if (isset($_POST["submit"])) {
     if($limpadito2 == 1){
         $categ1 = "DELETE FROM NEWS_CLAVE WHERE NEWS_ID = $idNews";
         $category1 = $mysqli->query($categ1);
+
+        $categ1 = NULL;
+        $category1 = NULL;
     }
     if($limpadito == 1){
         $clave1 = "DELETE FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNews";
         $claveRes = $mysqli->query($clave1); 
+
+        $clave1 = NULL;
+        $claveRes = NULL;
     }
 
     //echo "<script> alert('".$hora."'); </script>";
@@ -62,7 +68,6 @@ if (isset($_POST["submit"])) {
         
         if(!empty($_FILES["imagenT"]["name"]) || !empty($_FILES["imagen"]["name"]) || !empty($_FILES["imagen1"]["name"]) || !empty($_FILES["imagen2"]["name"])){
 
-
             if(strcmp($imageType, $mp4) == 0 || strcmp($imageType1, $mp4) == 0 || strcmp($imageType2, $mp4) == 0){
 
                 $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma);
@@ -82,6 +87,8 @@ if (isset($_POST["submit"])) {
                             $color = $row['COLOR'];
                         }
                     }
+                    $categ = NULL;
+                    $category = NULL;
                     $cateV = 1;
                     
                     if($_POST["unoPK"] !== ""){
@@ -102,6 +109,8 @@ if (isset($_POST["submit"])) {
                             $color = $row['COLOR'];
                         }
                     }
+                    $categ = NULL;
+                    $category = NULL;
                     $cateV = 1;
 
                     if($_POST["dosPK"] !== ""){
@@ -123,6 +132,8 @@ if (isset($_POST["submit"])) {
                             $color = $row['COLOR'];
                         }
                     }
+                    $categ = NULL;
+                    $category = NULL;
                     $cateV = 1;
         
                     if($_POST["tresPK"] !== ""){
@@ -253,7 +264,9 @@ if (isset($_POST["submit"])) {
                             $contador = 3;
                             continue;
                         }
-                    }
+                    } 
+                    $newImage = NULL;
+                    $resImage = NULL;
 
                     if($contador == 1){
 

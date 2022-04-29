@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
 
-    $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, TEXT_NEWS, CITY, SUBURB, COUNTRY, DATE_OF_NEWS, HOUR_OF_NEWS, CREATION_DATE, CREATED_BY, COMMENTS_EDITOR, `LIKES` FROM NEWS WHERE NEWS_ID = $id";
+    $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, TEXT_NEWS, CITY, SUBURB, COUNTRY, DATE_OF_NEWS, HOUR_OF_NEWS, CREATION_DATE, CREATED_BY, COMMENTS_EDITOR, `LIKES`, USER_DELETED FROM NEWS WHERE NEWS_ID = $id";
     $resNew = $mysqli->query($new);
     $new = NULL;
 
@@ -40,10 +40,6 @@ if (isset($_GET['id'])) {
             while ($row = mysqli_fetch_assoc($resNew)) {
                 $idUser = $row['CREATED_BY'];
 
-                $repo = "SELECT USER_ID, FULL_NAME, PROFILE_PIC FROM USERS WHERE USER_ID = $idUser";
-                $resRepo = $mysqli->query($repo);
-                $aRepo = mysqli_fetch_array($resRepo);
-                $repo = NULL;
             ?>
                 <b>Categorias</b>
                 <hr style="height:6px;">
@@ -62,14 +58,30 @@ if (isset($_GET['id'])) {
                     <div class="card-title  text-center">
                         <br>
                         <hr style="height:6px;">
-                        <a href="perfilAjeno.php?idAjeno=<?php echo $aRepo['USER_ID'] ?>">
-                            <img src="<?php echo $aRepo['PROFILE_PIC']; ?>" class="img text-center" width="80" height="80" alt="...">
-                        </a>
-                        <br>
-                        <br>
-                        <small> Nombre del Reportero/a </small>
-                        <h3 class="card-title text-center "><?php echo $aRepo['FULL_NAME']; ?></h3>
-                        <br>
+                        <?php
+                        if ($row['USER_DELETED'] == 0) {
+
+                            $repo = "SELECT USER_ID, FULL_NAME, PROFILE_PIC FROM USERS WHERE USER_ID = $idUser";
+                            $resRepo = $mysqli->query($repo);
+                            $aRepo = mysqli_fetch_array($resRepo);
+                            $repo = NULL;
+                        ?>
+                            <a href="perfilAjeno.php?idAjeno=<?php echo $aRepo['USER_ID'] ?>">
+                                <img src="<?php echo $aRepo['PROFILE_PIC']; ?>" class="img text-center" width="80" height="80" alt="...">
+                            </a>
+                            <br>
+                            <br>
+                            <small> Nombre del Reportero/a </small>
+                            <h3 class="card-title text-center "><?php echo $aRepo['FULL_NAME']; ?></h3>
+                            <br>
+                        <?php
+                        } else if ($row['USER_DELETED'] == 1) {
+                        ?>
+                            <img src="usuariodefault.png" class="img text-center" width="80" height="80" alt="...">
+                            <h3 class="card-title text-center ">//Reportero Eliminado//</h3>
+                        <?php
+                        }
+                        ?>
                         <small> Firma </small>
                         <h6 class="card-title text-center "><?php echo $row['SIGN']; ?></h6>
                         <br>
@@ -255,6 +267,9 @@ if (isset($_GET['id'])) {
                 $vacio = '';
                 $comment =  "SELECT * FROM COMMENT WHERE FK_NEWS = $id AND FK_COMMENT = 0";
                 $resComment = $mysqli->query($comment);
+                if (isset($_SESSION["USER_ID"])) {
+                    $userIdSession = $_SESSION["USER_ID"];
+                }
 
                 if ($resComment) {
                     while ($row4 = mysqli_fetch_assoc($resComment)) {
@@ -268,40 +283,42 @@ if (isset($_GET['id'])) {
                             <div class="comments-container">
                                 <ul id="comments-list" class="comments-list">
                                     <div class="comment-main-level">
-                                        <!-- Avatar -->
-                                        <div class="comment-avatar">
-                                            <img src="<?php echo $row5['PROFILE_PIC'] ?>" width="40" height="40" alt="">
-                                        </div>
-                                        <!-- Contenedor del Comentario -->
                                         <div class="comment-box">
-                                            <div class="comment-head">
-                                                <?php
-                                                if (strcmp($row5['USER_ID'], $idUser) == 0) {
-                                                ?>
-                                                    <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row5['USER_ID'] ?>"><?php echo $row5['USERNAME'] ?></a></h6>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row5['USER_ID'] ?>"><?php echo $row5['USERNAME'] ?></a></h6>
-                                                <?php
-                                                }
-                                                ?>
-                                                <span><a style="font-weight:900">Fecha </a><a><?php echo $row4['DATE_CREATION'] ?></a><br></span>
-                                                <div class="boton-corazon text-right">
+                                            <!-- Avatar -->
+                                            <?php
+                                            if ($row4['USER_DELETED'] == 0) {
+                                            ?>
+                                                <div class="comment-avatar">
+                                                    <img src="<?php echo $row5['PROFILE_PIC'] ?>" width="40" height="40" alt="">
+                                                </div>
+                                                <!-- Contenedor del Comentario -->
+                                                <div class="comment-head">
                                                     <?php
+                                                    if (strcmp($row5['USER_ID'], $idUser) == 0) {
+                                                    ?>
+                                                        <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row5['USER_ID'] ?>"><?php echo $row5['USERNAME'] ?></a></h6>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row5['USER_ID'] ?>"><?php echo $row5['USERNAME'] ?></a></h6>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    <span><a style="font-weight:900">Fecha </a><a><?php echo $row4['DATE_CREATION'] ?></a><br></span>
+                                                    <div class="boton-corazon text-right">
+                                                        <?php
 
-                                                    if (isset($_SESSION["USER_ID"])) {
-                                                        $userIdSession = $_SESSION["USER_ID"];
                                                         $userIdComents = $row4['FK_USER'];
 
+                                                        if (isset($_SESSION['USER_ID'])) {
 
-                                                        if ($userIdComents == $userIdSession) {
-                                                    ?>
-                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row4['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
-                                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                            </a>
+                                                            if ($userIdComents == $userIdSession) {
+                                                        ?>
+                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row4['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                                </a>
 
-                                                            <a id="BtnEdicion" onClick="
+                                                                <a id="BtnEdicion" onClick="
                                                             if(contador==0){
                                                             document.getElementById('<?php echo $row4['ID_COMMENT']; ?>').style.display = 'inline';
                                                             document.getElementById('<?php echo $row4['ID_COMMENT']; ?>content').style.display = 'none'
@@ -314,35 +331,47 @@ if (isset($_GET['id'])) {
                                                             document.getElementById('<?php echo $row4['ID_COMMENT']; ?>ButEditar').style.display = 'none'
                                                             contador=0;
                                                             }">
-                                                                <i class='far fa-edit' style='font-size:24px'></i>
-                                                            </a>
+                                                                    <i class='far fa-edit' style='font-size:24px'></i>
+                                                                </a>
+                                                            <?php
+                                                            } else if ($idUser == $userIdSession) {
+                                                            ?>
+                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row4['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                                </a>
                                                         <?php
-                                                        } else if ($idUser == $userIdSession) {
-                                                        ?>
-                                                            <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row4['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
-                                                                <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                            </a>
-                                                    <?php
+                                                            }
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
 
-                                                    <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
+                                                        <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
 
 
-                                                        <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row4['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row4['CONTENT'] ?>" placeholder="Editar Comentario">
-                                                        <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
-                                                        <input value="<?php echo $row4['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
+                                                            <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row4['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row4['CONTENT'] ?>" placeholder="Editar Comentario">
+                                                            <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
+                                                            <input value="<?php echo $row4['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
 
-                                                        <button id='<?php echo $row4['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
-                                                            <a class="far fa-paper-plane"></a>
-                                                        </button>
-                                                    </form>
+                                                            <button id='<?php echo $row4['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
+                                                                <a class="far fa-paper-plane"></a>
+                                                            </button>
+                                                        </form>
 
+                                                    </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="comment-content">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <div class="comment-avatar">
+                                                    <img src="usuariodefault.png" width="40" height="40" alt="">
+                                                </div>
+                                                <div class="comment-head">
+                                                    <h6 align="left">///Usuario Eliminado///</h6>
+                                                    <span><a style="font-weight:900">Fecha </a><a><?php echo $row4['DATE_CREATION'] ?></a><br></span>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <div class="comment-content" align="left">
                                                 <p id='<?php echo $row4['ID_COMMENT']; ?>content'><?php echo $row4['CONTENT'] ?></p>
                                             </div>
 
@@ -372,36 +401,38 @@ if (isset($_GET['id'])) {
                                 <div class="comments-container" align="left" style="position:relative; left:200px;">
                                     <ul id="comments-list" class="comments-list">
                                         <div class="comment-main-level">
-                                            <!-- Avatar -->
-                                            <div class="comment-avatar">
-                                                <img src="<?php echo $row7['PROFILE_PIC'] ?>" width="40" height="40" alt="">
-                                            </div>
-                                            <!-- Contenedor del Comentario -->
                                             <div class="comment-box">
-                                                <div class="comment-head">
-                                                    <?php
-                                                    if (strcmp($row7['USER_ID'], $idUser) == 0) {
-                                                    ?>
-                                                        <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row7['USER_ID'] ?>"><?php echo $row7['USERNAME'] ?></a></h6>
-                                                    <?php
-                                                    } else {
-                                                    ?>
-                                                        <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row7['USER_ID'] ?>"><?php echo $row7['USERNAME'] ?></a></h6>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                    <span><a style="font-weight:900">Fecha </a><a><?php echo $row6['DATE_CREATION'] ?></a><br></span>
-                                                    <div class="boton-corazon text-right">
+                                                <?php
+                                                if ($row6['USER_DELETED'] == 0) {
+                                                ?>
+                                                    <!-- Avatar -->
+                                                    <div class="comment-avatar">
+                                                        <img src="<?php echo $row7['PROFILE_PIC'] ?>" width="40" height="40" alt="">
+                                                    </div>
+                                                    <div class="comment-head">
                                                         <?php
-                                                        if (isset($_SESSION["USER_ID"])) {
-                                                            $userIdAnswers = $row6['FK_USER'];
-
-                                                            if ($userIdAnswers == $userIdSession) {
+                                                        if (strcmp($row7['USER_ID'], $idUser) == 0) {
                                                         ?>
-                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row6['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
-                                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                                </a>
-                                                                <a id="BtnEdicion" onClick="
+                                                            <h6 class="comment-name by-author"><a href="perfilAjeno.php?idAjeno=<?php echo $row7['USER_ID'] ?>"><?php echo $row7['USERNAME'] ?></a></h6>
+                                                        <?php
+                                                        } else {
+                                                        ?>
+                                                            <h6 class="comment-name by-user"><a href="perfilAjeno.php?idAjeno=<?php echo $row7['USER_ID'] ?>"><?php echo $row7['USERNAME'] ?></a></h6>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                        <span><a style="font-weight:900">Fecha </a><a><?php echo $row6['DATE_CREATION'] ?></a><br></span>
+                                                        <div class="boton-corazon text-right">
+                                                            <?php
+                                                            if (isset($_SESSION["USER_ID"])) {
+                                                                $userIdAnswers = $row6['FK_USER'];
+
+                                                                if ($userIdAnswers == $userIdSession) {
+                                                            ?>
+                                                                    <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row6['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                        <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                                    </a>
+                                                                    <a id="BtnEdicion" onClick="
                                                                     if(contadorRespuesta==0){
                                                                     document.getElementById('<?php echo $row6['ID_COMMENT']; ?>').style.display = 'inline';
                                                                     document.getElementById('<?php echo $row6['ID_COMMENT']; ?>content').style.display = 'none'
@@ -414,39 +445,52 @@ if (isset($_GET['id'])) {
                                                                     document.getElementById('<?php echo $row6['ID_COMMENT']; ?>ButEditar').style.display = 'none'
                                                                     contadorRespuesta=0;
                                                                     } " class='bx bxs-edit-alt bx-md bx-tada-hover'>
-                                                                    <i class='far fa-edit' style='font-size:24px'></i>
-                                                                </a>
+                                                                        <i class='far fa-edit' style='font-size:24px'></i>
+                                                                    </a>
+                                                                <?php
+                                                                } else if ($idUser == $userIdSession) {
+                                                                ?>
+                                                                    <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row6['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
+                                                                        <i class='far fa-trash-alt' style='font-size:24px'></i>
+                                                                    </a>
                                                             <?php
-                                                            } else if ($idUser == $userIdSession) {
-                                                            ?>
-                                                                <a onClick="javascript: return confirm('¿Querei borrar esto wn?');" href="./includes/eliminar_inc.php?idComentario=<?php echo $row6['ID_COMMENT']; ?>&idNoticia=<?php echo  $_GET["id"]; ?>">
-                                                                    <i class='far fa-trash-alt' style='font-size:24px'></i>
-                                                                </a>
-                                                        <?php
+                                                                }
                                                             }
-                                                        }
-                                                        ?>
+                                                            ?>
 
-                                                        <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
+                                                            <form class="form" action="./includes/comentarioUpdate_inc.php" method="post" enctype="multipart/form-data">
 
-                                                            <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row6['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row6['CONTENT'] ?>" placeholder="Editar Comentario">
-                                                            <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
-                                                            <input value="<?php echo $row6['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
+                                                                <input name="EdicionNuevo" style="display:none;" size="8" id='<?php echo $row6['ID_COMMENT']; ?>' size="8" class="form-control" type="text" name="Comentario" id="Comentario" value="<?php echo $row6['CONTENT'] ?>" placeholder="Editar Comentario">
+                                                                <input value="<?php echo $id ?>" name="idNews" id="idNews" hidden />
+                                                                <input value="<?php echo $row6['ID_COMMENT']; ?>Id" name="idComen" id="idComen" hidden />
 
 
-                                                            <button id='<?php echo $row6['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
+                                                                <button id='<?php echo $row6['ID_COMMENT']; ?>ButEditar' type="submit" name="submit" style="display:none">
 
-                                                                <a class="far fa-paper-plane"></a>
-                                                            </button>
-                                                        </form>
+                                                                    <a class="far fa-paper-plane"></a>
+                                                                </button>
+                                                            </form>
 
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <div class="comment-avatar">
+                                                        <img src="usuariodefault.png" width="40" height="40" alt="">
+                                                    </div>
+                                                    <div class="comment-head">
+                                                        <h6>///Usuario Eliminado///</h6>
+                                                        <span><a style="font-weight:900">Fecha </a><a><?php echo $row6['DATE_CREATION'] ?></a><br></span>
+                                                    </div>
 
+                                                <?php
+                                                }
+                                                ?>
+                                                <!-- Contenedor del Comentario -->
                                                 <div class="comment-content">
                                                     <p id='<?php echo $row6['ID_COMMENT']; ?>content'><?php echo $row6['CONTENT'] ?></p>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </ul>

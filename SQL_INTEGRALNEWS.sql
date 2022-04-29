@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS NEWS (
     `CREATION_DATE` DATETIME NOT NULL COMMENT "Fecha de creacion del registro",
     `CREATED_BY` INT NOT NULL COMMENT "Usuario que dio de alta el registro",
     `COMMENTS_EDITOR` VARCHAR(200) COMMENT "Comentario del editor",
+    `USER_DELETED` TINYINT NOT NULL DEFAULT '0' COMMENT "Si el reportero de la noticia fue eliminado o no",
     PRIMARY KEY (`NEWS_ID`)
 );
 
@@ -387,6 +388,7 @@ CREATE TABLE `COMMENT` (
   `FK_COMMENT` int(11) DEFAULT NULL COMMENT 'Llave foranea del comentario',
   `CONTENT` varchar(1000) NOT NULL COMMENT 'Contenido del comentario',
   `DATE_CREATION` date NOT NULL,
+  `USER_DELETED` TINYINT NOT NULL DEFAULT '0' COMMENT "Si el reportero del comentario fue eliminado o no",
   PRIMARY KEY (`ID_COMMENT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
