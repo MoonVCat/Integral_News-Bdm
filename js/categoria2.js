@@ -1,14 +1,22 @@
 const ComboBox = document.getElementById("cbx_cate1");
+const limpiar = document.getElementById("limpiado");
 const SeccionUno = document.getElementById("uno");
 const SeccionDos = document.getElementById("dos");
 const SeccionTres = document.getElementById("tres");
+const PKSeccionUno = document.getElementById("unoPK");
+const PKSeccionDos = document.getElementById("dosPK");
+const PKSeccionTres = document.getElementById("tresPK");
 const addBtn = document.querySelector(".btn-add");
 const refresh = document.querySelector(".btn-add2");
 
 const palClave = document.getElementById("claveWord");
+const limpiar1 = document.getElementById("limpiado1");
 const Uno = document.getElementById("claveU");
 const Dos = document.getElementById("claveD");
 const Tres = document.getElementById("claveT");
+const PKUno = document.getElementById("claveUPK");
+const PKDos = document.getElementById("claveDPK");
+const PKTres = document.getElementById("claveTPK");
 const agregar = document.querySelector(".btn-add3");
 const refresh1 = document.querySelector(".btn-add4");
 
@@ -64,13 +72,19 @@ addBtn.addEventListener("click", (a) => {
 
 refresh.addEventListener("click", (a) => {
   a.preventDefault();
+
   
+  limpiar.value = "1";
   SeccionUno.value = "";
   SeccionDos.value= "";
   SeccionTres.value = "";
+  PKSeccionUno.value = "";
+  PKSeccionDos.value= "";
+  PKSeccionTres.value = "";
   numero=0;
   }
 );
+
 
 
 const ol = document.querySelector("ol");
@@ -124,9 +138,13 @@ agregar.addEventListener("click", (e) => {
 refresh1.addEventListener("click", (e) => {
   e.preventDefault();
   
+  limpiar1.value = "1";
   Uno.value = "";
   Dos.value= "";
   Tres.value = "";
+  PKUno.value = "";
+  PKDos.value= "";
+  PKTres.value = "";
   num=0;
   }
 );

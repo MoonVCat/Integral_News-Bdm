@@ -130,7 +130,6 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                             <input value="" name="dos" id="dos" readonly />
 
                             <input value="" name="tres" id="tres" readonly />
-
                         </div>
                         <br>
                     </div>

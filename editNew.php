@@ -389,7 +389,7 @@ if (isset($_GET['id'])) {
 </div>
 
 <script src="js/registro.js"></script>
-<script src="js/categoria.js"> </script>
+<script src="js/categoria2.js"> </script>
 
 <script type="text/javascript">
     function readURT(input) {
