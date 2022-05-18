@@ -320,7 +320,7 @@ if (isset($_POST["submit"])) {
             }
         } else {
 
-            $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $comentarioEditor);
+            $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma);
                 $new->editNew2();
                 $cateV = 0;
                 $claveV = 0;

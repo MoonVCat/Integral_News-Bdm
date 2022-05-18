@@ -39,83 +39,115 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
     <figure class="text-center">
       <h1>Noticias más populares</h1>
     </figure>
-    <div class="card-group">
-      <div class="card">
-        <img src="https://image.freepik.com/vector-gratis/diseno-fondo-noticias-falsas_23-2148504681.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <a href="noticia.php" class="stretched-link">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://image.freepik.com/vector-gratis/diseno-fondo-noticias-falsas_23-2148504681.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          <a href="noticia.php" class="stretched-link">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://image.freepik.com/vector-gratis/diseno-fondo-noticias-falsas_23-2148504681.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          <a href="noticia.php" class="stretched-link">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://image.freepik.com/vector-gratis/diseno-fondo-noticias-falsas_23-2148504681.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          <a href="noticia.php" class="stretched-link">Go somewhere</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://image.freepik.com/vector-gratis/diseno-fondo-noticias-falsas_23-2148504681.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          <a href="noticia.php" class="stretched-link">Go somewhere</a>
-        </div>
-      </div>
 
+    <div class="card-deck">
+    
+      <?php
+      $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY LIKES DESC;";
+      $destRes = $mysqli->query($dest);
 
+      $contador = 0;
+
+      while ($rowPop = mysqli_fetch_assoc($destRes)) {
+
+        $idNew = $rowPop['NEWS_ID'];
+
+        $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+        $category = $mysqli->query($categ);
+        $i = mysqli_fetch_array($category);
+        $color = $i['COLOR'];
+        $categ = NULL;
+
+        $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+        $imagen = $mysqli->query($img);
+        $a = mysqli_fetch_array($imagen);
+        $img = NULL;
+
+        if ($contador < 5) {
+
+      ?>
+          <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
+            <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
+              <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
+            </div>
+
+            <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
+              <?php
+              $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+              $resCate = $mysqli->query($newCate);
+              while ($cate = $resCate->fetch_assoc()) {
+              ?>
+                <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                  <?php echo $cate['DESCRIPTION']; ?>
+                </span>
+
+              <?php
+              }
+              ?>
+
+              <h5 class="mt-0" style="color: white">Titulo: <?php echo $rowPop['TITLE']; ?>.</h5>
+              <br>
+              <small style="color: white">Fecha de noticia: </small>
+              <small style="color: white"><?php echo $rowPop['DATE_OF_NEWS']; ?></small>
+              <br>
+              <p style="color: white">Resumen: <?php echo $rowPop['DESCRIPTION']; ?></p>
+              <?php
+              $likes =  "SELECT NEWS_FK, `LIKE`, USER_FK from NEWS_LIKES where NEWS_FK= $idNew";
+              $resLikes = $mysqli->query($likes);
+              $likes = NULL;
+              ?>
+              <p style="color: white">Cantidad de Likes: 
+                <?php
+                if ($row3 = mysqli_fetch_assoc($resLikes)) {
+
+                  echo $rowPop['LIKES'];
+                }
+                ?>
+              </p>
+              <a href="noticia.php?id=<?php echo $rowPop['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+
+            </div>
+          </div>
+      <?php
+        }
+        $contador++;
+      }
+      ?>
     </div>
-
     <ol></ol>
 
     <figure class="text-center">
       <h1>Noticias más recientes</h1>
     </figure>
 
-    <?php
+    <div class="card-deck">
+      <?php
 
-    $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS ORDER BY CREATION_DATE DESC";
-    $news = $mysqli->query($new);
-    $new = NULL;
+      $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY CREATION_DATE DESC";
+      $news = $mysqli->query($new);
+      $new = NULL;
 
-    while ($row = mysqli_fetch_assoc($news)) {
+      while ($row = mysqli_fetch_assoc($news)) {
 
-      $idNew = $row['NEWS_ID'];
+        $idNew = $row['NEWS_ID'];
 
-      $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-      $category = $mysqli->query($categ);
-      $i = mysqli_fetch_array($category);
-      $color = $i['COLOR'];
-      $categ = NULL;
+        $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+        $category = $mysqli->query($categ);
+        $i = mysqli_fetch_array($category);
+        $color = $i['COLOR'];
+        $categ = NULL;
 
-      $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-      $imagen = $mysqli->query($img);
-      $a = mysqli_fetch_array($imagen);
-      $img = NULL;
-      if (strcmp($row['NEW_STATUS'], "Publicada") == 0) {
-    ?>
+        $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+        $imagen = $mysqli->query($img);
+        $a = mysqli_fetch_array($imagen);
+        $img = NULL;
+
+      ?>
+
         <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
 
           <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
-            <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" alt="...">
+            <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
           </div>
           <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
             <?php
@@ -142,19 +174,19 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
           </div>
         </div>
 
-    <?php
-      }
-    }
-    $news = NULL;
-    $category = NULL;
-    $imagen = NULL;
+      <?php
 
-    ?>
+      }
+      $news = NULL;
+      $category = NULL;
+      $imagen = NULL;
+
+      ?>
+    </div>
+
   </div>
 
 </div>
-
-
 
 <script src="jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

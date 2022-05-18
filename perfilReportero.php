@@ -9,7 +9,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 $id =  $_SESSION["USER_ID"];
 $image = $_SESSION["image"];
 
-$sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $id";
+$sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE CREATED_BY = $id AND NEW_STATUS = 'Publicada'";
 $resultado = $mysqli->query($sign);
 
 ?>
@@ -111,78 +111,78 @@ $resultado = $mysqli->query($sign);
                 <h4 style="color: white">Mis noticias</h4>
                 </hr>
                 <section id="noticia" class="seccion">
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
 
-                            <?php
-                            $resNew = $mysqli->query($sign);
-                            $sign = NULL;
-                            while ($row2 = mysqli_fetch_assoc($resNew)) {
+                    <?php
+                    $resNew = $mysqli->query($sign);
+                    $sign = NULL;
+                    while ($row2 = mysqli_fetch_assoc($resNew)) {
 
-                                if (strcmp($row2['NEW_STATUS'], "Publicada") == 0) {
+                        if (strcmp($row2['NEW_STATUS'], "Publicada") == 0) {
 
-                                    $idNew = $row2['NEWS_ID'];
+                            $idNew = $row2['NEWS_ID'];
 
-                                    $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-                                    $category = $mysqli->query($categ);
-                                    $i = mysqli_fetch_array($category);
-                                    $color = $i['COLOR'];
-                                    $categ = NULL;
+                            $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+                            $category = $mysqli->query($categ);
+                            $i = mysqli_fetch_array($category);
+                            $color = $i['COLOR'];
+                            $categ = NULL;
 
-                                    $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-                                    $imagen = $mysqli->query($img);
-                                    $a = mysqli_fetch_array($imagen);
-                                    $img = NULL;
+                            $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+                            $imagen = $mysqli->query($img);
+                            $a = mysqli_fetch_array($imagen);
+                            $img = NULL;
 
-                            ?>
-                                    <div class="row no-gutters" style="background-color:<?php echo $color ?>">
-                                        <div class="col-md-4" style="background-color:<?php echo $color ?>">
-                                            <img src="<?php echo $a['NEWS_TITLE']; ?>" class="card-img" width="80" height="250" alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body" style="background-color:<?php echo $color ?>">
-                                                <?php
-                                                $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
-                                                $resCate = $mysqli->query($newCate);
-                                                $newCate = NULL;
-                                                while ($cate = $resCate->fetch_assoc()) {
-                                                ?>
-                                                    <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
-                                                        <?php echo $cate['DESCRIPTION']; ?>
-                                                    </span>
+                    ?>
 
-                                                <?php
-                                                }
-                                                ?>
-                                                <br>
-                                                <br>
-                                                <h5 class="mt-0" style="color: white">Titulo: <?php echo $row2['TITLE']; ?>.</h5>
-                                                <br>
-                                                <small style="color: white">Fecha de noticia: </small>
-                                                <small style="color: white"><?php echo $row2['DATE_OF_NEWS']; ?></small>
-                                                <br>
-                                                <p style="color: white">Resumen: <?php echo $row2['DESCRIPTION']; ?></p>
-
-                                                <p class="card-text"><small style="color: white" class="text-muted">Creado: </small>
-                                                    <small style="color: white" class="text-muted"><?php echo $row2['CREATION_DATE']; ?></small>
-                                                    <i class='far fa-calendar' style='font-size:18px'></i>
-                                                </p>
-                                                <br>
-                                                <a href="noticia.php?id=<?php echo $row2['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
-                                            </div>
-                                        </div>
+                            <div class="card-deck">
+                                <div class="row g-0 bg-light position-relative" style="background-color:<?php echo $color ?>">
+                                    <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
+                                        <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
                                     </div>
-                            <?php
-                                }
-                            }
-                            $resNew = NULL;
-                            $resultado = NULL;
-                            $category = NULL;
-                            $imagen = NULL;
+                                    <div class="col-md-6 p-4 ps-md-0" style="background-color:<?php echo $color ?>">
+                                        <?php
+                                        $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                                        $resCate = $mysqli->query($newCate);
+                                        $newCate = NULL;
+                                        while ($cate = $resCate->fetch_assoc()) {
+                                        ?>
+                                            <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                                                <?php echo $cate['DESCRIPTION']; ?>
+                                            </span>
 
-                            ?>
-                        </div>
-                    </div>
+                                        <?php
+                                        }
+                                        ?>
+                                        <br>
+                                        <br>
+                                        <h5 class="mt-0" style="color: white">Titulo: <?php echo $row2['TITLE']; ?>.</h5>
+                                        <br>
+                                        <small style="color: white">Fecha de noticia: </small>
+                                        <small style="color: white"><?php echo $row2['DATE_OF_NEWS']; ?></small>
+                                        <br>
+                                        <p style="color: white">Resumen: <?php echo $row2['DESCRIPTION']; ?></p>
+
+                                        <p class="card-text"><small style="color: white">Creado: </small>
+                                            <small style="color: white"><?php echo $row2['CREATION_DATE']; ?></small>
+                                            <i class='far fa-calendar' style='font-size:18px'></i>
+                                        </p>
+                                        <br>
+                                        <a href="noticia.php?id=<?php echo $row2['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                    <?php
+                        }
+                    }
+                    $resNew = NULL;
+                    $resultado = NULL;
+                    $category = NULL;
+                    $imagen = NULL;
+
+                    ?>
+
+
                 </section>
                 <!--------------------------------------------------------- mis favoritos --------------------------------------------------------->
                 <hr>
@@ -191,98 +191,80 @@ $resultado = $mysqli->query($sign);
 
                 <section id="favoritos" class="seccion1">
 
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
-                            <div class="row no-gutters ">
 
-                                <div class="col-md-4">
-                                    <img src="http://i.huffpost.com/gen/1385110/images/o-COLBERT-FOX-NEWS-facebook.jpg" class="card-img" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo de la Noticia</h5>
-                                        <p class="card-text">Descripcion corta de la noticia Descripcion corta de la noticia
-                                            Descripcion corta de la noticia Descripcion corta de la noticia Descripcion corta de la
-                                            noticia.</p>
+                    <?php
+                    $likes =  "SELECT NEWS_FK, USER_FK from NEWS_LIKES where USER_FK= $id";
+                    $resLikes = $mysqli->query($likes);
+                    $likes = NULL;
 
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
+                    while ($rowLikes = mysqli_fetch_assoc($resLikes)) {
 
+                        $likesNews = $rowLikes['NEWS_FK'];
+
+                        $sign = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE FROM NEWS WHERE NEWS_ID = $likesNews AND NEW_STATUS = 'Publicada'";
+                        $resultado = $mysqli->query($sign);
+
+                        while ($rowNews = mysqli_fetch_assoc($resultado)) {
+
+                            $idNew = $rowNews['NEWS_ID'];
+
+                            $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+                            $category = $mysqli->query($categ);
+                            $i = mysqli_fetch_array($category);
+                            $color = $i['COLOR'];
+                            $categ = NULL;
+
+                            $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+                            $imagen = $mysqli->query($img);
+                            $a = mysqli_fetch_array($imagen);
+                            $img = NULL;
+
+                    ?>
+
+                            <div class="card-deck">
+                                <div class="row g-0 bg-light position-relative" style="background-color:<?php echo $color ?>">
+                                    <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
+                                        <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
+                                    </div>
+                                    <div class="col-md-6 p-4 ps-md-0" style="background-color:<?php echo $color ?>">
+                                        <?php
+                                        $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                                        $resCate = $mysqli->query($newCate);
+                                        $newCate = NULL;
+                                        while ($cate = $resCate->fetch_assoc()) {
+                                        ?>
+                                            <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                                                <?php echo $cate['DESCRIPTION']; ?>
+                                            </span>
+
+                                        <?php
+                                        }
+                                        ?>
+                                        <br>
+                                        <br>
+                                        <h5 class="mt-0" style="color: white">Titulo: <?php echo $rowNews['TITLE']; ?>.</h5>
+                                        <br>
+                                        <small style="color: white">Fecha de noticia: </small>
+                                        <small style="color: white"><?php echo $rowNews['DATE_OF_NEWS']; ?></small>
+                                        <br>
+                                        <p style="color: white">Resumen: <?php echo $rowNews['DESCRIPTION']; ?></p>
+
+                                        <p class="card-text"><small style="color: white">Creado: </small>
+                                            <small style="color: white"><?php echo $rowNews['CREATION_DATE']; ?></small>
                                             <i class='far fa-calendar' style='font-size:18px'></i>
-
                                         </p>
-
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-primary me-md-2" type="button">Eliminar de favoritos</button>
-                                        </div>
-
+                                        <br>
+                                        <a href="noticia.php?id=<?php echo $rowNews['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
                                     </div>
                                 </div>
+
                             </div>
-                        </div>
 
+                    <?php
+                        }
+                    }
+                    ?>
 
-                    </div>
-
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
-                            <div class="row no-gutters ">
-
-                                <div class="col-md-4">
-                                    <img src="http://i.huffpost.com/gen/1385110/images/o-COLBERT-FOX-NEWS-facebook.jpg" class="card-img" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo de la Noticia</h5>
-                                        <p class="card-text">Descripcion corta de la noticia Descripcion corta de la noticia
-                                            Descripcion corta de la noticia Descripcion corta de la noticia Descripcion corta de la
-                                            noticia.</p>
-
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
-
-                                            <i class='far fa-calendar' style='font-size:18px'></i>
-
-                                        </p>
-
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-primary me-md-2" type="button">Eliminar de favoritos</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="recent-news ">
-                        <div class="card mb-3 body-card ">
-                            <div class="row no-gutters ">
-
-                                <div class="col-md-4">
-                                    <img src="http://i.huffpost.com/gen/1385110/images/o-COLBERT-FOX-NEWS-facebook.jpg" class="card-img" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Titulo de la Noticia</h5>
-                                        <p class="card-text">Descripcion corta de la noticia Descripcion corta de la noticia
-                                            Descripcion corta de la noticia Descripcion corta de la noticia Descripcion corta de la
-                                            noticia.</p>
-
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
-
-                                            <i class='far fa-calendar' style='font-size:18px'></i>
-
-                                        </p>
-
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-primary me-md-2" type="button">Eliminar de favoritos</button>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
 

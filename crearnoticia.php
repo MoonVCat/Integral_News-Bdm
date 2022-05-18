@@ -120,8 +120,8 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                         </select>
                         <br>
                         <br>
-                        <button class="btn-add">Agregar</button>
-                        <button class="btn-add2">Limpiar</button>
+                        <button type="button" class="btn-add">Agregar</button>
+                        <button type="button" class="btn-add2">Limpiar</button>
                         <br> <br>
                         <div style="text-align: center;" class="li-container">
 
@@ -151,8 +151,9 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                         <br>
                         <input type="text" name="claveWord" id="claveWord" onkeypress="return Letra(event);" maxlength="100" placeholder="Palabras Clave" class="form-control">
                         <br>
-                        <button class="btnA">Agregar</button>
-                        <button class="btnA2">Limpiar</button>
+                        <button type="button" class="btn-add3">Agregar</button>
+                        <button type="button" class="btn-add4">Limpiar</button>
+                        <br>
                         <div style="text-align: center;" class="li-container">
                             <br>
                             <input value="" name="claveU" id="claveU" readonly required />
@@ -213,10 +214,8 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
 </div>
 
-<script src="js/bootstrap.min.js"></script>
 <script src="js/registro.js"></script>
 <script src="js/categoria.js"> </script>
-<script src="js/claveWord.js"> </script>
 
 <script type="text/javascript">
     function readURT(input) {
@@ -318,12 +317,6 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
 
     }
-</script>
-
-<script>
-    $(".readonly").keydown(function(e) {
-        e.preventDefault();
-    });
 </script>
 
 <script>

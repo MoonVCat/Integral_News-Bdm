@@ -24,6 +24,9 @@ CREATE TABLE IF NOT EXISTS USERS (
 
 SELECT * FROM USERS;
 
+CALL `integral_news`.`SP_USER`(, , , , , , , , , , , , );
+
+
 DELIMITER $$
 CREATE PROCEDURE SP_USER(
 	vOpcion VARCHAR(20),
@@ -61,6 +64,8 @@ CREATE PROCEDURE SP_USER(
 END	$$
 DELIMITER ;
 
+CALL SP_USER ('insertar', "", "", "", "", "", "3", "A", "", "", sysdate(), "", "1");
+
 
 ALTER TABLE USERS AUTO_INCREMENT = 1;
 SELECT * FROM USERS;
@@ -71,27 +76,26 @@ SELECT * FROM USERS;
 
 
 #-----------------------------------NOTICIAS----------------------------------------------
-
-
-CREATE TABLE IF NOT EXISTS NEWS (
-
-	`NEWS_ID` INT NOT NULL AUTO_INCREMENT COMMENT "Llave primaria de la tabla NEWS",
-    `SIGN` VARCHAR(100) NOT NULL COMMENT "Firma del reportero",
-    `TITLE` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Titulo de la noticia",
-    `DESCRIPTION` VARCHAR(300) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Resumen de la noticia",
-    `TEXT_NEWS` VARCHAR(600) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Texto que complemente la noticia",
-    `CITY` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Ciudad de la noticia",
-    `SUBURB` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Colonia de la noticia",
-    `COUNTRY` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT "Pais de la noticia",
-    `NEW_STATUS` VARCHAR(100) NOT NULL COMMENT "Estatus de la noticia",
-    `DATE_OF_NEWS` VARCHAR(50) NOT NULL COMMENT "Fecha de publicacion diferente a la creacion",
-    `HOUR_OF_NEWS` VARCHAR(50) NOT NULL COMMENT "Hora en que ocurrieron los eventos",
-    `CREATION_DATE` DATETIME NOT NULL COMMENT "Fecha de creacion del registro",
-    `CREATED_BY` INT NOT NULL COMMENT "Usuario que dio de alta el registro",
-    `COMMENTS_EDITOR` VARCHAR(200) COMMENT "Comentario del editor",
-    `USER_DELETED` TINYINT NOT NULL DEFAULT '0' COMMENT "Si el reportero de la noticia fue eliminado o no",
-    PRIMARY KEY (`NEWS_ID`)
+CREATE TABLE NEWS (
+  `NEWS_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria de la tabla NEWS',
+  `SIGN` varchar(100) NOT NULL COMMENT 'Firma del reportero',
+  `TITLE` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Titulo de la noticia',
+  `DESCRIPTION` varchar(300) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Resumen de la noticia',
+  `TEXT_NEWS` varchar(800) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Texto que complemente la noticia',
+  `CITY` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Ciudad de la noticia',
+  `SUBURB` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Colonia de la noticia',
+  `COUNTRY` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Pais de la noticia',
+  `NEW_STATUS` varchar(100) NOT NULL COMMENT 'Estatus de la noticia',
+  `DATE_OF_NEWS` varchar(50) NOT NULL COMMENT 'Fecha de publicacion diferente a la creacion',
+  `HOUR_OF_NEWS` varchar(50) NOT NULL COMMENT 'Hora en que ocurrieron los eventos',
+  `CREATION_DATE` datetime NOT NULL COMMENT 'Fecha de creacion del registro',
+  `CREATED_BY` int(11) NOT NULL COMMENT 'Usuario que dio de alta el registro',
+  `COMMENTS_EDITOR` varchar(200) DEFAULT NULL,
+  `LIKES` int(11) DEFAULT NULL,
+  `USER_DELETED` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`NEWS_ID`)
 );
+
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_NEWS`(
@@ -151,7 +155,7 @@ BEGIN
 			SET `LIKES`= `LIKES`-1
 		WHERE `NEWS_ID` = vNEWS_ID;
 	END IF;
-END
+END $$
 DELIMITER ;
 
 ALTER TABLE NEWS AUTO_INCREMENT = 1;

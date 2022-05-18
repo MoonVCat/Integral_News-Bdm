@@ -29,13 +29,13 @@
 
                                         include 'C:\xampp\htdocs\proyecto\connection.php';
 
-                                        $selNew = "SELECT NEWS_ID FROM NEWS WHERE CREATED_BY = $id AND NEW_STATUS = 'En redaccion'";
+                                        $selNew = "SELECT NEWS_ID FROM NEWS WHERE CREATED_BY = $id AND NEW_STATUS = 'En redaccion' OR NEW_STATUS = 'Terminada'";
                                         $resNew = $mysqli->query($selNew);
                                         while ($row = mysqli_fetch_assoc($resNew)) {
 
                                                 $idNews = $row['NEWS_ID'];
 
-                                                $delNew = "DELETE FROM NEWS WHERE CREATED_BY = $id AND NEW_STATUS = 'En redaccion' AND NEW_STATUS = 'Terminada'";
+                                                $delNew = "DELETE FROM NEWS WHERE CREATED_BY = $id AND NEW_STATUS = 'En redaccion' OR NEW_STATUS = 'Terminada'";
                                                 $resNew2 = $mysqli->query($delNew);
 
                                                 $upNew = "UPDATE NEWS SET USER_DELETED = '1' WHERE CREATED_BY = $id";
