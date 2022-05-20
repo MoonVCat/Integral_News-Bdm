@@ -35,15 +35,13 @@ include "../classes/dbh.classes.php";
         $check = true;
         return $check;
       }
-      
-
     }
 
-    function update($id, $title, $color){
+    function update($id, $title, $color, $order){
 
-            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?, ?)'); 
 
-            if(!$stmt->execute(array('update', $id, $title, $color))){
+            if(!$stmt->execute(array('update', $id, $title, $color, $order))){
               $stmt = null;
               echo '<script type="text/javascript">'; 
               echo 'alert("salio algo mal en la base de datos");';
@@ -51,6 +49,18 @@ include "../classes/dbh.classes.php";
               echo '</script>';
               exit();
             } 
+
+            $cateNews =  $this->connect()->prepare('CALL SP_NEWS_CATEGORIES( ?, ?, ?, ?, ?, ?)'); 
+            
+            if(!$cateNews->execute(array('updateCate', "", "", $title, $color, $id))){
+              $cateNews = null;
+              echo '<script type="text/javascript">'; 
+              echo 'alert("salio algo mal editar categoria de noticias");';
+              echo 'window.location.href = "../crearCate.php";';
+              echo '</script>';
+              exit();
+            } 
+
 
       $stmt = null;
     }

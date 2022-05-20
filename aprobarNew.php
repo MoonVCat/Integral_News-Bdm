@@ -36,6 +36,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                     <br>
                     <div class="recent-news ">
                         <div class="card mb-3 body-card ">
+                            <h5 style="text-align: left;">Noticias en aprobacion</h5>
                             <div class="row no-gutters ">
 
                                 <?php
@@ -59,7 +60,6 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                                     $img = NULL;
                                 ?>
 
-                                    <h5 style="text-align: left;">Noticias en aprobacion</h5>
                                     <br>
                                     <br>
                                     <?php

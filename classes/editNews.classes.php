@@ -5,7 +5,7 @@
     class editNews extends Dbh{
 
         protected function editNew($idNews, $hora, $fecha, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $urgente){
-
+            
             $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
             
                 if(!$stmt->execute(array('update', $idNews, $firma, $titulo, $descCorta, $desc, $ciudad, $colonia, $pais, "En redaccion", $fecha, $hora, "", "", "", "", $urgente))){

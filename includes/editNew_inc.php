@@ -29,6 +29,7 @@ if (isset($_POST["submit"])) {
     $date = substr($fecha, 0, 10);
     $hora = substr($fecha, -5);
 
+
     if($limpadito2 == 1){
         $categ1 = "DELETE FROM NEWS_CLAVE WHERE NEWS_ID = $idNews";
         $category1 = $mysqli->query($categ1);
@@ -81,11 +82,12 @@ if (isset($_POST["submit"])) {
                 if ($_POST["uno"] !== "") {
                     $cate = $_POST["uno"];
                     
-                    $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+                    $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                     $category = $mysqli->query($categ); 
                     while($row = mysqli_fetch_assoc($category)) {  
                         if(strcmp($row['DESCRIPTION'], $cate)==0){
                             $color = $row['COLOR'];
+                            $idCate = $row['CATEGORY_ID'];
                         }
                     }
                     $categ = NULL;
@@ -94,20 +96,21 @@ if (isset($_POST["submit"])) {
                     
                     if($_POST["unoPK"] !== ""){
                         $catePK = $_POST["unoPK"];
-                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color, $idCate);
                     $new2->editNew2();
                     }
                 }
                 if ($_POST["dos"] !== "") {
                     $cate = $_POST["dos"];
-                    $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+                    $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                     $category = $mysqli->query($categ); 
                     while($row = mysqli_fetch_assoc($category)) {  
                         if(strcmp($row['DESCRIPTION'], $cate)==0){
                             $color = $row['COLOR'];
+                            $idCate = $row['CATEGORY_ID'];
                         }
                     }
                     $categ = NULL;
@@ -116,21 +119,22 @@ if (isset($_POST["submit"])) {
 
                     if($_POST["dosPK"] !== ""){
                         $catePK = $_POST["dosPK"];
-                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }
         
                 }
                 if ($_POST["tres"] !== "") {
                     $cate = $_POST["tres"];
-                    $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+                    $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                     $category = $mysqli->query($categ); 
                     while($row = mysqli_fetch_assoc($category)) {  
                         if(strcmp($row['DESCRIPTION'], $cate)==0){
                             $color = $row['COLOR'];
+                            $idCate = $row['CATEGORY_ID'];
                         }
                     }
                     $categ = NULL;
@@ -139,10 +143,10 @@ if (isset($_POST["submit"])) {
         
                     if($_POST["tresPK"] !== ""){
                         $catePK = $_POST["tresPK"];
-                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }
                 }
@@ -156,10 +160,10 @@ if (isset($_POST["submit"])) {
 
                     if($_POST["claveUPK"] !== ""){
                         $clavePK = $_POST["claveUPK"];
-                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }
         
@@ -171,10 +175,10 @@ if (isset($_POST["submit"])) {
         
                     if($_POST["claveDPK"] !== ""){
                         $clavePK = $_POST["claveDPK"];
-                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }
                 }
@@ -185,10 +189,10 @@ if (isset($_POST["submit"])) {
         
                     if($_POST["claveTPK"] !== ""){
                         $clavePK = $_POST["claveTPK"];
-                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }
                 }
@@ -331,52 +335,55 @@ if (isset($_POST["submit"])) {
                 if ($_POST["uno"] !== "") {
                     $cate = $_POST["uno"];
                     
-                    $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+                    $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                     $category = $mysqli->query($categ); 
                     while($row = mysqli_fetch_assoc($category)) {  
                         if(strcmp($row['DESCRIPTION'], $cate)==0){
                             $color = $row['COLOR'];
+                            $idCate = $row['CATEGORY_ID'];
                         }
                     }
                     $cateV = 1;
                     
                     if($_POST["unoPK"] !== ""){
                         $catePK = $_POST["unoPK"];
-                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }
                 }
                 if ($_POST["dos"] !== "") {
                     $cate = $_POST["dos"];
-                    $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+                    $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                     $category = $mysqli->query($categ); 
                     while($row = mysqli_fetch_assoc($category)) {  
                         if(strcmp($row['DESCRIPTION'], $cate)==0){
                             $color = $row['COLOR'];
+                            $idCate = $row['CATEGORY_ID'];
                         }
                     }
                     $cateV = 1;
 
                     if($_POST["dosPK"] !== ""){
                         $catePK = $_POST["dosPK"];
-                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }
         
                 }
                 if ($_POST["tres"] !== "") {
                     $cate = $_POST["tres"];
-                    $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+                    $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
                     $category = $mysqli->query($categ); 
                     while($row = mysqli_fetch_assoc($category)) {  
                         if(strcmp($row['DESCRIPTION'], $cate)==0){
                             $color = $row['COLOR'];
+                            $idCate = $row['CATEGORY_ID'];
                         }
                     }
                     $cateV = 1;
@@ -385,10 +392,10 @@ if (isset($_POST["submit"])) {
                         
                         $catePK = $_POST["tresPK"];
                         
-                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, $catePK, $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color);
+                        $new2 = new editNew2Contr($idNews, "", $cate, $cateV, $claveV, $color, $idCate);
                         $new2->editNew2();
                     }
                 }
@@ -402,10 +409,10 @@ if (isset($_POST["submit"])) {
 
                     if($_POST["claveUPK"] !== ""){
                         $clavePK = $_POST["claveUPK"];
-                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }
         
@@ -417,10 +424,10 @@ if (isset($_POST["submit"])) {
         
                     if($_POST["claveDPK"] !== ""){
                         $clavePK = $_POST["claveDPK"];
-                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }
                 }
@@ -431,10 +438,10 @@ if (isset($_POST["submit"])) {
         
                     if($_POST["claveTPK"] !== ""){
                         $clavePK = $_POST["claveTPK"];
-                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, $clavePK, $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }else{
-                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "");
+                        $new2 = new editNew2Contr($idNews, "", $clave, $cateV, $claveV, "", "");
                         $new2->editNew2();
                     }
                 }

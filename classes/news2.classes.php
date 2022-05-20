@@ -3,11 +3,11 @@
     
     class News2 extends Dbh{
 
-        protected function cate2($uno, $color){
+        protected function cate2($uno, $color, $idCate){
              
-            $stmt = $this->connect()->prepare('CALL SP_NEWS_CATEGORIES(?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS_CATEGORIES(?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('insertar', "", "", $uno, $color))){
+                if(!$stmt->execute(array('insertar', "", "", $uno, $color, $idCate))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 

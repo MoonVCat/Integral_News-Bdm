@@ -3,11 +3,11 @@
     
     class editNews2 extends Dbh{
 
-        protected function cate2($idNews, $PK, $uno, $color){
+        protected function cate2($idNews, $PK, $uno, $color, $idCate){
              
-            $stmt = $this->connect()->prepare('CALL SP_NEWS_CATEGORIES(?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS_CATEGORIES(?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('update', $PK, $idNews, $uno, $color))){
+                if(!$stmt->execute(array('update', $PK, $idNews, $uno, $color, $idCate))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 
@@ -35,12 +35,12 @@
             $stmt = null;
         }
 
-        protected function cateIn2($idNews, $uno, $color){
+        protected function cateIn2($idNews, $uno, $color, $idCate){
 
              
-            $stmt = $this->connect()->prepare('CALL SP_NEWS_CATEGORIES(?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS_CATEGORIES(?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('editInsert', "", $idNews, $uno, $color))){
+                if(!$stmt->execute(array('editInsert', "", $idNews, $uno, $color, $idCate))){
 
                     $stmt = null;
                 

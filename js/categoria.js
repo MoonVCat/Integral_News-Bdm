@@ -68,6 +68,7 @@ refresh.addEventListener("click", (a) => {
   SeccionUno.value = "";
   SeccionDos.value= "";
   SeccionTres.value = "";
+
   numero=0;
   }
 );

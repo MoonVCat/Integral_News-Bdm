@@ -5,10 +5,6 @@ require "connection.php";
 include 'C:\xampp\htdocs\proyecto\templatess\headerPerfil.php';
 include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
-$cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
-$resultado = $mysqli->query($cate);
-$cate = NULL;
-
 $color = "SELECT COLOR_ID, COLOR FROM COLORS ORDER BY COLOR ASC";
 $resulColor = $mysqli->query($color);
 $color = NULL;
@@ -16,14 +12,13 @@ $color = NULL;
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
-    $query = "SELECT  CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES WHERE CATEGORY_ID=$id";
-    $category = $mysqli->query($query);
-    $query = NULL;
-    if (mysqli_num_rows($category) == 1) {
-        $row = mysqli_fetch_array($category);
-        $title = $row['DESCRIPTION'];
-        $color = $row['COLOR'];
-    }
+
+    $catEdit = "SELECT * FROM CATEGORIES WHERE CATEGORY_ID = '$id'";
+    $category = $mysqli->query($catEdit);
+    
+    $row2 = mysqli_fetch_array($category);
+
+    $catEdit = NULL;
 }
 
 ?>
@@ -74,7 +69,7 @@ if (isset($_GET['id'])) {
 
                     <div class="card card-body">
 
-                        <form class="form" method="post" action="./includes/editCate_inc.php?id=<?php echo $row['CATEGORY_ID'] ?>" enctype="multipart/form-data">
+                        <form class="form" method="post" action="./includes/editCate_inc.php?id=<?php echo $row2['CATEGORY_ID'] ?>" enctype="multipart/form-data">
 
                             <b for="exampleFormControlFile1">Edita una seccion</b>
                             <br>
@@ -82,16 +77,23 @@ if (isset($_GET['id'])) {
                             <b for="exampleFormControlFile1">Ponle nombre a la seccion</b>
                             <br>
                             <div class="form-group">
-                                <input type="text" id="name_cate" name="name_cate" class="form-control" placeholder="Titulo" maxlength="100" value="<?php echo (isset($row['DESCRIPTION']) ? htmlspecialchars($row['DESCRIPTION']) : ''); ?>" onkeypress="return Letra(event);" autofocus required>
+                                <input type="text" id="name_cate" name="name_cate" class="form-control" placeholder="Titulo" maxlength="100" value="<?php echo (isset($row2['DESCRIPTION']) ? htmlspecialchars($row2['DESCRIPTION']) : ''); ?>" onkeypress="return Letra(event);" autofocus required>
                             </div>
-                            <input type="hidden" id="description" name="description" class="form-control" value="<?php echo (isset($row['DESCRIPTION']) ? htmlspecialchars($row['DESCRIPTION']) : ''); ?>">
+                            <br>
+                            <b for="exampleFormControlFile1">Agrega un numero para el orden de la categoria</b>
+                            <br>
+                            <div class="form-group">
+                                <input type="text" id="num_cate" name="num_cate" class="form-control" placeholder="Orden" maxlength="11" onkeypress="return Numero(event);" value="<?php echo (isset($row2['ORDER']) ? htmlspecialchars($row2['ORDER']) : ''); ?>" required>
+                            </div>
+                            <br>
+                            <input type="hidden" id="description" name="description" class="form-control" value="<?php echo (isset($row2['DESCRIPTION']) ? htmlspecialchars($row2['DESCRIPTION']) : ''); ?>">
                             <br>
                             <div class="form-group">
                                 <b for="exampleFormControlFile1">Selecciona el color</b>
                                 <br>
                                 <br>
                                 <select class="form-select form-select-lg mb-3" id="cbx_color" name="cbx_color">
-                                    
+
                                     <?php
                                     while ($row = $resulColor->fetch_assoc()) {
                                         $color = $row['COLOR'];
@@ -100,15 +102,15 @@ if (isset($_GET['id'])) {
                                     <?php
                                     }
 
-                                    $resultado = NULL;
                                     $resulColor = NULL;
-                                    $category = NULL;
+                                    
                                     ?>
                                 </select>
                             </div>
 
-                            <input type="submit" name="submit" class="btn btn-success btn-block" value="Editar Seccion">
-
+                            <div class="botonBonito">
+                                <button type="submit" name="submit" class="btn btn-info">Editar Seccion</button>
+                            </div>
                         </form>
                     </div>
                 </div>

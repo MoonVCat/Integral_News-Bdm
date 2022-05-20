@@ -6,11 +6,12 @@
 
         private $id_color;
         private $id_nombre;
+        private $id_order;
 
-        public function __construct($id_color, $id_nombre){
+        public function __construct($id_color, $id_nombre, $id_order){
             $this->id_color = $id_color;
             $this->id_nombre = $id_nombre;
-            
+            $this->id_order = $id_order;
         }
 
         public function registerCate(){
@@ -27,7 +28,7 @@
             
             }
 
-            $this->categoryR($this->id_color, $this->id_nombre);
+            $this->categoryR($this->id_color, $this->id_nombre, $this->id_order);
         }
 
     }

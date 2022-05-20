@@ -15,7 +15,6 @@ if (isset($_POST["submit"])) {
     $firma = $_POST["firma"];
     $idUser = $_SESSION["USER_ID"];
     $fecha = $_POST["date"];
-    $idNew = $_POST["idNew"];
     $urgente = $_POST["urgente"];
     $edicion = 0;
     $mp4 = "mp4";
@@ -23,7 +22,7 @@ if (isset($_POST["submit"])) {
     $date = substr($fecha, 0, 10);
     $hora = substr($fecha, -5);
 
-
+    echo "<script> alert('".$urgente."'); </script>";
     //echo "<script> alert('".$hora."'); </script>";
     //echo "<script> alert('".$date."'); </script>";
 
@@ -58,45 +57,48 @@ if (isset($_POST["submit"])) {
 
         if ($_POST["uno"] !== "") {
             $cate = $_POST["uno"];
-            $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+            $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
             $category = $mysqli->query($categ); 
             while($row = mysqli_fetch_assoc($category)) {  
                 if(strcmp($row['DESCRIPTION'], $cate)==0){
                     $color = $row['COLOR'];
+                    $idCate = $row['CATEGORY_ID'];
                 }
 
             }
             $cateV = 1;
 
-            $new2 = new New2Contr($cate, $cateV, $claveV, $color);
+            $new2 = new New2Contr($cate, $cateV, $claveV, $color, $idCate);
             $new2->registerNew2();
         }
         if ($_POST["dos"] !== "") {
             $cate = $_POST["dos"];
-            $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+            $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
             $category = $mysqli->query($categ); 
             while($row = mysqli_fetch_assoc($category)) {  
                 if(strcmp($row['DESCRIPTION'], $cate)==0){
                     $color = $row['COLOR'];
+                    $idCate = $row['CATEGORY_ID'];
                 }
             }
             $cateV = 1;
 
-            $new2 = new New2Contr($cate, $cateV, $claveV, $color);
+            $new2 = new New2Contr($cate, $cateV, $claveV, $color, $idCate);
             $new2->registerNew2();
         }
         if ($_POST["tres"] !== "") {
             $cate = $_POST["tres"];
-            $categ = "SELECT DESCRIPTION, COLOR FROM CATEGORIES";
+            $categ = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
             $category = $mysqli->query($categ); 
             while($row = mysqli_fetch_assoc($category)) {  
                 if(strcmp($row['DESCRIPTION'], $cate)==0){
                     $color = $row['COLOR'];
+                    $idCate = $row['CATEGORY_ID'];
                 }
             }
             $cateV = 1;
 
-            $new2 = new New2Contr($cate, $cateV, $claveV, $color);
+            $new2 = new New2Contr($cate, $cateV, $claveV, $color, $idCate);
             $new2->registerNew2();
         }
 
@@ -107,7 +109,7 @@ if (isset($_POST["submit"])) {
             $cateV = 0;
             $claveV = 1;
 
-            $new2 = new New2Contr($clave, $cateV, $claveV, $mp4);
+            $new2 = new New2Contr($clave, $cateV, $claveV, "", "");
             $new2->registerNew2();
         }
         if ($_POST["claveD"] !== "") {
@@ -115,7 +117,7 @@ if (isset($_POST["submit"])) {
             $cateV = 0;
             $claveV = 1;
 
-            $new2 = new New2Contr($clave, $cateV, $claveV, $mp4);
+            $new2 = new New2Contr($clave, $cateV, $claveV, "", "");
             $new2->registerNew2();
         }
         if ($_POST["claveT"] !== "") {
@@ -123,7 +125,7 @@ if (isset($_POST["submit"])) {
             $cateV = 0;
             $claveV = 1;
 
-            $new2 = new New2Contr($clave, $cateV, $claveV, $mp4);
+            $new2 = new New2Contr($clave, $cateV, $claveV, "", "");
             $new2->registerNew2();
         }
 

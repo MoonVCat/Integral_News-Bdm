@@ -35,43 +35,40 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
   </div>
 
   <div class="preguntas">
+    <div class="preguntas">
+      <figure class="text-center">
+        <h1 style="color: red">Noticias urgentes</h1>
+      </figure>
 
-    <figure class="text-center">
-      <h1>Noticias urgentes</h1>
-    </figure>
+      <div class="card-deck">
 
-    <div class="card-deck">
+        <?php
+        $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES, URGENTES FROM NEWS where URGENTES = '1' ORDER BY CREATION_DATE DESC;";
+        $destRes = $mysqli->query($dest);
 
-      <?php
-      $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES, URGENTES FROM NEWS where URGENTES = '1' ORDER BY CREATION_DATE DESC;";
-      $destRes = $mysqli->query($dest);
+        while ($rowUrg = mysqli_fetch_assoc($destRes)) {
 
-      $contador = 0;
+          $idNew = $rowUrg['NEWS_ID'];
 
-      while ($rowUrg = mysqli_fetch_assoc($destRes)) {
+          $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+          $category = $mysqli->query($categ);
+          $i = mysqli_fetch_array($category);
+          $color = $i['COLOR'];
+          $categ = NULL;
 
-        $idNew = $rowUrg['NEWS_ID'];
+          $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+          $imagen = $mysqli->query($img);
+          $a = mysqli_fetch_array($imagen);
+          $img = NULL;
 
-        $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-        $category = $mysqli->query($categ);
-        $i = mysqli_fetch_array($category);
-        $color = $i['COLOR'];
-        $categ = NULL;
-
-        $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-        $imagen = $mysqli->query($img);
-        $a = mysqli_fetch_array($imagen);
-        $img = NULL;
-
-        if ($contador < 5) {
-
-      ?>
+        ?>
           <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
             <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
               <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
             </div>
 
             <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
+              <h5 class="mt-0" style="color: red">URGENTE</h5>
               <?php
               $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
               $resCate = $mysqli->query($newCate);
@@ -95,58 +92,230 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
             </div>
           </div>
-      <?php
+        <?php
+
         }
-        $contador++;
-      }
-      $rowUrg = NULL;
-      $dest = NULL;
-      $destRes = NULL;
-      $newCate = NULL;
-      $resCate = NULL;
-      $category = NULL;
-      $imagen = NULL;
-      $a = NULL;
-      $i = NULL;
-      ?>
+        $rowUrg = NULL;
+        $dest = NULL;
+        $destRes = NULL;
+        $newCate = NULL;
+        $resCate = NULL;
+        $category = NULL;
+        $imagen = NULL;
+        $a = NULL;
+        $i = NULL;
+        ?>
+      </div>
+      <ol></ol>
     </div>
-    <ol></ol>
 
-    <figure class="text-center">
-      <h1>Noticias más populares</h1>
-    </figure>
+    <div class="preguntas">
+      <figure class="text-center">
+        <h1>Noticias más populares</h1>
+      </figure>
 
-    <div class="card-deck">
+      <div class="card-deck">
 
-      <?php
-      $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY LIKES DESC;";
-      $destRes = $mysqli->query($dest);
+        <?php
+        $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY LIKES DESC;";
+        $destRes = $mysqli->query($dest);
 
-      $contador = 0;
+        $contador = 0;
 
-      while ($rowPop = mysqli_fetch_assoc($destRes)) {
+        while ($rowPop = mysqli_fetch_assoc($destRes)) {
 
-        $idNew = $rowPop['NEWS_ID'];
+          $idNew = $rowPop['NEWS_ID'];
+          
+          $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+          $category = $mysqli->query($categ);
+          $i = mysqli_fetch_array($category);
+          $color = $i['COLOR'];
+          $categ = NULL;
 
-        $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-        $category = $mysqli->query($categ);
-        $i = mysqli_fetch_array($category);
-        $color = $i['COLOR'];
-        $categ = NULL;
+          $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+          $imagen = $mysqli->query($img);
+          $a = mysqli_fetch_array($imagen);
+          $img = NULL;
 
-        $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-        $imagen = $mysqli->query($img);
-        $a = mysqli_fetch_array($imagen);
-        $img = NULL;
+          if ($contador < 5) {
 
-        if ($contador < 5) {
+        ?>
+            <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
+              <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
+                <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
+              </div>
 
-      ?>
+              <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
+                <?php
+                $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                $resCate = $mysqli->query($newCate);
+                while ($cate = $resCate->fetch_assoc()) {
+                ?>
+                  <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                    <?php echo $cate['DESCRIPTION']; ?>
+                  </span>
+
+                <?php
+                }
+                ?>
+
+                <h5 class="mt-0" style="color: white">Titulo: <?php echo $rowPop['TITLE']; ?>.</h5>
+                <br>
+                <small style="color: white">Fecha de noticia: </small>
+                <small style="color: white"><?php echo $rowPop['DATE_OF_NEWS']; ?></small>
+                <br>
+                <p style="color: white">Resumen: <?php echo $rowPop['DESCRIPTION']; ?></p>
+                <?php
+                $likes =  "SELECT NEWS_FK, `LIKE`, USER_FK from NEWS_LIKES where NEWS_FK= $idNew";
+                $resLikes = $mysqli->query($likes);
+                $likes = NULL;
+                ?>
+                <p style="color: white">Cantidad de Likes:
+                  <?php
+                  if ($row3 = mysqli_fetch_assoc($resLikes)) {
+
+                    echo $rowPop['LIKES'];
+                  }
+                  ?>
+                </p>
+                <a href="noticia.php?id=<?php echo $rowPop['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+
+              </div>
+            </div>
+        <?php
+          }
+          $contador++;
+        }
+        $rowPop = NULL;
+        $dest = NULL;
+        $destRes = NULL;
+        $newCate = NULL;
+        $resCate = NULL;
+        $category = NULL;
+        $imagen = NULL;
+        $resLikes = NULL;
+        $a = NULL;
+        $i = NULL;
+        ?>
+      </div>
+      <ol></ol>
+    </div>
+
+    <div class="preguntas">
+      <figure class="text-center">
+        <h1>Noticias más recientes</h1>
+      </figure>
+
+      <div class="card-deck">
+        <?php
+
+        $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY CREATION_DATE DESC";
+        $news = $mysqli->query($new);
+        $new = NULL;
+
+        $contador = 0;
+
+        while ($row = mysqli_fetch_assoc($news)) {
+
+          $idNew = $row['NEWS_ID'];
+
+          $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+          $category = $mysqli->query($categ);
+          $i = mysqli_fetch_array($category);
+          $color = $i['COLOR'];
+          $categ = NULL;
+
+          $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+          $imagen = $mysqli->query($img);
+          $a = mysqli_fetch_array($imagen);
+          $img = NULL;
+
+          if ($contador < 3) {
+
+        ?>
+
+            <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
+
+              <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
+                <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
+              </div>
+              <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
+                <?php
+                $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
+                $resCate = $mysqli->query($newCate);
+                while ($cate = $resCate->fetch_assoc()) {
+                ?>
+                  <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
+                    <?php echo $cate['DESCRIPTION']; ?>
+                  </span>
+
+                <?php
+                }
+                ?>
+                <br>
+                <br>
+                <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
+                <br>
+                <small style="color: white">Fecha de noticia: </small>
+                <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
+                <br>
+                <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
+                <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
+              </div>
+            </div>
+
+        <?php
+          }
+          $contador++;
+        }
+        $row = NULL;
+        $news = NULL;
+        $category = NULL;
+        $imagen = NULL;
+        $newCate = NULL;
+        $resCate = NULL;
+        $cate = NULL;
+        $i = NULL;
+        $a = NULL;
+
+        ?>
+      </div>
+    </div>
+
+    <div class="preguntas">
+      <figure class="text-center">
+        <h1>Noticias</h1>
+      </figure>
+
+      <div class="card-deck">
+        <?php
+
+        $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY CREATION_DATE DESC";
+        $news = $mysqli->query($new);
+        $new = NULL;
+
+        while ($row = mysqli_fetch_assoc($news)) {
+
+          $idNew = $row['NEWS_ID'];
+
+          $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
+          $category = $mysqli->query($categ);
+          $i = mysqli_fetch_array($category);
+          $color = $i['COLOR'];
+          $categ = NULL;
+
+          $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
+          $imagen = $mysqli->query($img);
+          $a = mysqli_fetch_array($imagen);
+          $img = NULL;
+
+        ?>
+
           <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
+
             <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
               <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
             </div>
-
             <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
               <?php
               $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
@@ -160,122 +329,34 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
               <?php
               }
               ?>
-
-              <h5 class="mt-0" style="color: white">Titulo: <?php echo $rowPop['TITLE']; ?>.</h5>
+              <br>
+              <br>
+              <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
               <br>
               <small style="color: white">Fecha de noticia: </small>
-              <small style="color: white"><?php echo $rowPop['DATE_OF_NEWS']; ?></small>
+              <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
               <br>
-              <p style="color: white">Resumen: <?php echo $rowPop['DESCRIPTION']; ?></p>
-              <?php
-              $likes =  "SELECT NEWS_FK, `LIKE`, USER_FK from NEWS_LIKES where NEWS_FK= $idNew";
-              $resLikes = $mysqli->query($likes);
-              $likes = NULL;
-              ?>
-              <p style="color: white">Cantidad de Likes:
-                <?php
-                if ($row3 = mysqli_fetch_assoc($resLikes)) {
-
-                  echo $rowPop['LIKES'];
-                }
-                ?>
-              </p>
-              <a href="noticia.php?id=<?php echo $rowPop['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
-
+              <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
+              <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
             </div>
           </div>
-      <?php
+
+        <?php
+
         }
-        $contador++;
-      }
-      $rowPop = NULL;
-      $dest = NULL;
-      $destRes = NULL;
-      $newCate = NULL;
-      $resCate = NULL;
-      $category = NULL;
-      $imagen = NULL;
-      $resLikes = NULL;
-      $a = NULL;
-      $i = NULL;
-      ?>
+        $row = NULL;
+        $news = NULL;
+        $category = NULL;
+        $imagen = NULL;
+        $newCate = NULL;
+        $resCate = NULL;
+        $cate = NULL;
+        $i = NULL;
+        $a = NULL;
+
+        ?>
+      </div>
     </div>
-    <ol></ol>
-
-    <figure class="text-center">
-      <h1>Noticias más recientes</h1>
-    </figure>
-
-    <div class="card-deck">
-      <?php
-
-      $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS where NEW_STATUS = 'Publicada' ORDER BY CREATION_DATE DESC";
-      $news = $mysqli->query($new);
-      $new = NULL;
-
-      while ($row = mysqli_fetch_assoc($news)) {
-
-        $idNew = $row['NEWS_ID'];
-
-        $categ = "SELECT DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE $idNew = `NEWS_ID`";
-        $category = $mysqli->query($categ);
-        $i = mysqli_fetch_array($category);
-        $color = $i['COLOR'];
-        $categ = NULL;
-
-        $img = "SELECT NEWS_TITLE FROM NEWS_IMAGE WHERE $idNew = `NEWS_ID`";
-        $imagen = $mysqli->query($img);
-        $a = mysqli_fetch_array($imagen);
-        $img = NULL;
-
-      ?>
-
-        <div style="background-color:<?php echo $color ?>" class="row g-0 bg-light position-relative">
-
-          <div style="background-color:<?php echo $color ?>" class="col-md-6 mb-md-0 p-md-4">
-            <img src="<?php echo $a['NEWS_TITLE']; ?>" class="w-40" width="200" height="200" alt="...">
-          </div>
-          <div style="background-color:<?php echo $color ?>" class="col-md-6 p-4 ps-md-0">
-            <?php
-            $newCate = "SELECT N_CATE_ID, NEWS_ID, DESCRIPTION, COLOR FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNew";
-            $resCate = $mysqli->query($newCate);
-            while ($cate = $resCate->fetch_assoc()) {
-            ?>
-              <span style="background-color:<?php echo $cate['COLOR'] ?>;align-content: space-around; font-size: 90%;font-weight:bold">
-                <?php echo $cate['DESCRIPTION']; ?>
-              </span>
-
-            <?php
-            }
-            ?>
-            <br>
-            <br>
-            <h5 class="mt-0" style="color: white">Titulo: <?php echo $row['TITLE']; ?>.</h5>
-            <br>
-            <small style="color: white">Fecha de noticia: </small>
-            <small style="color: white"><?php echo $row['DATE_OF_NEWS']; ?></small>
-            <br>
-            <p style="color: white">Resumen: <?php echo $row['DESCRIPTION']; ?></p>
-            <a href="noticia.php?id=<?php echo $row['NEWS_ID'] ?>" class="stretched-link">Ir a noticia</a>
-          </div>
-        </div>
-
-      <?php
-
-      }
-      $row = NULL;
-      $news = NULL;
-      $category = NULL;
-      $imagen = NULL;
-      $newCate = NULL;
-      $resCate = NULL;
-      $cate = NULL;
-      $i = NULL;
-      $a = NULL;
-
-      ?>
-    </div>
-
   </div>
 
 </div>

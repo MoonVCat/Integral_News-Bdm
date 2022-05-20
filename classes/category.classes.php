@@ -27,17 +27,16 @@
 
         }
 
-        protected function categoryR($id_color, $id_nombre){
+        protected function categoryR($id_color, $id_nombre, $id_order){
 
-            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?, ?)'); 
             
-            if(!$stmt->execute(array('insertar', "", $id_nombre, $id_color))){
-
-                
+            if(!$stmt->execute(array('insertar', "", $id_nombre, $id_color, $id_order))){
+ 
                 $stmt = null;
             
                 echo '<script type="text/javascript">'; 
-                echo 'alert("Salio algo mal en la base de datos al registrar");';
+                echo 'alert("Salio algo mal en la base de datos al crear categoria");';
                 echo 'window.location.href = "../crearCate.php";';
                 echo '</script>';
                 exit();

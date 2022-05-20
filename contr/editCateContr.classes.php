@@ -8,14 +8,15 @@ include "../classes/editCate.classes.php";
         private $title;
         private $description;
         private $color;
+        private $order;
 
-        public function __construct($id, $title, $description, $color){
+        public function __construct($id, $title, $description, $color, $order){
 
             $this->id = $id;
             $this->title = $title;
             $this->color = $color;
             $this->description = $description;
-
+            $this->order = $order;
         }
 
         public function updateContr(){
@@ -33,7 +34,7 @@ include "../classes/editCate.classes.php";
             }
 
 
-            $this->update( $this->id, $this->title, $this->color);
+            $this->update( $this->id, $this->title, $this->color, $this->order);
         }
 
 

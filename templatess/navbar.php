@@ -11,8 +11,6 @@ require "connection.php";
     </a>
   </div>
 
-
-
   <ul class="navbar-nav">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" style="color:white;" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -21,21 +19,21 @@ require "connection.php";
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <?php
 
-
-        $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES";
+        $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR, `ORDER` FROM CATEGORIES ORDER BY `ORDER` DESC;";
         $category = $mysqli->query($cate);
         while ($row = mysqli_fetch_assoc($category)) {
           $color = $row['COLOR'];
         ?>
-          <li><a style="color: <?php echo $color ?>;" class="dropdown-item" href="#"><?php echo $row['DESCRIPTION']; ?></a></li>
+          <li><a style="color: <?php echo $color ?>;" class="dropdown-item" href="cateIndex.php?id=<?php echo $row['DESCRIPTION'] ?>"><?php echo $row['DESCRIPTION']; ?></a></li>
         <?php
         }
+        $cate = NULL;
+        $category = NULL;
         ?>
 
       </ul>
     </li>
   </ul>
-
 
   <div class="container-fluid">
     <form class="d-flex">
@@ -48,7 +46,6 @@ require "connection.php";
 -->
 
   <?php
-
 
   if (isset($_SESSION["user_login"])) {
 

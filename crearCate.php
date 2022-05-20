@@ -67,6 +67,12 @@ $color = NULL;
                                 <input type="text" id="name_cate" name="name_cate" class="form-control" placeholder="Titulo" maxlength="100" onkeypress="return Letra(event);" autofocus required>
                             </div>
                             <br>
+                            <b for="exampleFormControlFile1">Agrega un numero para el orden de la categoria</b>
+                            <br>
+                            <div class="form-group">
+                                <input type="text" id="num_cate" name="num_cate" class="form-control" placeholder="Orden" maxlength="11" onkeypress="return Numero(event);" required>
+                            </div>
+                            <br>
                             <div class="form-group">
                                 <b for="exampleFormControlFile1">Selecciona el color</b>
                                 <br>
