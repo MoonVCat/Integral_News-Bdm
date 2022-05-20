@@ -17,6 +17,7 @@ if (isset($_POST["submit"])) {
     $limpadito = $_POST["limpiado"];
     $limpadito2 = $_POST["limpiado1"];
     $fecha = $_POST["date"];
+    $urgente = $_POST["urgente"];
     $first = true;
     $second = true;
     $third = true;
@@ -70,7 +71,7 @@ if (isset($_POST["submit"])) {
 
             if(strcmp($imageType, $mp4) == 0 || strcmp($imageType1, $mp4) == 0 || strcmp($imageType2, $mp4) == 0){
 
-                $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma);
+                $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $urgente);
                 $new->editNew2();
                 $cateV = 0;
                 $claveV = 0;
@@ -320,7 +321,7 @@ if (isset($_POST["submit"])) {
             }
         } else {
 
-            $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma);
+            $new = new editNewContr($idNews, $hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $urgente);
                 $new->editNew2();
                 $cateV = 0;
                 $claveV = 0;

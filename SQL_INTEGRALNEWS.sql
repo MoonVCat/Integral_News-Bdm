@@ -76,7 +76,7 @@ SELECT * FROM USERS;
 
 
 #-----------------------------------NOTICIAS----------------------------------------------
-CREATE TABLE NEWS (
+CREATE TABLE `NEWS` (
   `NEWS_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria de la tabla NEWS',
   `SIGN` varchar(100) NOT NULL COMMENT 'Firma del reportero',
   `TITLE` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Titulo de la noticia',
@@ -93,8 +93,10 @@ CREATE TABLE NEWS (
   `COMMENTS_EDITOR` varchar(200) DEFAULT NULL,
   `LIKES` int(11) DEFAULT NULL,
   `USER_DELETED` tinyint(4) NOT NULL DEFAULT 0,
+  `URGENTES` tinyint(4) DEFAULT 0,
   PRIMARY KEY (`NEWS_ID`)
-);
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
 
 
 DELIMITER $$

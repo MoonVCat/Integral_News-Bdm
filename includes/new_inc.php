@@ -16,6 +16,7 @@ if (isset($_POST["submit"])) {
     $idUser = $_SESSION["USER_ID"];
     $fecha = $_POST["date"];
     $idNew = $_POST["idNew"];
+    $urgente = $_POST["urgente"];
     $edicion = 0;
     $mp4 = "mp4";
 
@@ -48,7 +49,7 @@ if (isset($_POST["submit"])) {
         
     if(strcmp($imageType, $mp4) == 0 || strcmp($imageType1, $mp4) == 0 || strcmp($imageType2, $mp4) == 0){
 
-        $new = new NewContr($hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $idUser);
+        $new = new NewContr($hora, $date, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $idUser, $urgente);
         $new->registerNew();
         $cateV = 0;
         $claveV = 0;

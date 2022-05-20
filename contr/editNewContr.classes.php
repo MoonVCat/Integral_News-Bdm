@@ -14,8 +14,9 @@ include "../classes/editNews.classes.php";
         private $descCorta;
         private $desc;
         private $firma;
+        private $urgente;
 
-        public function __construct($idNews, $hora, $fecha, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma){
+        public function __construct($idNews, $hora, $fecha, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $urgente){
             $this->idNews = $idNews;
             $this->hora = $hora;
             $this->fecha = $fecha;
@@ -26,12 +27,13 @@ include "../classes/editNews.classes.php";
             $this->descCorta = $descCorta;
             $this->desc = $desc;
             $this->firma = $firma;
+            $this->urgente = $urgente;
         }
 
         public function editNew2(){
             //Registro de usuario
 
-            $this->editNew($this->idNews, $this->hora, $this->fecha, $this->titulo, $this->pais, $this->ciudad,  $this->colonia, $this->descCorta, $this->desc, $this->firma);
+            $this->editNew($this->idNews, $this->hora, $this->fecha, $this->titulo, $this->pais, $this->ciudad,  $this->colonia, $this->descCorta, $this->desc, $this->firma, $this->urgente);
         }
     }
 

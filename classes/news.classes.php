@@ -4,11 +4,11 @@
 
     class News extends Dbh{
 
-        protected function new($hora, $fecha, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $idUser){
+        protected function new($hora, $fecha, $titulo, $pais, $ciudad, $colonia, $descCorta, $desc, $firma, $idUser, $urgente){
 
-            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_NEWS( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
             
-                if(!$stmt->execute(array('insertar', "", $firma, $titulo, $descCorta, $desc, $ciudad, $colonia, $pais, "En redaccion", $fecha, $hora, "", $idUser, "", ""))){
+                if(!$stmt->execute(array('insertar', "", $firma, $titulo, $descCorta, $desc, $ciudad, $colonia, $pais, "En redaccion", $fecha, $hora, "", $idUser, "", "", $urgente))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 

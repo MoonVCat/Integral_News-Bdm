@@ -244,7 +244,7 @@ if (isset($_GET['id'])) {
                                 <?php
                                 }
                                 ?>
-                                <input value="" name="limpiado" id="limpiado" hidden/>
+                                <input value="" name="limpiado" id="limpiado" hidden />
                             </div>
                             <br>
                         </div>
@@ -324,8 +324,20 @@ if (isset($_GET['id'])) {
                                 <?php
                                 }
                                 ?>
-                                <input value="" name="limpiado1" id="limpiado1" hidden/>
+                                <input value="" name="limpiado1" id="limpiado1" hidden />
                             </div>
+                        </div>
+                        <br>
+                        <label for="exampleInputEmail1 font-weight-bold">¿Es noticia urgente?</label> <br>
+                        <div class="form-group mb-2 form-check-inline">
+
+                            <br>
+                            <input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name="urgente" id="urgente">
+                            <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox2" value="0" name="urgente" id="urgente" checked>
+                            <label class="form-check-label" for="inlineCheckbox2">No</label>
                         </div>
                         <br>
                         <div class="form-group">
