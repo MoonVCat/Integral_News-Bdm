@@ -29,9 +29,9 @@
 
         protected function categoryR($id_color, $id_nombre, $id_order){
 
-            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?, ?, ?, ?)'); 
             
-            if(!$stmt->execute(array('insertar', "", $id_nombre, $id_color, $id_order))){
+            if(!$stmt->execute(array('insertar', "", $id_nombre, $id_color, $id_order, "", ""))){
  
                 $stmt = null;
             

@@ -19,7 +19,7 @@ require "connection.php";
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <?php
 
-        $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR, `ORDER` FROM CATEGORIES ORDER BY `ORDER` DESC;";
+        $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR, `ORDER` FROM CATEGORIES ORDER BY `ORDER` ASC;";
         $category = $mysqli->query($cate);
         while ($row = mysqli_fetch_assoc($category)) {
           $color = $row['COLOR'];

@@ -11,8 +11,9 @@ include "../classes/register.classes.php";
         private $telephone;
         private $image;
         private $reportero;
+        private $userType;
 
-        public function __construct($email, $pwd, $confirm, $username, $telephone, $image, $reportero){
+        public function __construct($email, $pwd, $confirm, $username, $telephone, $image, $reportero, $userType){
             $this->email = $email;
             $this->pwd = $pwd;
             $this->confirm = $confirm;
@@ -20,7 +21,7 @@ include "../classes/register.classes.php";
             $this->telephone = $telephone;
             $this->image = $image;
             $this->reportero = $reportero;
-            
+            $this->userType = $userType;
         }
 
         public function registerUser(){
@@ -95,7 +96,7 @@ include "../classes/register.classes.php";
 
             //Registro de usuario
 
-            $this->register($this->email, $this->pwd, $this->username, $this->telephone, $this->image,  $this->reportero);
+            $this->register($this->email, $this->pwd, $this->username, $this->telephone, $this->image,  $this->reportero, $this->userType);
         }
 
 

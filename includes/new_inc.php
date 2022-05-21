@@ -22,7 +22,6 @@ if (isset($_POST["submit"])) {
     $date = substr($fecha, 0, 10);
     $hora = substr($fecha, -5);
 
-    echo "<script> alert('".$urgente."'); </script>";
     //echo "<script> alert('".$hora."'); </script>";
     //echo "<script> alert('".$date."'); </script>";
 

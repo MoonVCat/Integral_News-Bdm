@@ -23,11 +23,22 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
         $categNew = "SELECT * FROM NEWS_CATEGORIES WHERE DESCRIPTION = '$id'";
         $resCateN = $mysqli->query($categNew);
 
+        $categ2 = "SELECT * FROM CATEGORIES WHERE DESCRIPTION = '$id'";
+        $resCate2 = $mysqli->query($categ2);
+
+        $aCate = mysqli_fetch_array($resCate2);
+        $vistas = $aCate['VIEWS'];
+
+        $vistas++;
+
+        $updateCate = "CALL SP_CATEGORIES('updateViews', '', '$id', '', '', '$vistas', '')";
+        $resUpCate = $mysqli->query($updateCate);
+
         while ($rowCate = mysqli_fetch_assoc($resCateN)) {
 
           $newId = $rowCate['NEWS_ID'];
 
-          $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS where NEWS_ID = '$newId'";
+          $new = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR FROM NEWS where NEWS_ID = '$newId' AND NEW_STATUS = 'Publicada'";
           $news = $mysqli->query($new);
           $new = NULL;
 
@@ -87,6 +98,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
         $imagen = NULL;
         $newCate = NULL;
         $resCate = NULL;
+        $resCate2 = NULL;
         $resCateN = NULL;
         $cate = NULL;
         $i = NULL;

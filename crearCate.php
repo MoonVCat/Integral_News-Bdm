@@ -45,6 +45,9 @@ $color = NULL;
                 <a href="aprobarNew.php" class="list-group-item list-group-item-action">Aprobar Noticias
                     <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
                 </a>
+                <a href="reporte.php" class="list-group-item list-group-item-action">Reporte Noticias/Secciones
+                    <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
+                </a>
                 <a href="cerrarsesion.php" class="list-group-item list-group-item-action">Cerrar Sesion
                     <i class='far fa-eye' style='font-size:18px;color: black'></i>
                 </a>

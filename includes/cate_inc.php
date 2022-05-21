@@ -1,6 +1,5 @@
 <?php
 
-    
 include "../contr/catecontr.classes.php";
 
     if(isset($_POST["submit"])){
@@ -17,7 +16,6 @@ include "../contr/catecontr.classes.php";
         echo 'window.location.href = "../crearCate.php";';
         echo '</script>';
     }
-   
 
 ?>
 

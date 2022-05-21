@@ -43,7 +43,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
       <div class="card-deck">
 
         <?php
-        $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES, URGENTES FROM NEWS where URGENTES = '1' ORDER BY CREATION_DATE DESC;";
+        $dest = "SELECT NEWS_ID, `SIGN`, TITLE, DESCRIPTION, DATE_OF_NEWS, NEW_STATUS, CREATION_DATE, COMMENTS_EDITOR, LIKES, URGENTES FROM NEWS where URGENTES = '1' AND NEW_STATUS = 'Publicada' ORDER BY CREATION_DATE DESC;";
         $destRes = $mysqli->query($dest);
 
         while ($rowUrg = mysqli_fetch_assoc($destRes)) {

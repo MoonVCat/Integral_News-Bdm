@@ -39,9 +39,9 @@ include "../classes/dbh.classes.php";
 
     function update($id, $title, $color, $order){
 
-            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?, ?)'); 
+            $stmt = $this->connect()->prepare('CALL SP_CATEGORIES( ?, ?, ?, ?, ?, ?, ?)'); 
 
-            if(!$stmt->execute(array('update', $id, $title, $color, $order))){
+            if(!$stmt->execute(array('update', $id, $title, $color, $order, "", ""))){
               $stmt = null;
               echo '<script type="text/javascript">'; 
               echo 'alert("salio algo mal en la base de datos");';

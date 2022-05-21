@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS USERS (
 
 SELECT * FROM USERS;
 
-CALL `integral_news`.`SP_USER`(, , , , , , , , , , , , );
 
 
 DELIMITER $$
@@ -344,27 +343,36 @@ DROP TRIGGER T_NEW_HISTORY;
 CREATE TABLE CATEGORIES (
   `CATEGORY_ID` int(11) NOT NULL AUTO_INCREMENT,
   `DESCRIPTION` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `COLOR` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT 'Green',
+  `COLOR` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci,
   `ORDER` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`CATEGORY_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 
 DELIMITER $$
-CREATE PROCEDURE SP_CATEGORIES(
+CREATE PROCEDURE `SP_CATEGORIES`(
 	vOpcion VARCHAR(20),
 	vId INT,
 	vDescription VARCHAR(100),
-    vColor VARCHAR(100)
-) BEGIN
+    vColor VARCHAR(100),
+	vORDER INT,
+    vVIEWS INT,
+    vCREATION_DATE DATETIME
+)
+BEGIN
 	IF vOpcion = 'insertar' THEN
-		INSERT INTO CATEGORIES(`DESCRIPTION`, `COLOR`) 
-		VALUES(vDescription, vColor);
+		INSERT INTO CATEGORIES(`DESCRIPTION`, `COLOR`, `ORDER`, `CREATION_DATE`) 
+		VALUES(vDescription, vColor, vORDER, CURRENT_DATE());
     END IF;
     IF vOpcion = 'update' THEN
 		UPDATE CATEGORIES
-			SET `DESCRIPTION` = vDescription, `COLOR` = vColor
+			SET `DESCRIPTION` = vDescription, `COLOR` = vColor, `ORDER` = vORDER
 		WHERE `CATEGORY_ID` = vId;
+    END IF;
+      IF vOpcion = 'updateViews' THEN
+		UPDATE CATEGORIES
+			SET `VIEWS` = vVIEWS
+		WHERE `DESCRIPTION` = vDescription;
     END IF;
     IF vOpcion = 'delete' THEN
 		DELETE FROM CATEGORIES
@@ -449,12 +457,12 @@ BEGIN
 	IF vOption = 'Gusta' THEN
 		INSERT INTO NEWS_LIKES(`NEWS_FK`,`USER_FK`,`LIKE`)
 		VALUES (vNEWS_FK,vUSER_FK,1);
-		CALL SP_NEWS('likeMas',vNEWS_FK,null,null,null,null,null,null,null,null,null,null,null,null,null,null);      
+		CALL SP_NEWS('likeMas',vNEWS_FK,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);      
 	END IF;
 
 	IF vOption = 'NoGusta' THEN
 		DELETE FROM NEWS_LIKES WHERE `NEWS_FK`= vNEWS_FK AND `USER_FK`= vUSER_FK;  
-		CALL SP_NEWS('likeMenos',vNEWS_FK,null,null,null,null,null,null,null,null,null,null,null,null,null,null);        
+		CALL SP_NEWS('likeMenos',vNEWS_FK,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);        
 	END IF;
 END$$
 DELIMITER ;

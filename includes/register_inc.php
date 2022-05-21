@@ -8,13 +8,12 @@ include "../contr/registercontr.classes.php";
         $username = $_POST["username"];
         $telephone = $_POST["telephone"];
         $confirm = $_POST["pass2"];
+        $userType = $_POST["usuario"];
 
-        
         if(isset($_GET['id'])){
             $reportero = $_GET['id'];
-        }
+        }   else $reportero = "0";
 
-        
         if(!empty($_FILES["imagen"]["name"])){
 
             $fileName = basename($_FILES["imagen"]["name"]);
@@ -29,7 +28,7 @@ include "../contr/registercontr.classes.php";
                 $realImage = 'data:image/'.$imageType.';base64,'.$base64Image; //para concatenar en php se usa el punto "."
                 
                 //ImageContr::withImage($realImage)->uploadImage(); //referencia explicita ::
-                $register = new RegisterContr($email, $pwd, $confirm, $username, $telephone, $realImage, $reportero);
+                $register = new RegisterContr($email, $pwd, $confirm, $username, $telephone, $realImage, $reportero, $userType);
                 $register->registerUser();
 
                 if($reportero == 1){

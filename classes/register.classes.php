@@ -27,7 +27,7 @@
 
         }
 
-        protected function register($email, $pwd, $username, $telephone, $image, $reportero){
+        protected function register($email, $pwd, $username, $telephone, $image, $reportero, $userType){
             //$stmt = $this->connect()->prepare('INSERT INTO USERS (EMAIL, PASSWORD) VALUES(?, ?)'); 
             //con un STORED PROCEDURE:
             $stmt = $this->connect()->prepare('CALL SP_USER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'); 
@@ -45,7 +45,7 @@
                 }
                 
             }else{
-                if(!$stmt->execute(array('insertar', "", $email, $hashPwd, "", $image, "3", "A", $telephone, $username, "", "", "1"))){
+                if(!$stmt->execute(array('insertar', "", $email, $hashPwd, "", $image, $userType, "A", $telephone, $username, "", "", "1"))){
                     $stmt = null;
                 
                     echo '<script type="text/javascript">'; 

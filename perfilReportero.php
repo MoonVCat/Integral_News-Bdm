@@ -191,7 +191,6 @@ $resultado = $mysqli->query($sign);
 
                 <section id="favoritos" class="seccion1">
 
-
                     <?php
                     $likes =  "SELECT NEWS_FK, USER_FK from NEWS_LIKES where USER_FK= $id";
                     $resLikes = $mysqli->query($likes);

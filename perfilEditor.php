@@ -24,6 +24,9 @@ $image = $_SESSION['image'];
                     <i class='far fa-address-card' style='font-size:18px;color: black'></i>
                 </a>
                 <a href="aprobarNew.php" class="list-group-item list-group-item-action">Aprobar Noticias
+                    <i class='far fa-newspaper' style='font-size:18px;color: black'></i>
+                </a>
+                <a href="reporte.php" class="list-group-item list-group-item-action">Reporte Noticias/Secciones
                     <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
                 </a>
                 <a href="conf.php" class="list-group-item list-group-item-action">Configuración

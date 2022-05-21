@@ -31,12 +31,28 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
         <label for="">Numero de contacto</label>
         <input type="text" name="telephone" id="telephone" onkeypress="return Numero(event);" minlength="8" maxlength="12" required>
 
+        <br>
+        <label for="exampleInputEmail1 font-weight-bold">Tipo de Usuario</label> <br>
+        <div class="form-group mb-2 form-check-inline">
+          <br>
+          <input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name="usuario" id="usuario">
+          <small class="form-check-label" for="inlineCheckbox1">Editor</small>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="inlineCheckbox2" value="2" name="usuario" id="usuario">
+          <small class="form-check-label" for="inlineCheckbox2">Reportero</small>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="inlineCheckbox2" value="3" name="usuario" id="usuario" checked>
+          <small class="form-check-label" for="inlineCheckbox2">Usuario</small>
+        </div>
+        <br>
+
         <label for="">Foto de perfil</label>
         <input name="imagen" id="imagen" type="file" onchange="readURL(this);" required />
         <hr>
 
         <input type="submit" name="submit" value="Registrarse" class="submit_button">
-
 
       </form>
 

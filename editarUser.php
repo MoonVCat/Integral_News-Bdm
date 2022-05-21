@@ -38,6 +38,9 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                 <a href="crearCate.php" class="list-group-item list-group-item-action">Crear Secciones(Categorias)
                     <i class='far fa-save' style='font-size:18px;color: black'></i>
                 </a>
+                <a href="reporte.php" class="list-group-item list-group-item-action">Reporte Noticias/Secciones
+                    <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
+                </a>
                 <a href="aprobarNew.php" class="list-group-item list-group-item-action">Aprobar Noticias
                     <i class='fas fa-pencil-alt' style='font-size:18px;color: black'></i>
                 </a>
