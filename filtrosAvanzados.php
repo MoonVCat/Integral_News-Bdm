@@ -20,7 +20,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
         <h5 id="Pie3">Palabras Clave</h5>
         <br>
         <select id="cbx_clave1" name="cbx_clave1">
-          <option value="0"></option>
+          
           <?php
           $clave = "SELECT * FROM NEWS_CLAVE ORDER BY `NEWS_CLAVE` ASC";
           $resClave = $mysqli->query($clave);
@@ -66,57 +66,6 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 
       </div>
 
-      <div style="text-align: center;">
-        <br>
-        <br>
-        <h5 id="Pie3">Categorias</h5>
-        <br>
-        <select id="cbx_cate1" name="cbx_cate1">
-          <option value="0"></option>
-          <?php
-          $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
-          $resultado = $mysqli->query($cate);
-          $cate = NULL;
-          while ($row = $resultado->fetch_assoc()) {
-          ?>
-            <option value="<?php echo $row['DESCRIPTION'] ?>"><?php echo $row['DESCRIPTION'] ?></option>
-          <?php
-          }
-          $resultado = NULL;
-          ?>
-        </select>
-
-        <select id="cbx_cate2" name="cbx_cate2">
-          <option value="0"></option>
-          <?php
-          $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
-          $resultado = $mysqli->query($cate);
-          $cate = NULL;
-          while ($row = $resultado->fetch_assoc()) {
-          ?>
-            <option value="<?php echo $row['DESCRIPTION'] ?>"><?php echo $row['DESCRIPTION'] ?></option>
-          <?php
-          }
-          $resultado = NULL;
-          ?>
-        </select>
-
-        <select id="cbx_cate3" name="cbx_cate3">
-          <option value="0"></option>
-          <?php
-          $cate = "SELECT CATEGORY_ID, DESCRIPTION, COLOR FROM CATEGORIES ORDER BY DESCRIPTION ASC";
-          $resultado = $mysqli->query($cate);
-          $cate = NULL;
-          while ($row = $resultado->fetch_assoc()) {
-          ?>
-            <option value="<?php echo $row['DESCRIPTION'] ?>"><?php echo $row['DESCRIPTION'] ?></option>
-          <?php
-          }
-          $resultado = NULL;
-          ?>
-        </select>
-
-      </div>
 
       <div style="text-align: center;">
         <br>
@@ -152,6 +101,10 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
         </ul>
         <br>
         <br>
+        <h5 for="exampleFormControlFile1">Escribir Palabra</h5>
+        <input type="text" id="texto" name="texto" maxlength="100" onkeypress="return Letra(event);">
+        <br>
+        <br>
         <br>
         <br>
         <div class="botonBonito">
@@ -168,6 +121,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
 <script src="jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/Principal.js"></script>
+<script src="js/registro.js"></script>
 
 </body>
 
