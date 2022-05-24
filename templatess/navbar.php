@@ -36,8 +36,7 @@ require "connection.php";
   </ul>
 
   <div class="container-fluid">
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Busca tu noticia" aria-label="Search">
+    <form action="filtrosAvanzados.php" class="form">  
       <button class="btn btn-light" type="submit"> Buscar </button>
     </form>
   </div>

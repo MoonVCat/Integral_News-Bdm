@@ -93,7 +93,6 @@ $color = NULL;
                 </div>
                 </form>
 
-
             </div>
         </div>
     </div>

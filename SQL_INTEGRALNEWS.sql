@@ -271,6 +271,8 @@ SELECT * FROM NEWS_CLAVE;
 ALTER TABLE NEWS_CATEGORIES AUTO_INCREMENT = 1;
 SELECT * FROM NEWS_CATEGORIES;
 
+SELECT * FROM NEWS;
+
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_NEWS_CATEGORIES`(
 	IN vOption VARCHAR(20),
@@ -307,20 +309,17 @@ BEGIN
 END$$
 DELIMITER ;
 
+CALL `integral_news`.`SP_NEWS`('insertar','20', '1','1',  '1', '1', '1', '1', '1','1', '1', '1',  sysdate(), 2, '1', '1', '1');
 
-CREATE TABLE IF NOT EXISTS NEW_HISTORY(
-	
-    `HISTORY_TEXT` VARCHAR(100) NOT NULL COMMENT "Lo que paso",
-    `CREATED_BY` INT NOT NULL COMMENT "Usuario hizo el historial",
-    `HISTORY_DATE` DATETIME NOT NULL COMMENT "Fecha de alta del historial"
-);
+SELECT * FROM comment;
+
 
 DELIMITER $$
 CREATE TRIGGER T_NEW_HISTORY AFTER INSERT ON NEWS
 FOR EACH ROW
 BEGIN
-	set @reportero=(SELECT MAX(NEWS_ID) FROM news);
-	set @creador=(SELECT (CREATED_BY) FROM news WHERE NEWS_ID = @reportero);
+	set @noticia=(SELECT MAX(NEWS_ID) FROM NEWS);
+	set @creador=(SELECT (CREATED_BY) FROM NEWS WHERE NEWS_ID = @noticia);
 	INSERT INTO `integral_news`.`NEW_HISTORY` ( `HISTORY_TEXT`, `CREATED_BY`, `HISTORY_DATE`)
 	VALUES ( CONCAT ('Noticia creada por', @creador), sysdate());
 
@@ -332,8 +331,8 @@ CREATE TRIGGER T_NEW_UPDATE AFTER UPDATE ON NEWS
 FOR EACH ROW
 BEGIN
 	
-    set @reportero=(SELECT MAX(NEWS_ID) FROM news);
-	set @creador=(SELECT (CREATED_BY) FROM news WHERE NEWS_ID = @reportero);
+    set @noticia=(SELECT MAX(NEWS_ID) FROM news);
+	set @creador=(SELECT (CREATED_BY) FROM news WHERE NEWS_ID = @noticia);
     IF OLD.`NEW_STATUS` = '1' AND NEW.`NEW_STATUS` = '2' THEN
 		INSERT INTO `integral_news`.`NEW_HISTORY` ( `HISTORY_TEXT`, `CREATED_BY`, `HISTORY_DATE`)
 		VALUES ( CONCAT ('Noticia terminada por',  @creador), sysdate());

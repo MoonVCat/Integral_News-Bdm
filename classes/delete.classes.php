@@ -16,6 +16,12 @@
                         } else {
 
                                 if($norepo == 0){
+
+                                        include 'C:\xampp\htdocs\proyecto\connection.php';
+
+                                        $upCom = "UPDATE COMMENT SET USER_DELETED = '1' WHERE FK_USER = $id";
+                                        $resCom = $mysqli->query($upCom);
+
                                         session_start();
                                         unset($_SESSION["USER_ID"]);
                                         unset($_SESSION["user_login"]);
@@ -40,6 +46,9 @@
 
                                                 $upNew = "UPDATE NEWS SET USER_DELETED = '1' WHERE CREATED_BY = $id";
                                                 $resNew3 = $mysqli->query($upNew);
+
+                                                $upCom = "UPDATE COMMENT SET USER_DELETED = '1' WHERE FK_USER = $id";
+                                                $resCom = $mysqli->query($upCom);
 
                                                 $delCate = "DELETE FROM NEWS_CATEGORIES WHERE NEWS_ID = $idNews";
                                                 $resCate = $mysqli->query($delCate);

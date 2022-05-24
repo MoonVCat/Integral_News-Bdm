@@ -166,7 +166,7 @@ include 'C:\xampp\htdocs\proyecto\templatess\navbar.php';
                     <br>
                     <label for="exampleInputEmail1 font-weight-bold">¿Es noticia urgente?</label> <br>
                     <div class="form-group mb-2 form-check-inline">
-                        
+
                         <br>
                         <input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name="urgente" id="urgente">
                         <label class="form-check-label" for="inlineCheckbox1">Si</label>
