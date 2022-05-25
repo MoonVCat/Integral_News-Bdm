@@ -13,7 +13,7 @@
                 
                     echo '<script type="text/javascript">'; 
                     echo 'alert("Salio algo mal en la base de datos al crear Noticia");';
-                    echo 'window.location.href = "../crearNoticia.php";';
+                    echo 'window.location.href = "../crearnoticia.php";';
                     echo '</script>';
                     exit();
                 }

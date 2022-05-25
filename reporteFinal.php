@@ -63,86 +63,73 @@ $Cate = $_GET["Cate"];
 
                             <?php
 
-                            if (strcmp($Cate, "Todas") == 0) {
-                                $cate = "SELECT * FROM CATEGORIES WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2'";
-                                $category = $mysqli->query($cate);
-                                $cate = NULL;
+                            if (strcmp($Cate, "Todas") != 0) {
+
+                                $cate2 = "SELECT * FROM NEWS_CATEGORIES WHERE CATE_ID = '$Cate'";
+                                $category2 = $mysqli->query($cate2);
+                                $cate2 = NULL;
+
+                                while ($row8 = mysqli_fetch_assoc($category2)) {
+
+                                    $idNoticia = $row8['NEWS_ID'];
+                                }
+
+
+                                $noticias = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' AND NEWS_ID = '$idNoticia' ORDER BY LIKES DESC";
+                                $resNews = $mysqli->query($noticias);
+                                $noticias = NULL;
                             } else {
-                                $cate = "SELECT * FROM CATEGORIES WHERE CATEGORY_ID = '$Cate' AND CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2'";
-                                $category = $mysqli->query($cate);
-                                $cate = NULL;
 
-                                $newsCate = "SELECT NEWS_ID, N_CATE_ID FROM NEWS_CATEGORIES WHERE N_CATE_ID = '$Cate'";
-                                $resNewsCate = $mysqli->query($newsCate);
-                                $newsCate = NULL;
-
-                                $i = mysqli_fetch_array($resNewsCate);
-
+                                $noticias = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' ORDER BY LIKES DESC";
+                                $resNews = $mysqli->query($noticias);
+                                $noticias = NULL;
                             }
 
-                            if (strcmp($Cate, "Todas") == 0) {
-                                while ($row3 = mysqli_fetch_assoc($category)) {
 
-                                    $cate3 = $row3['CATEGORY_ID'];
+                            while ($row2 = mysqli_fetch_assoc($resNews)) {
 
-                                    $newsCate4 = "SELECT N_CATE_ID, NEWS_ID, CATE_ID FROM NEWS_CATEGORIES WHERE CATE_ID = '$cate3'";
-                                    $resNewsCate4 = $mysqli->query($newsCate4);
-                                    $newsCate4 = NULL;
-                                    $b = mysqli_fetch_array($resNewsCate4);
-                                    
-                                    $idNews = $b['NEWS_ID'];
-
-                                    $noticias = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' AND NEWS_ID = '$idNews'";
-                                    $resNews = $mysqli->query($noticias);
-                                    $noticias = NULL;
-
-                                    while ($row2 = mysqli_fetch_assoc($resNews)) {
+                                $idNews = $row2['NEWS_ID'];
                             ?>
-                                        <tr>
-                                            <?php
-
-                                            $newCate1 = "SELECT NEWS_ID, DESCRIPTION FROM NEWS_CATEGORIES WHERE NEWS_ID = '$idNews'";
-                                            $resNews1 = $mysqli->query($newCate1);
-                                            $newCate1 = NULL;
-                                            while ($row3 = mysqli_fetch_assoc($resNews)) {
-                                            ?>
-                                                <td><?php echo $row3['DESCRIPTION']; ?></td>
-                                            <?php
-                                            }
-                                            ?>
-
-                                            <td><?php echo $row2['CREATION_DATE']; ?></td>
-
-                                        </tr>
-                                    <?php
-                                    }
-                                }
-                            } else {
-                                $idNews = $i['NEWS_ID'];
-
-                                $noticias1 = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' AND NEWS_ID = '$idNews'";
-                                $resNews1 = $mysqli->query($noticias1);
-                                $noticias = NULL;
-                                while ($row4 = mysqli_fetch_assoc($resNews1)) {
-                                    ?>
-
-                                    <tr>
+                                <tr>
+                                    <td>
                                         <?php
 
-                                        $newCate1 = "SELECT  N_CATE_ID, NEWS_ID, CATE_ID, DESCRIPTION FROM NEWS_CATEGORIES WHERE NEWS_ID = '$idNews'";
+                                        $newCate1 = "SELECT NEWS_ID, DESCRIPTION FROM NEWS_CATEGORIES WHERE NEWS_ID = '$idNews'";
                                         $resNews1 = $mysqli->query($newCate1);
                                         $newCate1 = NULL;
-                                        while ($row3 = mysqli_fetch_assoc($resNews)) {
+                                        while ($row3 = mysqli_fetch_assoc($resNews1)) {
                                         ?>
-                                            <td><?php echo $row4['DESCRIPTION']; ?></td>
+                                            <?php echo $row3['DESCRIPTION']; ?>
+
+                                            <br>
                                         <?php
                                         }
                                         ?>
-                                        <td><?php echo $row4['CREATION_DATE']; ?></td>
+                                    </td>
 
-                                    </tr>
+                                    <td><?php echo $row2['CREATION_DATE']; ?></td>
+                                    <td><?php echo $row2['TITLE']; ?></td>
+                                    <td><?php echo $row2['LIKES']; ?></td>
+
+                                    <?php
+                                    $coment = "SELECT COUNT(*) FROM COMMENT WHERE FK_NEWS='$idNews'";
+                                    $resComent = $mysqli->query($coment);
+                                    $coment = NULL;
+
+                                    while ($row7 = mysqli_fetch_array($resComent)) {
+
+                                        $cantCom = $row7['COUNT(*)'];
+                                    }
+                                    ?>
+                                    <td><?php echo $cantCom; ?></td>
+                                    <td align="center">
+                                        <a href="noticia.php?id=<?php echo $idNews ?>" class="btn btn-secondary">
+                                            <i class="fas fa-cat"></i>
+                                        </a>
+                                    </td>
+
+                                </tr>
                             <?php
-                                }
                             }
                             $i = NULL;
                             $resNewsCate = NULL;
@@ -165,20 +152,19 @@ $Cate = $_GET["Cate"];
                             <tr>
                                 <th>Secciones</th>
                                 <th>Fecha</th>
-                                <th>Cantidad Likes</th>
-                                <th>Cantidad Comentarios</th>
-                                <th>Ir a Noticia</th>
+                                <th>Cantidad Vistas</th>
+                                <th>Ir a Seccion</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
 
                             if (strcmp($Cate, "Todas") == 0) {
-                                $cate = "SELECT * FROM CATEGORIES WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2'";
+                                $cate = "SELECT * FROM CATEGORIES WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' ORDER BY VIEWS DESC";
                                 $category = $mysqli->query($cate);
                                 $cate = NULL;
                             } else {
-                                $cate = "SELECT * FROM CATEGORIES WHERE CATEGORY_ID = '$Cate' AND CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2'";
+                                $cate = "SELECT * FROM CATEGORIES WHERE CATEGORY_ID = '$Cate' AND CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' ORDER BY VIEWS DESC";
                                 $category = $mysqli->query($cate);
                                 $cate = NULL;
                             }
@@ -190,6 +176,12 @@ $Cate = $_GET["Cate"];
                                 <tr>
                                     <td style="background-color:<?php echo $color ?>"><?php echo $row['DESCRIPTION']; ?></td>
                                     <td style="background-color:<?php echo $color ?>"><?php echo $row['CREATION_DATE']; ?></td>
+                                    <td style="background-color:<?php echo $color ?>"><?php echo $row['VIEWS']; ?></td>
+                                    <td align="center">
+                                        <a href="cateIndex.php?id=<?php echo $row['DESCRIPTION'] ?>" class="btn btn-secondary">
+                                            <i class="fas fa-cat"></i>
+                                        </a>
+                                    </td>
 
                                 </tr>
                             <?php

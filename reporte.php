@@ -62,7 +62,7 @@ $color = NULL;
                                     $color = $row['COLOR'];
                                 ?>
                                     <li>
-                                        <option style="color: <?php echo $color ?>;" value="<?php echo $row['CATEGORY_ID'] ?>" class="dropdown-item" ><?php echo $row['DESCRIPTION']; ?></option>
+                                        <option style="color: <?php echo $color ?>;" value="<?php echo $row['CATEGORY_ID'] ?>" class="dropdown-item"><?php echo $row['DESCRIPTION']; ?></option>
                                     </li>
                                 <?php
                                 }
@@ -92,6 +92,7 @@ $color = NULL;
                     <button type="submit" name="submit" class="btn btn-info">Generar Reporte</button>
                 </div>
                 </form>
+
 
             </div>
         </div>
