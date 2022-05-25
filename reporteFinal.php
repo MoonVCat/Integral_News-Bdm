@@ -72,71 +72,121 @@ $Cate = $_GET["Cate"];
                                 while ($row8 = mysqli_fetch_assoc($category2)) {
 
                                     $idNoticia = $row8['NEWS_ID'];
+
+                                    $noticias = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' AND NEWS_ID = '$idNoticia' ORDER BY LIKES DESC";
+                                    $resNews = $mysqli->query($noticias);
+                                    $noticias = NULL;
+
+                                    while ($row2 = mysqli_fetch_assoc($resNews)) {
+
+                                        $idNews = $row2['NEWS_ID'];
+                            ?>
+                                        <tr>
+                                            <td>
+                                                <?php
+
+                                                $newCate1 = "SELECT NEWS_ID, DESCRIPTION FROM NEWS_CATEGORIES WHERE NEWS_ID = '$idNews'";
+                                                $resNews1 = $mysqli->query($newCate1);
+                                                $newCate1 = NULL;
+                                                while ($row3 = mysqli_fetch_assoc($resNews1)) {
+                                                ?>
+                                                    <?php echo $row3['DESCRIPTION']; ?>
+
+                                                    <br>
+                                                <?php
+                                                }
+                                                ?>
+                                            </td>
+
+                                            <td><?php echo $row2['CREATION_DATE']; ?></td>
+                                            <td><?php echo $row2['TITLE']; ?></td>
+                                            <td><?php echo $row2['LIKES']; ?></td>
+
+                                            <?php
+                                            $coment = "SELECT COUNT(*) FROM COMMENT WHERE FK_NEWS='$idNews'";
+                                            $resComent = $mysqli->query($coment);
+                                            $coment = NULL;
+
+                                            while ($row7 = mysqli_fetch_array($resComent)) {
+
+                                                $cantCom = $row7['COUNT(*)'];
+                                            }
+                                            ?>
+                                            <td><?php echo $cantCom; ?></td>
+                                            <td align="center">
+                                                <a href="noticia.php?id=<?php echo $idNews ?>" class="btn btn-secondary">
+                                                    <i class="fas fa-cat"></i>
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                    <?php
+                                    }
+                                    $i = NULL;
+                                    $resNewsCate = NULL;
+                                    $resNews = NULL;
+                                    $resNews1 = NULL;
+                                    $category = NULL;
+                                    $resultado = NULL;
                                 }
-
-
-                                $noticias = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' AND NEWS_ID = '$idNoticia' ORDER BY LIKES DESC";
-                                $resNews = $mysqli->query($noticias);
-                                $noticias = NULL;
                             } else {
 
                                 $noticias = "SELECT * FROM NEWS WHERE CREATION_DATE BETWEEN '$Fecha1' AND '$Fecha2' ORDER BY LIKES DESC";
                                 $resNews = $mysqli->query($noticias);
                                 $noticias = NULL;
-                            }
 
+                                while ($row2 = mysqli_fetch_assoc($resNews)) {
 
-                            while ($row2 = mysqli_fetch_assoc($resNews)) {
+                                    $idNews = $row2['NEWS_ID'];
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php
 
-                                $idNews = $row2['NEWS_ID'];
-                            ?>
-                                <tr>
-                                    <td>
+                                            $newCate1 = "SELECT NEWS_ID, DESCRIPTION FROM NEWS_CATEGORIES WHERE NEWS_ID = '$idNews'";
+                                            $resNews1 = $mysqli->query($newCate1);
+                                            $newCate1 = NULL;
+                                            while ($row3 = mysqli_fetch_assoc($resNews1)) {
+                                            ?>
+                                                <?php echo $row3['DESCRIPTION']; ?>
+
+                                                <br>
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
+
+                                        <td><?php echo $row2['CREATION_DATE']; ?></td>
+                                        <td><?php echo $row2['TITLE']; ?></td>
+                                        <td><?php echo $row2['LIKES']; ?></td>
+
                                         <?php
+                                        $coment = "SELECT COUNT(*) FROM COMMENT WHERE FK_NEWS='$idNews'";
+                                        $resComent = $mysqli->query($coment);
+                                        $coment = NULL;
 
-                                        $newCate1 = "SELECT NEWS_ID, DESCRIPTION FROM NEWS_CATEGORIES WHERE NEWS_ID = '$idNews'";
-                                        $resNews1 = $mysqli->query($newCate1);
-                                        $newCate1 = NULL;
-                                        while ($row3 = mysqli_fetch_assoc($resNews1)) {
-                                        ?>
-                                            <?php echo $row3['DESCRIPTION']; ?>
+                                        while ($row7 = mysqli_fetch_array($resComent)) {
 
-                                            <br>
-                                        <?php
+                                            $cantCom = $row7['COUNT(*)'];
                                         }
                                         ?>
-                                    </td>
+                                        <td><?php echo $cantCom; ?></td>
+                                        <td align="center">
+                                            <a href="noticia.php?id=<?php echo $idNews ?>" class="btn btn-secondary">
+                                                <i class="fas fa-cat"></i>
+                                            </a>
+                                        </td>
 
-                                    <td><?php echo $row2['CREATION_DATE']; ?></td>
-                                    <td><?php echo $row2['TITLE']; ?></td>
-                                    <td><?php echo $row2['LIKES']; ?></td>
-
-                                    <?php
-                                    $coment = "SELECT COUNT(*) FROM COMMENT WHERE FK_NEWS='$idNews'";
-                                    $resComent = $mysqli->query($coment);
-                                    $coment = NULL;
-
-                                    while ($row7 = mysqli_fetch_array($resComent)) {
-
-                                        $cantCom = $row7['COUNT(*)'];
-                                    }
-                                    ?>
-                                    <td><?php echo $cantCom; ?></td>
-                                    <td align="center">
-                                        <a href="noticia.php?id=<?php echo $idNews ?>" class="btn btn-secondary">
-                                            <i class="fas fa-cat"></i>
-                                        </a>
-                                    </td>
-
-                                </tr>
+                                    </tr>
                             <?php
+                                }
+                                $i = NULL;
+                                $resNewsCate = NULL;
+                                $resNews = NULL;
+                                $resNews1 = NULL;
+                                $category = NULL;
+                                $resultado = NULL;
                             }
-                            $i = NULL;
-                            $resNewsCate = NULL;
-                            $resNews = NULL;
-                            $resNews1 = NULL;
-                            $category = NULL;
-                            $resultado = NULL;
 
                             ?>
                         </tbody>

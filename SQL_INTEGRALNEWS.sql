@@ -390,7 +390,7 @@ DELIMITER ;
 
 CALL `integral_news`.`SP_NEWS`('insertar','20', '1','1',  '1', '1', '1', '1', '1','1', '1', '1',  sysdate(), 2, '1', '1', '1');
 
-SELECT * FROM NEW_HISTORY;
+SELECT * FROM categories;
 
 #--DROP TRIGGER T_NEW_UPDATE;
 #--DROP TRIGGER T_NEW_HISTORY;
